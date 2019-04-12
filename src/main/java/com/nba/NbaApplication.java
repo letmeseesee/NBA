@@ -49,9 +49,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableCaching
 @EnableAsync
-public class DemoApplication {
+public class NbaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(NbaApplication.class, args);
     }
 
     @Bean
