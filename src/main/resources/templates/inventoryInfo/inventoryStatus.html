@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--简单表达式-->
+<p th:text="'Hello！, ' + ${name} + '!'">3333</p>
+<!--调用国际化资源-->
+<p th:utext="#{home.welcome}">Welcome to our grocery store!</p>
+<!--url表达式-->
+<a href="details.html" th:href="@{/order/details}">view</a>
+<!-- 生成列表 -->
+<table>
+    <tbody>
+    <tr th:each="rsInventoryStatuse:${rsInventoryStatuses}">
+        <td th:text="${rsInventoryStatuse.inventoryStatusId}">1</td>
+        <td th:text="${rsInventoryStatuse.inventoryId}">Red Chair</td>
+        <td th:text="${rsInventoryStatuse.status}">Red Chair</td>
+        <td th:text="${rsInventoryStatuse.userName}">Red Chair</td>
+        <!--<td th:text="${#numbers.formatDecimal(rsInventoryStatuse.price, 1, 2)}">123</td>-->
+        <td th:text="${#dates.format(rsInventoryStatuse.addTime.longValue() * 1000, 'yyyy-MM-dd')}">2014-12-01</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
