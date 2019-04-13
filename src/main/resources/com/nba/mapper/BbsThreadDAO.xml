@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.BbsThreadDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.BbsThread">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="top" jdbcType="BIT" property="top" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="subject" jdbcType="CHAR" property="subject" />
+    <result column="create_date" jdbcType="INTEGER" property="createDate" />
+    <result column="last_date" jdbcType="INTEGER" property="lastDate" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="posts" jdbcType="INTEGER" property="posts" />
+    <result column="closed" jdbcType="BIT" property="closed" />
+    <result column="firstpid" jdbcType="INTEGER" property="firstpid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tid, `top`, `uid`, subject, create_date, last_date, views, posts, closed, firstpid
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.BbsThreadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bbs_thread
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_thread
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bbs_thread
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.BbsThreadExample">
+    delete from bbs_thread
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nba.model.BbsThread">
+    insert into bbs_thread (tid, `top`, `uid`, subject, 
+      create_date, last_date, views, 
+      posts, closed, firstpid
+      )
+    values (#{tid,jdbcType=INTEGER}, #{top,jdbcType=BIT}, #{uid,jdbcType=INTEGER}, #{subject,jdbcType=CHAR}, 
+      #{createDate,jdbcType=INTEGER}, #{lastDate,jdbcType=INTEGER}, #{views,jdbcType=INTEGER}, 
+      #{posts,jdbcType=INTEGER}, #{closed,jdbcType=BIT}, #{firstpid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nba.model.BbsThread">
+    insert into bbs_thread
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="top != null">
+        `top`,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastDate != null">
+        last_date,
+      </if>
+      <if test="views != null">
+        views,
+      </if>
+      <if test="posts != null">
+        posts,
+      </if>
+      <if test="closed != null">
+        closed,
+      </if>
+      <if test="firstpid != null">
+        firstpid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="top != null">
+        #{top,jdbcType=BIT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=INTEGER},
+      </if>
+      <if test="lastDate != null">
+        #{lastDate,jdbcType=INTEGER},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null">
+        #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="closed != null">
+        #{closed,jdbcType=BIT},
+      </if>
+      <if test="firstpid != null">
+        #{firstpid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.BbsThreadExample" resultType="java.lang.Long">
+    select count(*) from bbs_thread
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bbs_thread
+    <set>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
+      <if test="record.top != null">
+        `top` = #{record.top,jdbcType=BIT},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subject != null">
+        subject = #{record.subject,jdbcType=CHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastDate != null">
+        last_date = #{record.lastDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.views != null">
+        views = #{record.views,jdbcType=INTEGER},
+      </if>
+      <if test="record.posts != null">
+        posts = #{record.posts,jdbcType=INTEGER},
+      </if>
+      <if test="record.closed != null">
+        closed = #{record.closed,jdbcType=BIT},
+      </if>
+      <if test="record.firstpid != null">
+        firstpid = #{record.firstpid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bbs_thread
+    set tid = #{record.tid,jdbcType=INTEGER},
+      `top` = #{record.top,jdbcType=BIT},
+      `uid` = #{record.uid,jdbcType=INTEGER},
+      subject = #{record.subject,jdbcType=CHAR},
+      create_date = #{record.createDate,jdbcType=INTEGER},
+      last_date = #{record.lastDate,jdbcType=INTEGER},
+      views = #{record.views,jdbcType=INTEGER},
+      posts = #{record.posts,jdbcType=INTEGER},
+      closed = #{record.closed,jdbcType=BIT},
+      firstpid = #{record.firstpid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.BbsThread">
+    update bbs_thread
+    <set>
+      <if test="top != null">
+        `top` = #{top,jdbcType=BIT},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=INTEGER},
+      </if>
+      <if test="lastDate != null">
+        last_date = #{lastDate,jdbcType=INTEGER},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null">
+        posts = #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="closed != null">
+        closed = #{closed,jdbcType=BIT},
+      </if>
+      <if test="firstpid != null">
+        firstpid = #{firstpid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.BbsThread">
+    update bbs_thread
+    set `top` = #{top,jdbcType=BIT},
+      `uid` = #{uid,jdbcType=INTEGER},
+      subject = #{subject,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=INTEGER},
+      last_date = #{lastDate,jdbcType=INTEGER},
+      views = #{views,jdbcType=INTEGER},
+      posts = #{posts,jdbcType=INTEGER},
+      closed = #{closed,jdbcType=BIT},
+      firstpid = #{firstpid,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>
