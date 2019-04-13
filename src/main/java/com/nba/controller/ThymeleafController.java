@@ -53,6 +53,6 @@ public class ThymeleafController extends BaseController  implements ThymeleafApi
 
     @Override
     public String bootstrap(Model model) {
-        return "bootstrap/index";
+        return "main/index";
     }
 }

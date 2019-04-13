@@ -1,4 +1,4 @@
-package com.nba.facade.vo.request;
+package com.nba.facade.vo.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,15 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @author xukaijun
- * @date 2018-05-24 11:09:33
- * @description:
+ * @author 2018-4-13
  */
 @SuppressWarnings("Duplicates")
 @Data
-@ApiModel("查询系统信息")
+@ApiModel("返回系统信息")
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class SystemInfoReq{
-    @ApiModelProperty(value = "区", example = "3c", required = false)
-    private String area;
+public class LoginRsp {
+
+    @ApiModelProperty(value = "登陆结果")
+    private Boolean result;
 }
