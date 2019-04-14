@@ -37,4 +37,13 @@ public interface LoginApi {
     @ApiOperation(value = "登陆操作")
     @RequestMapping(value = "/login/doLogin",method = RequestMethod.POST)
     String doLogin(Model model,@RequestBody LoginReq loginReq);
+
+
+    /**
+     * 登出
+     * @return
+     */
+    @ApiOperation(value = "退出登陆")
+    @RequestMapping(value = "/login/logout",method = RequestMethod.POST)
+    String logout();
 }

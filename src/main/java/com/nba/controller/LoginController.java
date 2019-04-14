@@ -2,6 +2,7 @@ package com.nba.controller;
 
 import com.nba.facade.api.LoginApi;
 import com.nba.facade.vo.request.LoginReq;
+import com.nba.model.User;
 import com.nba.server.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,12 +35,22 @@ public class LoginController implements LoginApi {
 
     @Override
     public String doLogin(Model model, LoginReq loginReq) {
-        Boolean result = loginService.doLogin(loginReq.getUsername(),loginReq.getPassword());
-        if(result){
+        User result = loginService.doLogin(loginReq.getUsername(),loginReq.getPassword());
+        if(result != null){
             request.setAttribute("username",loginReq.getUsername());
             model.addAttribute("name",loginReq.getUsername());
+            model.addAttribute("email",result.getEmail());
+            model.addAttribute("gold",result.getGolds());
+            model.addAttribute("posts",result.getPosts());
+            model.addAttribute("threads",result.getThreads());
             return "main/index";
         }
+        return "login/index";
+    }
+
+    @Override
+    public String logout() {
+        request.setAttribute("username","");
         return "login/index";
     }
 }
