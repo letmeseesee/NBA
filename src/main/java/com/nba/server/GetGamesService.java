@@ -1,23 +1,25 @@
 package com.nba.server;
 
-import org.apache.commons.lang3.StringUtils;
+import com.nba.facade.vo.NewsList;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+
+import static com.alibaba.fastjson.JSON.parseObject;
+
 @PropertySource("classpath:application.properties")
 @Service
 public class GetGamesService {
@@ -47,6 +49,9 @@ public class GetGamesService {
 
     @Value("${fantasy.getTimeLine}")
     private String getTimeLine;
+
+    @Autowired
+    GamesAsynTaskService gamesAsynTaskService;
     /**
      * 根据日期查询比赛
      * @param date
@@ -69,6 +74,13 @@ public class GetGamesService {
         String url = baseUrl + getNewsUrl;
         String content = curlGet(url);
         logger.info(content);
+        //将获取的新闻保存到数据库中
+        try {
+            NewsList newsList = parseObject(content,NewsList.class);
+            newsList.getNews().parallelStream().forEach((news -> {gamesAsynTaskService.saveNews(news);}));
+        }catch (Exception e){
+            logger.warn(e.getMessage());
+        }
     }
 
     /**
@@ -79,6 +91,7 @@ public class GetGamesService {
         String url = baseUrl + getNewsByDateUrl + date;
         String content = curlGet(url);
         logger.info(content);
+        //将获取的新闻
     }
 
     /**

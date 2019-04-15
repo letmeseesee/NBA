@@ -37,6 +37,18 @@ public class AsyncConfig {
         return executor;
     }
 
+    @Bean(name = "GameAnsycExecutor")
+    public Executor gamesExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(20);
+        executor.setMaxPoolSize(50);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("GameAnsycTaskThread-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
+
     @Bean(name = "asyncExecutorScheduler")
     public Executor taskExecutor(){
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
