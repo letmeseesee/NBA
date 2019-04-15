@@ -1515,52 +1515,62 @@ public class PlayersExample {
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdEqualTo(Integer value) {
+        public Criteria andSportRadarPlayerIdEqualTo(String value) {
             addCriterion("sport_radar_player_id =", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdNotEqualTo(Integer value) {
+        public Criteria andSportRadarPlayerIdNotEqualTo(String value) {
             addCriterion("sport_radar_player_id <>", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdGreaterThan(Integer value) {
+        public Criteria andSportRadarPlayerIdGreaterThan(String value) {
             addCriterion("sport_radar_player_id >", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSportRadarPlayerIdGreaterThanOrEqualTo(String value) {
             addCriterion("sport_radar_player_id >=", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdLessThan(Integer value) {
+        public Criteria andSportRadarPlayerIdLessThan(String value) {
             addCriterion("sport_radar_player_id <", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdLessThanOrEqualTo(Integer value) {
+        public Criteria andSportRadarPlayerIdLessThanOrEqualTo(String value) {
             addCriterion("sport_radar_player_id <=", value, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdIn(List<Integer> values) {
+        public Criteria andSportRadarPlayerIdLike(String value) {
+            addCriterion("sport_radar_player_id like", value, "sportRadarPlayerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSportRadarPlayerIdNotLike(String value) {
+            addCriterion("sport_radar_player_id not like", value, "sportRadarPlayerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSportRadarPlayerIdIn(List<String> values) {
             addCriterion("sport_radar_player_id in", values, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdNotIn(List<Integer> values) {
+        public Criteria andSportRadarPlayerIdNotIn(List<String> values) {
             addCriterion("sport_radar_player_id not in", values, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdBetween(Integer value1, Integer value2) {
+        public Criteria andSportRadarPlayerIdBetween(String value1, String value2) {
             addCriterion("sport_radar_player_id between", value1, value2, "sportRadarPlayerId");
             return (Criteria) this;
         }
 
-        public Criteria andSportRadarPlayerIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andSportRadarPlayerIdNotBetween(String value1, String value2) {
             addCriterion("sport_radar_player_id not between", value1, value2, "sportRadarPlayerId");
             return (Criteria) this;
         }

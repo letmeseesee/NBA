@@ -1,6 +1,9 @@
 package com.nba.server;
 
+import com.alibaba.fastjson.JSON;
 import com.nba.facade.vo.NewsList;
+import com.nba.model.News;
+import com.nba.model.Players;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,6 +20,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.alibaba.fastjson.JSON.parseObject;
 
@@ -89,9 +93,17 @@ public class GetGamesService {
      */
     public void getNewsByDate(String date) {
         String url = baseUrl + getNewsByDateUrl + date;
+        logger.info("从地址{}获取新闻信息" , url);
         String content = curlGet(url);
         logger.info(content);
         //将获取的新闻
+        //将获取的新闻保存到数据库中
+        try {
+            List<News> newsList = JSON.parseArray(content,News.class);
+            newsList.parallelStream().forEach((news -> {gamesAsynTaskService.saveNews(news);}));
+        }catch (Exception e){
+            logger.warn(e.getMessage());
+        }
     }
 
     /**
@@ -101,15 +113,27 @@ public class GetGamesService {
         String url = baseUrl + getAllTeamsUrl;
         String content = curlGet(url);
         logger.info(content);
+//        try {
+//            List<Players> playersList = JSON.parseArray(content,Players.class);
+//            playersList.parallelStream().forEach((player -> {gamesAsynTaskService.savePlayer(player);}));
+//        }catch (Exception e){
+//            logger.warn(e.getMessage());
+//        }
     }
 
     /**
-     * 获取所有的球队
+     * 获取所有的球员
      */
     public void getPlayers(){
         String url = baseUrl + getPlayersUrl;
         String content = curlGet(url);
         logger.info(content);
+        try {
+            List<Players> playersList = JSON.parseArray(content,Players.class);
+            playersList.parallelStream().forEach((player -> {gamesAsynTaskService.savePlayer(player);}));
+        }catch (Exception e){
+            logger.warn(e.getMessage());
+        }
     }
 
 

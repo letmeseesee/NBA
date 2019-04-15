@@ -50,7 +50,7 @@ public class Players implements Serializable {
 
     private Integer experience;
 
-    private Integer sportRadarPlayerId;
+    private String sportRadarPlayerId;
 
     private Integer rotoWorldPlayerId;
 
@@ -272,11 +272,11 @@ public class Players implements Serializable {
         this.experience = experience;
     }
 
-    public Integer getSportRadarPlayerId() {
+    public String getSportRadarPlayerId() {
         return sportRadarPlayerId;
     }
 
-    public void setSportRadarPlayerId(Integer sportRadarPlayerId) {
+    public void setSportRadarPlayerId(String sportRadarPlayerId) {
         this.sportRadarPlayerId = sportRadarPlayerId;
     }
 

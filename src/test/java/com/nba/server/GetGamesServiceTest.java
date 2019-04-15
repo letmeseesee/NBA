@@ -22,7 +22,7 @@ public class GetGamesServiceTest {
 
     @Test
     public void test01(){
-        getGamesService.getNewsByDate("2018-10-01");
+        getGamesService.getNewsByDate("2019-01");
     }
 
     @Test
@@ -38,6 +38,6 @@ public class GetGamesServiceTest {
 
     @Test
     public void test04(){
-        getGamesService.getGamesByDate("2018");
+        getGamesService.getGamesByDate("2019");
     }
 }

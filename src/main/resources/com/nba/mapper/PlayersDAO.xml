@@ -23,7 +23,7 @@
     <result column="salary" jdbcType="DOUBLE" property="salary" />
     <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
     <result column="experience" jdbcType="INTEGER" property="experience" />
-    <result column="sport_radar_player_id" jdbcType="INTEGER" property="sportRadarPlayerId" />
+    <result column="sport_radar_player_id" jdbcType="VARCHAR" property="sportRadarPlayerId" />
     <result column="roto_world_player_id" jdbcType="INTEGER" property="rotoWorldPlayerId" />
     <result column="fantasy_alarm_player_id" jdbcType="INTEGER" property="fantasyAlarmPlayerId" />
     <result column="stats_player_id" jdbcType="INTEGER" property="statsPlayerId" />
@@ -178,7 +178,7 @@
       #{birthDate,jdbcType=TIMESTAMP}, #{birthCity,jdbcType=VARCHAR}, #{birthState,jdbcType=VARCHAR}, 
       #{birthCountry,jdbcType=VARCHAR}, #{highSchool,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
       #{salary,jdbcType=DOUBLE}, #{photoUrl,jdbcType=VARCHAR}, #{experience,jdbcType=INTEGER}, 
-      #{sportRadarPlayerId,jdbcType=INTEGER}, #{rotoWorldPlayerId,jdbcType=INTEGER}, 
+      #{sportRadarPlayerId,jdbcType=VARCHAR}, #{rotoWorldPlayerId,jdbcType=INTEGER}, 
       #{fantasyAlarmPlayerId,jdbcType=INTEGER}, #{statsPlayerId,jdbcType=INTEGER}, #{sportsDirectPlayerId,jdbcType=INTEGER}, 
       #{xmlTeamPlayerId,jdbcType=INTEGER}, #{injuryStatus,jdbcType=VARCHAR}, #{injuryBodyPart,jdbcType=VARCHAR}, 
       #{injuryStartDate,jdbcType=TIMESTAMP}, #{injuryNotes,jdbcType=VARCHAR}, #{fanDuelPlayerId,jdbcType=INTEGER}, 
@@ -400,7 +400,7 @@
         #{experience,jdbcType=INTEGER},
       </if>
       <if test="sportRadarPlayerId != null">
-        #{sportRadarPlayerId,jdbcType=INTEGER},
+        #{sportRadarPlayerId,jdbcType=VARCHAR},
       </if>
       <if test="rotoWorldPlayerId != null">
         #{rotoWorldPlayerId,jdbcType=INTEGER},
@@ -552,7 +552,7 @@
         experience = #{record.experience,jdbcType=INTEGER},
       </if>
       <if test="record.sportRadarPlayerId != null">
-        sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=INTEGER},
+        sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=VARCHAR},
       </if>
       <if test="record.rotoWorldPlayerId != null">
         roto_world_player_id = #{record.rotoWorldPlayerId,jdbcType=INTEGER},
@@ -657,7 +657,7 @@
       salary = #{record.salary,jdbcType=DOUBLE},
       photo_url = #{record.photoUrl,jdbcType=VARCHAR},
       experience = #{record.experience,jdbcType=INTEGER},
-      sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=INTEGER},
+      sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=VARCHAR},
       roto_world_player_id = #{record.rotoWorldPlayerId,jdbcType=INTEGER},
       fantasy_alarm_player_id = #{record.fantasyAlarmPlayerId,jdbcType=INTEGER},
       stats_player_id = #{record.statsPlayerId,jdbcType=INTEGER},
@@ -751,7 +751,7 @@
         experience = #{experience,jdbcType=INTEGER},
       </if>
       <if test="sportRadarPlayerId != null">
-        sport_radar_player_id = #{sportRadarPlayerId,jdbcType=INTEGER},
+        sport_radar_player_id = #{sportRadarPlayerId,jdbcType=VARCHAR},
       </if>
       <if test="rotoWorldPlayerId != null">
         roto_world_player_id = #{rotoWorldPlayerId,jdbcType=INTEGER},
@@ -853,7 +853,7 @@
       salary = #{salary,jdbcType=DOUBLE},
       photo_url = #{photoUrl,jdbcType=VARCHAR},
       experience = #{experience,jdbcType=INTEGER},
-      sport_radar_player_id = #{sportRadarPlayerId,jdbcType=INTEGER},
+      sport_radar_player_id = #{sportRadarPlayerId,jdbcType=VARCHAR},
       roto_world_player_id = #{rotoWorldPlayerId,jdbcType=INTEGER},
       fantasy_alarm_player_id = #{fantasyAlarmPlayerId,jdbcType=INTEGER},
       stats_player_id = #{statsPlayerId,jdbcType=INTEGER},
