@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.PlayersDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.Players">
+    <id column="player_id" jdbcType="INTEGER" property="playerId" />
+    <result column="sports_data_id" jdbcType="VARCHAR" property="sportsDataId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="team" jdbcType="VARCHAR" property="team" />
+    <result column="jersey" jdbcType="INTEGER" property="jersey" />
+    <result column="position_category" jdbcType="VARCHAR" property="positionCategory" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="birth_date" jdbcType="TIMESTAMP" property="birthDate" />
+    <result column="birth_city" jdbcType="VARCHAR" property="birthCity" />
+    <result column="birth_state" jdbcType="VARCHAR" property="birthState" />
+    <result column="birth_country" jdbcType="VARCHAR" property="birthCountry" />
+    <result column="high_school" jdbcType="VARCHAR" property="highSchool" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="salary" jdbcType="DOUBLE" property="salary" />
+    <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
+    <result column="experience" jdbcType="INTEGER" property="experience" />
+    <result column="sport_radar_player_id" jdbcType="INTEGER" property="sportRadarPlayerId" />
+    <result column="roto_world_player_id" jdbcType="INTEGER" property="rotoWorldPlayerId" />
+    <result column="fantasy_alarm_player_id" jdbcType="INTEGER" property="fantasyAlarmPlayerId" />
+    <result column="stats_player_id" jdbcType="INTEGER" property="statsPlayerId" />
+    <result column="sports_direct_player_id" jdbcType="INTEGER" property="sportsDirectPlayerId" />
+    <result column="xml_team_player_id" jdbcType="INTEGER" property="xmlTeamPlayerId" />
+    <result column="injury_status" jdbcType="VARCHAR" property="injuryStatus" />
+    <result column="injury_body_part" jdbcType="VARCHAR" property="injuryBodyPart" />
+    <result column="injury_start_date" jdbcType="TIMESTAMP" property="injuryStartDate" />
+    <result column="injury_notes" jdbcType="VARCHAR" property="injuryNotes" />
+    <result column="fan_duel_player_id" jdbcType="INTEGER" property="fanDuelPlayerId" />
+    <result column="draft_kings_player_id" jdbcType="INTEGER" property="draftKingsPlayerId" />
+    <result column="yahoo_Pplayer_id" jdbcType="INTEGER" property="yahooPplayerId" />
+    <result column="fan_duel_name" jdbcType="VARCHAR" property="fanDuelName" />
+    <result column="draft_kings_name" jdbcType="VARCHAR" property="draftKingsName" />
+    <result column="yahoo_name" jdbcType="VARCHAR" property="yahooName" />
+    <result column="depth_chart_position" jdbcType="VARCHAR" property="depthChartPosition" />
+    <result column="depth_chart_order" jdbcType="VARCHAR" property="depthChartOrder" />
+    <result column="global_team_id" jdbcType="INTEGER" property="globalTeamId" />
+    <result column="fantasy_draft_name" jdbcType="VARCHAR" property="fantasyDraftName" />
+    <result column="fantasy_draft_player_id" jdbcType="INTEGER" property="fantasyDraftPlayerId" />
+    <result column="usa_today_player_id" jdbcType="INTEGER" property="usaTodayPlayerId" />
+    <result column="usa_today_headshot_url" jdbcType="VARCHAR" property="usaTodayHeadshotUrl" />
+    <result column="usa_today_headshot_no_background_url" jdbcType="VARCHAR" property="usaTodayHeadshotNoBackgroundUrl" />
+    <result column="usa_today_headshot_updated" jdbcType="TIMESTAMP" property="usaTodayHeadshotUpdated" />
+    <result column="usa_today_headshot_no_background_updated" jdbcType="TIMESTAMP" property="usaTodayHeadshotNoBackgroundUpdated" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    player_id, sports_data_id, `status`, team_id, team, jersey, position_category, `position`, 
+    first_name, last_name, height, weight, birth_date, birth_city, birth_state, birth_country, 
+    high_school, college, salary, photo_url, experience, sport_radar_player_id, roto_world_player_id, 
+    fantasy_alarm_player_id, stats_player_id, sports_direct_player_id, xml_team_player_id, 
+    injury_status, injury_body_part, injury_start_date, injury_notes, fan_duel_player_id, 
+    draft_kings_player_id, yahoo_Pplayer_id, fan_duel_name, draft_kings_name, yahoo_name, 
+    depth_chart_position, depth_chart_order, global_team_id, fantasy_draft_name, fantasy_draft_player_id, 
+    usa_today_player_id, usa_today_headshot_url, usa_today_headshot_no_background_url, 
+    usa_today_headshot_updated, usa_today_headshot_no_background_updated
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.PlayersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from players
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from players
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from players
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.PlayersExample">
+    delete from players
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nba.model.Players">
+    insert into players (player_id, sports_data_id, `status`, 
+      team_id, team, jersey, 
+      position_category, `position`, first_name, 
+      last_name, height, weight, 
+      birth_date, birth_city, birth_state, 
+      birth_country, high_school, college, 
+      salary, photo_url, experience, 
+      sport_radar_player_id, roto_world_player_id, 
+      fantasy_alarm_player_id, stats_player_id, sports_direct_player_id, 
+      xml_team_player_id, injury_status, injury_body_part, 
+      injury_start_date, injury_notes, fan_duel_player_id, 
+      draft_kings_player_id, yahoo_Pplayer_id, fan_duel_name, 
+      draft_kings_name, yahoo_name, depth_chart_position, 
+      depth_chart_order, global_team_id, fantasy_draft_name, 
+      fantasy_draft_player_id, usa_today_player_id, 
+      usa_today_headshot_url, usa_today_headshot_no_background_url, 
+      usa_today_headshot_updated, usa_today_headshot_no_background_updated
+      )
+    values (#{playerId,jdbcType=INTEGER}, #{sportsDataId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{teamId,jdbcType=INTEGER}, #{team,jdbcType=VARCHAR}, #{jersey,jdbcType=INTEGER}, 
+      #{positionCategory,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, 
+      #{lastName,jdbcType=VARCHAR}, #{height,jdbcType=DOUBLE}, #{weight,jdbcType=DOUBLE}, 
+      #{birthDate,jdbcType=TIMESTAMP}, #{birthCity,jdbcType=VARCHAR}, #{birthState,jdbcType=VARCHAR}, 
+      #{birthCountry,jdbcType=VARCHAR}, #{highSchool,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=DOUBLE}, #{photoUrl,jdbcType=VARCHAR}, #{experience,jdbcType=INTEGER}, 
+      #{sportRadarPlayerId,jdbcType=INTEGER}, #{rotoWorldPlayerId,jdbcType=INTEGER}, 
+      #{fantasyAlarmPlayerId,jdbcType=INTEGER}, #{statsPlayerId,jdbcType=INTEGER}, #{sportsDirectPlayerId,jdbcType=INTEGER}, 
+      #{xmlTeamPlayerId,jdbcType=INTEGER}, #{injuryStatus,jdbcType=VARCHAR}, #{injuryBodyPart,jdbcType=VARCHAR}, 
+      #{injuryStartDate,jdbcType=TIMESTAMP}, #{injuryNotes,jdbcType=VARCHAR}, #{fanDuelPlayerId,jdbcType=INTEGER}, 
+      #{draftKingsPlayerId,jdbcType=INTEGER}, #{yahooPplayerId,jdbcType=INTEGER}, #{fanDuelName,jdbcType=VARCHAR}, 
+      #{draftKingsName,jdbcType=VARCHAR}, #{yahooName,jdbcType=VARCHAR}, #{depthChartPosition,jdbcType=VARCHAR}, 
+      #{depthChartOrder,jdbcType=VARCHAR}, #{globalTeamId,jdbcType=INTEGER}, #{fantasyDraftName,jdbcType=VARCHAR}, 
+      #{fantasyDraftPlayerId,jdbcType=INTEGER}, #{usaTodayPlayerId,jdbcType=INTEGER}, 
+      #{usaTodayHeadshotUrl,jdbcType=VARCHAR}, #{usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR}, 
+      #{usaTodayHeadshotUpdated,jdbcType=TIMESTAMP}, #{usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nba.model.Players">
+    insert into players
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="playerId != null">
+        player_id,
+      </if>
+      <if test="sportsDataId != null">
+        sports_data_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="team != null">
+        team,
+      </if>
+      <if test="jersey != null">
+        jersey,
+      </if>
+      <if test="positionCategory != null">
+        position_category,
+      </if>
+      <if test="position != null">
+        `position`,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="birthDate != null">
+        birth_date,
+      </if>
+      <if test="birthCity != null">
+        birth_city,
+      </if>
+      <if test="birthState != null">
+        birth_state,
+      </if>
+      <if test="birthCountry != null">
+        birth_country,
+      </if>
+      <if test="highSchool != null">
+        high_school,
+      </if>
+      <if test="college != null">
+        college,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+      <if test="photoUrl != null">
+        photo_url,
+      </if>
+      <if test="experience != null">
+        experience,
+      </if>
+      <if test="sportRadarPlayerId != null">
+        sport_radar_player_id,
+      </if>
+      <if test="rotoWorldPlayerId != null">
+        roto_world_player_id,
+      </if>
+      <if test="fantasyAlarmPlayerId != null">
+        fantasy_alarm_player_id,
+      </if>
+      <if test="statsPlayerId != null">
+        stats_player_id,
+      </if>
+      <if test="sportsDirectPlayerId != null">
+        sports_direct_player_id,
+      </if>
+      <if test="xmlTeamPlayerId != null">
+        xml_team_player_id,
+      </if>
+      <if test="injuryStatus != null">
+        injury_status,
+      </if>
+      <if test="injuryBodyPart != null">
+        injury_body_part,
+      </if>
+      <if test="injuryStartDate != null">
+        injury_start_date,
+      </if>
+      <if test="injuryNotes != null">
+        injury_notes,
+      </if>
+      <if test="fanDuelPlayerId != null">
+        fan_duel_player_id,
+      </if>
+      <if test="draftKingsPlayerId != null">
+        draft_kings_player_id,
+      </if>
+      <if test="yahooPplayerId != null">
+        yahoo_Pplayer_id,
+      </if>
+      <if test="fanDuelName != null">
+        fan_duel_name,
+      </if>
+      <if test="draftKingsName != null">
+        draft_kings_name,
+      </if>
+      <if test="yahooName != null">
+        yahoo_name,
+      </if>
+      <if test="depthChartPosition != null">
+        depth_chart_position,
+      </if>
+      <if test="depthChartOrder != null">
+        depth_chart_order,
+      </if>
+      <if test="globalTeamId != null">
+        global_team_id,
+      </if>
+      <if test="fantasyDraftName != null">
+        fantasy_draft_name,
+      </if>
+      <if test="fantasyDraftPlayerId != null">
+        fantasy_draft_player_id,
+      </if>
+      <if test="usaTodayPlayerId != null">
+        usa_today_player_id,
+      </if>
+      <if test="usaTodayHeadshotUrl != null">
+        usa_today_headshot_url,
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUrl != null">
+        usa_today_headshot_no_background_url,
+      </if>
+      <if test="usaTodayHeadshotUpdated != null">
+        usa_today_headshot_updated,
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUpdated != null">
+        usa_today_headshot_no_background_updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="playerId != null">
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="sportsDataId != null">
+        #{sportsDataId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="team != null">
+        #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="jersey != null">
+        #{jersey,jdbcType=INTEGER},
+      </if>
+      <if test="positionCategory != null">
+        #{positionCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="birthCity != null">
+        #{birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="birthState != null">
+        #{birthState,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCountry != null">
+        #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="highSchool != null">
+        #{highSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="photoUrl != null">
+        #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        #{experience,jdbcType=INTEGER},
+      </if>
+      <if test="sportRadarPlayerId != null">
+        #{sportRadarPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="rotoWorldPlayerId != null">
+        #{rotoWorldPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fantasyAlarmPlayerId != null">
+        #{fantasyAlarmPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="statsPlayerId != null">
+        #{statsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="sportsDirectPlayerId != null">
+        #{sportsDirectPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="xmlTeamPlayerId != null">
+        #{xmlTeamPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="injuryStatus != null">
+        #{injuryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="injuryBodyPart != null">
+        #{injuryBodyPart,jdbcType=VARCHAR},
+      </if>
+      <if test="injuryStartDate != null">
+        #{injuryStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="injuryNotes != null">
+        #{injuryNotes,jdbcType=VARCHAR},
+      </if>
+      <if test="fanDuelPlayerId != null">
+        #{fanDuelPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="draftKingsPlayerId != null">
+        #{draftKingsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="yahooPplayerId != null">
+        #{yahooPplayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fanDuelName != null">
+        #{fanDuelName,jdbcType=VARCHAR},
+      </if>
+      <if test="draftKingsName != null">
+        #{draftKingsName,jdbcType=VARCHAR},
+      </if>
+      <if test="yahooName != null">
+        #{yahooName,jdbcType=VARCHAR},
+      </if>
+      <if test="depthChartPosition != null">
+        #{depthChartPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="depthChartOrder != null">
+        #{depthChartOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="globalTeamId != null">
+        #{globalTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="fantasyDraftName != null">
+        #{fantasyDraftName,jdbcType=VARCHAR},
+      </if>
+      <if test="fantasyDraftPlayerId != null">
+        #{fantasyDraftPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="usaTodayPlayerId != null">
+        #{usaTodayPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="usaTodayHeadshotUrl != null">
+        #{usaTodayHeadshotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUrl != null">
+        #{usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usaTodayHeadshotUpdated != null">
+        #{usaTodayHeadshotUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUpdated != null">
+        #{usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.PlayersExample" resultType="java.lang.Long">
+    select count(*) from players
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update players
+    <set>
+      <if test="record.playerId != null">
+        player_id = #{record.playerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sportsDataId != null">
+        sports_data_id = #{record.sportsDataId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamId != null">
+        team_id = #{record.teamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.team != null">
+        team = #{record.team,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jersey != null">
+        jersey = #{record.jersey,jdbcType=INTEGER},
+      </if>
+      <if test="record.positionCategory != null">
+        position_category = #{record.positionCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        `position` = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstName != null">
+        first_name = #{record.firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastName != null">
+        last_name = #{record.lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=DOUBLE},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.birthDate != null">
+        birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.birthCity != null">
+        birth_city = #{record.birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthState != null">
+        birth_state = #{record.birthState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthCountry != null">
+        birth_country = #{record.birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.highSchool != null">
+        high_school = #{record.highSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.college != null">
+        college = #{record.college,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null">
+        salary = #{record.salary,jdbcType=DOUBLE},
+      </if>
+      <if test="record.photoUrl != null">
+        photo_url = #{record.photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experience != null">
+        experience = #{record.experience,jdbcType=INTEGER},
+      </if>
+      <if test="record.sportRadarPlayerId != null">
+        sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rotoWorldPlayerId != null">
+        roto_world_player_id = #{record.rotoWorldPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fantasyAlarmPlayerId != null">
+        fantasy_alarm_player_id = #{record.fantasyAlarmPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statsPlayerId != null">
+        stats_player_id = #{record.statsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sportsDirectPlayerId != null">
+        sports_direct_player_id = #{record.sportsDirectPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.xmlTeamPlayerId != null">
+        xml_team_player_id = #{record.xmlTeamPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.injuryStatus != null">
+        injury_status = #{record.injuryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.injuryBodyPart != null">
+        injury_body_part = #{record.injuryBodyPart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.injuryStartDate != null">
+        injury_start_date = #{record.injuryStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.injuryNotes != null">
+        injury_notes = #{record.injuryNotes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fanDuelPlayerId != null">
+        fan_duel_player_id = #{record.fanDuelPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.draftKingsPlayerId != null">
+        draft_kings_player_id = #{record.draftKingsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.yahooPplayerId != null">
+        yahoo_Pplayer_id = #{record.yahooPplayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fanDuelName != null">
+        fan_duel_name = #{record.fanDuelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.draftKingsName != null">
+        draft_kings_name = #{record.draftKingsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yahooName != null">
+        yahoo_name = #{record.yahooName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depthChartPosition != null">
+        depth_chart_position = #{record.depthChartPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depthChartOrder != null">
+        depth_chart_order = #{record.depthChartOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.globalTeamId != null">
+        global_team_id = #{record.globalTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fantasyDraftName != null">
+        fantasy_draft_name = #{record.fantasyDraftName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fantasyDraftPlayerId != null">
+        fantasy_draft_player_id = #{record.fantasyDraftPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usaTodayPlayerId != null">
+        usa_today_player_id = #{record.usaTodayPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usaTodayHeadshotUrl != null">
+        usa_today_headshot_url = #{record.usaTodayHeadshotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usaTodayHeadshotNoBackgroundUrl != null">
+        usa_today_headshot_no_background_url = #{record.usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usaTodayHeadshotUpdated != null">
+        usa_today_headshot_updated = #{record.usaTodayHeadshotUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usaTodayHeadshotNoBackgroundUpdated != null">
+        usa_today_headshot_no_background_updated = #{record.usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update players
+    set player_id = #{record.playerId,jdbcType=INTEGER},
+      sports_data_id = #{record.sportsDataId,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      team_id = #{record.teamId,jdbcType=INTEGER},
+      team = #{record.team,jdbcType=VARCHAR},
+      jersey = #{record.jersey,jdbcType=INTEGER},
+      position_category = #{record.positionCategory,jdbcType=VARCHAR},
+      `position` = #{record.position,jdbcType=VARCHAR},
+      first_name = #{record.firstName,jdbcType=VARCHAR},
+      last_name = #{record.lastName,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=DOUBLE},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      birth_city = #{record.birthCity,jdbcType=VARCHAR},
+      birth_state = #{record.birthState,jdbcType=VARCHAR},
+      birth_country = #{record.birthCountry,jdbcType=VARCHAR},
+      high_school = #{record.highSchool,jdbcType=VARCHAR},
+      college = #{record.college,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=DOUBLE},
+      photo_url = #{record.photoUrl,jdbcType=VARCHAR},
+      experience = #{record.experience,jdbcType=INTEGER},
+      sport_radar_player_id = #{record.sportRadarPlayerId,jdbcType=INTEGER},
+      roto_world_player_id = #{record.rotoWorldPlayerId,jdbcType=INTEGER},
+      fantasy_alarm_player_id = #{record.fantasyAlarmPlayerId,jdbcType=INTEGER},
+      stats_player_id = #{record.statsPlayerId,jdbcType=INTEGER},
+      sports_direct_player_id = #{record.sportsDirectPlayerId,jdbcType=INTEGER},
+      xml_team_player_id = #{record.xmlTeamPlayerId,jdbcType=INTEGER},
+      injury_status = #{record.injuryStatus,jdbcType=VARCHAR},
+      injury_body_part = #{record.injuryBodyPart,jdbcType=VARCHAR},
+      injury_start_date = #{record.injuryStartDate,jdbcType=TIMESTAMP},
+      injury_notes = #{record.injuryNotes,jdbcType=VARCHAR},
+      fan_duel_player_id = #{record.fanDuelPlayerId,jdbcType=INTEGER},
+      draft_kings_player_id = #{record.draftKingsPlayerId,jdbcType=INTEGER},
+      yahoo_Pplayer_id = #{record.yahooPplayerId,jdbcType=INTEGER},
+      fan_duel_name = #{record.fanDuelName,jdbcType=VARCHAR},
+      draft_kings_name = #{record.draftKingsName,jdbcType=VARCHAR},
+      yahoo_name = #{record.yahooName,jdbcType=VARCHAR},
+      depth_chart_position = #{record.depthChartPosition,jdbcType=VARCHAR},
+      depth_chart_order = #{record.depthChartOrder,jdbcType=VARCHAR},
+      global_team_id = #{record.globalTeamId,jdbcType=INTEGER},
+      fantasy_draft_name = #{record.fantasyDraftName,jdbcType=VARCHAR},
+      fantasy_draft_player_id = #{record.fantasyDraftPlayerId,jdbcType=INTEGER},
+      usa_today_player_id = #{record.usaTodayPlayerId,jdbcType=INTEGER},
+      usa_today_headshot_url = #{record.usaTodayHeadshotUrl,jdbcType=VARCHAR},
+      usa_today_headshot_no_background_url = #{record.usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR},
+      usa_today_headshot_updated = #{record.usaTodayHeadshotUpdated,jdbcType=TIMESTAMP},
+      usa_today_headshot_no_background_updated = #{record.usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.Players">
+    update players
+    <set>
+      <if test="sportsDataId != null">
+        sports_data_id = #{sportsDataId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="team != null">
+        team = #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="jersey != null">
+        jersey = #{jersey,jdbcType=INTEGER},
+      </if>
+      <if test="positionCategory != null">
+        position_category = #{positionCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        `position` = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="birthDate != null">
+        birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="birthCity != null">
+        birth_city = #{birthCity,jdbcType=VARCHAR},
+      </if>
+      <if test="birthState != null">
+        birth_state = #{birthState,jdbcType=VARCHAR},
+      </if>
+      <if test="birthCountry != null">
+        birth_country = #{birthCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="highSchool != null">
+        high_school = #{highSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        college = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="photoUrl != null">
+        photo_url = #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null">
+        experience = #{experience,jdbcType=INTEGER},
+      </if>
+      <if test="sportRadarPlayerId != null">
+        sport_radar_player_id = #{sportRadarPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="rotoWorldPlayerId != null">
+        roto_world_player_id = #{rotoWorldPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fantasyAlarmPlayerId != null">
+        fantasy_alarm_player_id = #{fantasyAlarmPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="statsPlayerId != null">
+        stats_player_id = #{statsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="sportsDirectPlayerId != null">
+        sports_direct_player_id = #{sportsDirectPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="xmlTeamPlayerId != null">
+        xml_team_player_id = #{xmlTeamPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="injuryStatus != null">
+        injury_status = #{injuryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="injuryBodyPart != null">
+        injury_body_part = #{injuryBodyPart,jdbcType=VARCHAR},
+      </if>
+      <if test="injuryStartDate != null">
+        injury_start_date = #{injuryStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="injuryNotes != null">
+        injury_notes = #{injuryNotes,jdbcType=VARCHAR},
+      </if>
+      <if test="fanDuelPlayerId != null">
+        fan_duel_player_id = #{fanDuelPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="draftKingsPlayerId != null">
+        draft_kings_player_id = #{draftKingsPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="yahooPplayerId != null">
+        yahoo_Pplayer_id = #{yahooPplayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fanDuelName != null">
+        fan_duel_name = #{fanDuelName,jdbcType=VARCHAR},
+      </if>
+      <if test="draftKingsName != null">
+        draft_kings_name = #{draftKingsName,jdbcType=VARCHAR},
+      </if>
+      <if test="yahooName != null">
+        yahoo_name = #{yahooName,jdbcType=VARCHAR},
+      </if>
+      <if test="depthChartPosition != null">
+        depth_chart_position = #{depthChartPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="depthChartOrder != null">
+        depth_chart_order = #{depthChartOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="globalTeamId != null">
+        global_team_id = #{globalTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="fantasyDraftName != null">
+        fantasy_draft_name = #{fantasyDraftName,jdbcType=VARCHAR},
+      </if>
+      <if test="fantasyDraftPlayerId != null">
+        fantasy_draft_player_id = #{fantasyDraftPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="usaTodayPlayerId != null">
+        usa_today_player_id = #{usaTodayPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="usaTodayHeadshotUrl != null">
+        usa_today_headshot_url = #{usaTodayHeadshotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUrl != null">
+        usa_today_headshot_no_background_url = #{usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usaTodayHeadshotUpdated != null">
+        usa_today_headshot_updated = #{usaTodayHeadshotUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usaTodayHeadshotNoBackgroundUpdated != null">
+        usa_today_headshot_no_background_updated = #{usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.Players">
+    update players
+    set sports_data_id = #{sportsDataId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      team_id = #{teamId,jdbcType=INTEGER},
+      team = #{team,jdbcType=VARCHAR},
+      jersey = #{jersey,jdbcType=INTEGER},
+      position_category = #{positionCategory,jdbcType=VARCHAR},
+      `position` = #{position,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      height = #{height,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=DOUBLE},
+      birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      birth_city = #{birthCity,jdbcType=VARCHAR},
+      birth_state = #{birthState,jdbcType=VARCHAR},
+      birth_country = #{birthCountry,jdbcType=VARCHAR},
+      high_school = #{highSchool,jdbcType=VARCHAR},
+      college = #{college,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=DOUBLE},
+      photo_url = #{photoUrl,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=INTEGER},
+      sport_radar_player_id = #{sportRadarPlayerId,jdbcType=INTEGER},
+      roto_world_player_id = #{rotoWorldPlayerId,jdbcType=INTEGER},
+      fantasy_alarm_player_id = #{fantasyAlarmPlayerId,jdbcType=INTEGER},
+      stats_player_id = #{statsPlayerId,jdbcType=INTEGER},
+      sports_direct_player_id = #{sportsDirectPlayerId,jdbcType=INTEGER},
+      xml_team_player_id = #{xmlTeamPlayerId,jdbcType=INTEGER},
+      injury_status = #{injuryStatus,jdbcType=VARCHAR},
+      injury_body_part = #{injuryBodyPart,jdbcType=VARCHAR},
+      injury_start_date = #{injuryStartDate,jdbcType=TIMESTAMP},
+      injury_notes = #{injuryNotes,jdbcType=VARCHAR},
+      fan_duel_player_id = #{fanDuelPlayerId,jdbcType=INTEGER},
+      draft_kings_player_id = #{draftKingsPlayerId,jdbcType=INTEGER},
+      yahoo_Pplayer_id = #{yahooPplayerId,jdbcType=INTEGER},
+      fan_duel_name = #{fanDuelName,jdbcType=VARCHAR},
+      draft_kings_name = #{draftKingsName,jdbcType=VARCHAR},
+      yahoo_name = #{yahooName,jdbcType=VARCHAR},
+      depth_chart_position = #{depthChartPosition,jdbcType=VARCHAR},
+      depth_chart_order = #{depthChartOrder,jdbcType=VARCHAR},
+      global_team_id = #{globalTeamId,jdbcType=INTEGER},
+      fantasy_draft_name = #{fantasyDraftName,jdbcType=VARCHAR},
+      fantasy_draft_player_id = #{fantasyDraftPlayerId,jdbcType=INTEGER},
+      usa_today_player_id = #{usaTodayPlayerId,jdbcType=INTEGER},
+      usa_today_headshot_url = #{usaTodayHeadshotUrl,jdbcType=VARCHAR},
+      usa_today_headshot_no_background_url = #{usaTodayHeadshotNoBackgroundUrl,jdbcType=VARCHAR},
+      usa_today_headshot_updated = #{usaTodayHeadshotUpdated,jdbcType=TIMESTAMP},
+      usa_today_headshot_no_background_updated = #{usaTodayHeadshotNoBackgroundUpdated,jdbcType=TIMESTAMP}
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+</mapper>

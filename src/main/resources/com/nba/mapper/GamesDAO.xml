@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.GamesDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.Games">
+    <id column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="season" jdbcType="INTEGER" property="season" />
+    <result column="seasonType" jdbcType="INTEGER" property="seasontype" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="day" jdbcType="TIMESTAMP" property="day" />
+    <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
+    <result column="away_team" jdbcType="VARCHAR" property="awayTeam" />
+    <result column="home_team" jdbcType="VARCHAR" property="homeTeam" />
+    <result column="away_team_id" jdbcType="INTEGER" property="awayTeamId" />
+    <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
+    <result column="stadium_id" jdbcType="INTEGER" property="stadiumId" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="attendance" jdbcType="VARCHAR" property="attendance" />
+    <result column="away_team_score" jdbcType="INTEGER" property="awayTeamScore" />
+    <result column="home_team_score" jdbcType="INTEGER" property="homeTeamScore" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="quarter" jdbcType="VARCHAR" property="quarter" />
+    <result column="time_remaining_minutes" jdbcType="INTEGER" property="timeRemainingMinutes" />
+    <result column="time_remaining_seconds" jdbcType="INTEGER" property="timeRemainingSeconds" />
+    <result column="point_spread" jdbcType="DOUBLE" property="pointSpread" />
+    <result column="over_under" jdbcType="DOUBLE" property="overUnder" />
+    <result column="away_team_money_line" jdbcType="DOUBLE" property="awayTeamMoneyLine" />
+    <result column="home_team_money_line" jdbcType="DOUBLE" property="homeTeamMoneyLine" />
+    <result column="global_game_id" jdbcType="INTEGER" property="globalGameId" />
+    <result column="global_away_team_id" jdbcType="INTEGER" property="globalAwayTeamId" />
+    <result column="global_home_team_id" jdbcType="INTEGER" property="globalHomeTeamId" />
+    <result column="point_spread_away_team_money_line" jdbcType="INTEGER" property="pointSpreadAwayTeamMoneyLine" />
+    <result column="point_spread_home_team_noney_line" jdbcType="INTEGER" property="pointSpreadHomeTeamNoneyLine" />
+    <result column="last_play" jdbcType="VARCHAR" property="lastPlay" />
+    <result column="is_closed" jdbcType="VARCHAR" property="isClosed" />
+    <result column="game_end_date_time" jdbcType="TIMESTAMP" property="gameEndDateTime" />
+    <result column="quarters" jdbcType="VARCHAR" property="quarters" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    game_id, season, seasonType, `status`, `day`, date_time, away_team, home_team, away_team_id, 
+    home_team_id, stadium_id, channel, attendance, away_team_score, home_team_score, 
+    updated, quarter, time_remaining_minutes, time_remaining_seconds, point_spread, over_under, 
+    away_team_money_line, home_team_money_line, global_game_id, global_away_team_id, 
+    global_home_team_id, point_spread_away_team_money_line, point_spread_home_team_noney_line, 
+    last_play, is_closed, game_end_date_time, quarters
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.GamesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from games
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from games
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from games
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.GamesExample">
+    delete from games
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nba.model.Games">
+    insert into games (game_id, season, seasonType, 
+      `status`, `day`, date_time, 
+      away_team, home_team, away_team_id, 
+      home_team_id, stadium_id, channel, 
+      attendance, away_team_score, home_team_score, 
+      updated, quarter, time_remaining_minutes, 
+      time_remaining_seconds, point_spread, over_under, 
+      away_team_money_line, home_team_money_line, global_game_id, 
+      global_away_team_id, global_home_team_id, point_spread_away_team_money_line, 
+      point_spread_home_team_noney_line, last_play, 
+      is_closed, game_end_date_time, quarters
+      )
+    values (#{gameId,jdbcType=INTEGER}, #{season,jdbcType=INTEGER}, #{seasontype,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{day,jdbcType=TIMESTAMP}, #{dateTime,jdbcType=TIMESTAMP}, 
+      #{awayTeam,jdbcType=VARCHAR}, #{homeTeam,jdbcType=VARCHAR}, #{awayTeamId,jdbcType=INTEGER}, 
+      #{homeTeamId,jdbcType=INTEGER}, #{stadiumId,jdbcType=INTEGER}, #{channel,jdbcType=VARCHAR}, 
+      #{attendance,jdbcType=VARCHAR}, #{awayTeamScore,jdbcType=INTEGER}, #{homeTeamScore,jdbcType=INTEGER}, 
+      #{updated,jdbcType=TIMESTAMP}, #{quarter,jdbcType=VARCHAR}, #{timeRemainingMinutes,jdbcType=INTEGER}, 
+      #{timeRemainingSeconds,jdbcType=INTEGER}, #{pointSpread,jdbcType=DOUBLE}, #{overUnder,jdbcType=DOUBLE}, 
+      #{awayTeamMoneyLine,jdbcType=DOUBLE}, #{homeTeamMoneyLine,jdbcType=DOUBLE}, #{globalGameId,jdbcType=INTEGER}, 
+      #{globalAwayTeamId,jdbcType=INTEGER}, #{globalHomeTeamId,jdbcType=INTEGER}, #{pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER}, 
+      #{pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER}, #{lastPlay,jdbcType=VARCHAR}, 
+      #{isClosed,jdbcType=VARCHAR}, #{gameEndDateTime,jdbcType=TIMESTAMP}, #{quarters,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nba.model.Games">
+    insert into games
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        game_id,
+      </if>
+      <if test="season != null">
+        season,
+      </if>
+      <if test="seasontype != null">
+        seasonType,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="day != null">
+        `day`,
+      </if>
+      <if test="dateTime != null">
+        date_time,
+      </if>
+      <if test="awayTeam != null">
+        away_team,
+      </if>
+      <if test="homeTeam != null">
+        home_team,
+      </if>
+      <if test="awayTeamId != null">
+        away_team_id,
+      </if>
+      <if test="homeTeamId != null">
+        home_team_id,
+      </if>
+      <if test="stadiumId != null">
+        stadium_id,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="attendance != null">
+        attendance,
+      </if>
+      <if test="awayTeamScore != null">
+        away_team_score,
+      </if>
+      <if test="homeTeamScore != null">
+        home_team_score,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="quarter != null">
+        quarter,
+      </if>
+      <if test="timeRemainingMinutes != null">
+        time_remaining_minutes,
+      </if>
+      <if test="timeRemainingSeconds != null">
+        time_remaining_seconds,
+      </if>
+      <if test="pointSpread != null">
+        point_spread,
+      </if>
+      <if test="overUnder != null">
+        over_under,
+      </if>
+      <if test="awayTeamMoneyLine != null">
+        away_team_money_line,
+      </if>
+      <if test="homeTeamMoneyLine != null">
+        home_team_money_line,
+      </if>
+      <if test="globalGameId != null">
+        global_game_id,
+      </if>
+      <if test="globalAwayTeamId != null">
+        global_away_team_id,
+      </if>
+      <if test="globalHomeTeamId != null">
+        global_home_team_id,
+      </if>
+      <if test="pointSpreadAwayTeamMoneyLine != null">
+        point_spread_away_team_money_line,
+      </if>
+      <if test="pointSpreadHomeTeamNoneyLine != null">
+        point_spread_home_team_noney_line,
+      </if>
+      <if test="lastPlay != null">
+        last_play,
+      </if>
+      <if test="isClosed != null">
+        is_closed,
+      </if>
+      <if test="gameEndDateTime != null">
+        game_end_date_time,
+      </if>
+      <if test="quarters != null">
+        quarters,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="season != null">
+        #{season,jdbcType=INTEGER},
+      </if>
+      <if test="seasontype != null">
+        #{seasontype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateTime != null">
+        #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awayTeam != null">
+        #{awayTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="homeTeam != null">
+        #{homeTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="awayTeamId != null">
+        #{awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamId != null">
+        #{homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="stadiumId != null">
+        #{stadiumId,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="attendance != null">
+        #{attendance,jdbcType=VARCHAR},
+      </if>
+      <if test="awayTeamScore != null">
+        #{awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamScore != null">
+        #{homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarter != null">
+        #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="timeRemainingMinutes != null">
+        #{timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingSeconds != null">
+        #{timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpread != null">
+        #{pointSpread,jdbcType=DOUBLE},
+      </if>
+      <if test="overUnder != null">
+        #{overUnder,jdbcType=DOUBLE},
+      </if>
+      <if test="awayTeamMoneyLine != null">
+        #{awayTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="homeTeamMoneyLine != null">
+        #{homeTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="globalGameId != null">
+        #{globalGameId,jdbcType=INTEGER},
+      </if>
+      <if test="globalAwayTeamId != null">
+        #{globalAwayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="globalHomeTeamId != null">
+        #{globalHomeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpreadAwayTeamMoneyLine != null">
+        #{pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpreadHomeTeamNoneyLine != null">
+        #{pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="lastPlay != null">
+        #{lastPlay,jdbcType=VARCHAR},
+      </if>
+      <if test="isClosed != null">
+        #{isClosed,jdbcType=VARCHAR},
+      </if>
+      <if test="gameEndDateTime != null">
+        #{gameEndDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarters != null">
+        #{quarters,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.GamesExample" resultType="java.lang.Long">
+    select count(*) from games
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update games
+    <set>
+      <if test="record.gameId != null">
+        game_id = #{record.gameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.season != null">
+        season = #{record.season,jdbcType=INTEGER},
+      </if>
+      <if test="record.seasontype != null">
+        seasonType = #{record.seasontype,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.day != null">
+        `day` = #{record.day,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dateTime != null">
+        date_time = #{record.dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.awayTeam != null">
+        away_team = #{record.awayTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeTeam != null">
+        home_team = #{record.homeTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.awayTeamId != null">
+        away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeTeamId != null">
+        home_team_id = #{record.homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stadiumId != null">
+        stadium_id = #{record.stadiumId,jdbcType=INTEGER},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attendance != null">
+        attendance = #{record.attendance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.awayTeamScore != null">
+        away_team_score = #{record.awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeTeamScore != null">
+        home_team_score = #{record.homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.quarter != null">
+        quarter = #{record.quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeRemainingMinutes != null">
+        time_remaining_minutes = #{record.timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeRemainingSeconds != null">
+        time_remaining_seconds = #{record.timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointSpread != null">
+        point_spread = #{record.pointSpread,jdbcType=DOUBLE},
+      </if>
+      <if test="record.overUnder != null">
+        over_under = #{record.overUnder,jdbcType=DOUBLE},
+      </if>
+      <if test="record.awayTeamMoneyLine != null">
+        away_team_money_line = #{record.awayTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="record.homeTeamMoneyLine != null">
+        home_team_money_line = #{record.homeTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="record.globalGameId != null">
+        global_game_id = #{record.globalGameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.globalAwayTeamId != null">
+        global_away_team_id = #{record.globalAwayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.globalHomeTeamId != null">
+        global_home_team_id = #{record.globalHomeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointSpreadAwayTeamMoneyLine != null">
+        point_spread_away_team_money_line = #{record.pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointSpreadHomeTeamNoneyLine != null">
+        point_spread_home_team_noney_line = #{record.pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastPlay != null">
+        last_play = #{record.lastPlay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isClosed != null">
+        is_closed = #{record.isClosed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameEndDateTime != null">
+        game_end_date_time = #{record.gameEndDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.quarters != null">
+        quarters = #{record.quarters,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update games
+    set game_id = #{record.gameId,jdbcType=INTEGER},
+      season = #{record.season,jdbcType=INTEGER},
+      seasonType = #{record.seasontype,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      `day` = #{record.day,jdbcType=TIMESTAMP},
+      date_time = #{record.dateTime,jdbcType=TIMESTAMP},
+      away_team = #{record.awayTeam,jdbcType=VARCHAR},
+      home_team = #{record.homeTeam,jdbcType=VARCHAR},
+      away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
+      home_team_id = #{record.homeTeamId,jdbcType=INTEGER},
+      stadium_id = #{record.stadiumId,jdbcType=INTEGER},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      attendance = #{record.attendance,jdbcType=VARCHAR},
+      away_team_score = #{record.awayTeamScore,jdbcType=INTEGER},
+      home_team_score = #{record.homeTeamScore,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      quarter = #{record.quarter,jdbcType=VARCHAR},
+      time_remaining_minutes = #{record.timeRemainingMinutes,jdbcType=INTEGER},
+      time_remaining_seconds = #{record.timeRemainingSeconds,jdbcType=INTEGER},
+      point_spread = #{record.pointSpread,jdbcType=DOUBLE},
+      over_under = #{record.overUnder,jdbcType=DOUBLE},
+      away_team_money_line = #{record.awayTeamMoneyLine,jdbcType=DOUBLE},
+      home_team_money_line = #{record.homeTeamMoneyLine,jdbcType=DOUBLE},
+      global_game_id = #{record.globalGameId,jdbcType=INTEGER},
+      global_away_team_id = #{record.globalAwayTeamId,jdbcType=INTEGER},
+      global_home_team_id = #{record.globalHomeTeamId,jdbcType=INTEGER},
+      point_spread_away_team_money_line = #{record.pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER},
+      point_spread_home_team_noney_line = #{record.pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER},
+      last_play = #{record.lastPlay,jdbcType=VARCHAR},
+      is_closed = #{record.isClosed,jdbcType=VARCHAR},
+      game_end_date_time = #{record.gameEndDateTime,jdbcType=TIMESTAMP},
+      quarters = #{record.quarters,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.Games">
+    update games
+    <set>
+      <if test="season != null">
+        season = #{season,jdbcType=INTEGER},
+      </if>
+      <if test="seasontype != null">
+        seasonType = #{seasontype,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null">
+        `day` = #{day,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateTime != null">
+        date_time = #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awayTeam != null">
+        away_team = #{awayTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="homeTeam != null">
+        home_team = #{homeTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="awayTeamId != null">
+        away_team_id = #{awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamId != null">
+        home_team_id = #{homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="stadiumId != null">
+        stadium_id = #{stadiumId,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="attendance != null">
+        attendance = #{attendance,jdbcType=VARCHAR},
+      </if>
+      <if test="awayTeamScore != null">
+        away_team_score = #{awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamScore != null">
+        home_team_score = #{homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarter != null">
+        quarter = #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="timeRemainingMinutes != null">
+        time_remaining_minutes = #{timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingSeconds != null">
+        time_remaining_seconds = #{timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpread != null">
+        point_spread = #{pointSpread,jdbcType=DOUBLE},
+      </if>
+      <if test="overUnder != null">
+        over_under = #{overUnder,jdbcType=DOUBLE},
+      </if>
+      <if test="awayTeamMoneyLine != null">
+        away_team_money_line = #{awayTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="homeTeamMoneyLine != null">
+        home_team_money_line = #{homeTeamMoneyLine,jdbcType=DOUBLE},
+      </if>
+      <if test="globalGameId != null">
+        global_game_id = #{globalGameId,jdbcType=INTEGER},
+      </if>
+      <if test="globalAwayTeamId != null">
+        global_away_team_id = #{globalAwayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="globalHomeTeamId != null">
+        global_home_team_id = #{globalHomeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpreadAwayTeamMoneyLine != null">
+        point_spread_away_team_money_line = #{pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="pointSpreadHomeTeamNoneyLine != null">
+        point_spread_home_team_noney_line = #{pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER},
+      </if>
+      <if test="lastPlay != null">
+        last_play = #{lastPlay,jdbcType=VARCHAR},
+      </if>
+      <if test="isClosed != null">
+        is_closed = #{isClosed,jdbcType=VARCHAR},
+      </if>
+      <if test="gameEndDateTime != null">
+        game_end_date_time = #{gameEndDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarters != null">
+        quarters = #{quarters,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.Games">
+    update games
+    set season = #{season,jdbcType=INTEGER},
+      seasonType = #{seasontype,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=VARCHAR},
+      `day` = #{day,jdbcType=TIMESTAMP},
+      date_time = #{dateTime,jdbcType=TIMESTAMP},
+      away_team = #{awayTeam,jdbcType=VARCHAR},
+      home_team = #{homeTeam,jdbcType=VARCHAR},
+      away_team_id = #{awayTeamId,jdbcType=INTEGER},
+      home_team_id = #{homeTeamId,jdbcType=INTEGER},
+      stadium_id = #{stadiumId,jdbcType=INTEGER},
+      channel = #{channel,jdbcType=VARCHAR},
+      attendance = #{attendance,jdbcType=VARCHAR},
+      away_team_score = #{awayTeamScore,jdbcType=INTEGER},
+      home_team_score = #{homeTeamScore,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      quarter = #{quarter,jdbcType=VARCHAR},
+      time_remaining_minutes = #{timeRemainingMinutes,jdbcType=INTEGER},
+      time_remaining_seconds = #{timeRemainingSeconds,jdbcType=INTEGER},
+      point_spread = #{pointSpread,jdbcType=DOUBLE},
+      over_under = #{overUnder,jdbcType=DOUBLE},
+      away_team_money_line = #{awayTeamMoneyLine,jdbcType=DOUBLE},
+      home_team_money_line = #{homeTeamMoneyLine,jdbcType=DOUBLE},
+      global_game_id = #{globalGameId,jdbcType=INTEGER},
+      global_away_team_id = #{globalAwayTeamId,jdbcType=INTEGER},
+      global_home_team_id = #{globalHomeTeamId,jdbcType=INTEGER},
+      point_spread_away_team_money_line = #{pointSpreadAwayTeamMoneyLine,jdbcType=INTEGER},
+      point_spread_home_team_noney_line = #{pointSpreadHomeTeamNoneyLine,jdbcType=INTEGER},
+      last_play = #{lastPlay,jdbcType=VARCHAR},
+      is_closed = #{isClosed,jdbcType=VARCHAR},
+      game_end_date_time = #{gameEndDateTime,jdbcType=TIMESTAMP},
+      quarters = #{quarters,jdbcType=VARCHAR}
+    where game_id = #{gameId,jdbcType=INTEGER}
+  </update>
+</mapper>
