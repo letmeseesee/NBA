@@ -77,9 +77,9 @@ public class ScheduledTasks {
     }
 
     /**
-     * 抓取一个月内的比赛 一分钟抓取一次
+     * 抓取一个月内的比赛 五分钟抓取一次
      */
-    @Scheduled(fixedRate = 1000 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 5)
     public void scheduledGetDayGames() {
         Calendar calendar = Calendar.getInstance();
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取当月的比赛。");
