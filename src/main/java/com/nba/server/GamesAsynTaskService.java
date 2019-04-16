@@ -79,16 +79,32 @@ public class GamesAsynTaskService {
 
     /**
      * 球队
-     * @param teams
+     * @param teamsDto
      */
     @Async("GameAnsycExecutor")
     public void saveTeam(TeamsDto teamsDto){
         Teams teams = new Teams();
         if(teamsDto.getActive()){
-            teams.setActive(1);
+            teams.setActive((byte)1);
         }else {
-            teams.setActive(0);
+            teams.setActive((byte)0);
         }
+        teams.setCity(teamsDto.getCity());
+        teams.setTeamId(teamsDto.getTeamId());
+        teams.setKey(teamsDto.getKey());
+        teams.setName(teamsDto.getName());
+        teams.setLeagueId(teamsDto.getLeagueId());
+        teams.setStadiumId(teamsDto.getStadiumId());
+        teams.setConference(teamsDto.getConference());
+        teams.setDivision(teamsDto.getDivision());
+        teams.setPrimaryColor(teamsDto.getPrimaryColor());
+        teams.setSecondaryColor(teamsDto.getSecondaryColor());
+        teams.setTertiaryColor(teamsDto.getTertiaryColor());
+        teams.setQuaternaryColor(teamsDto.getQuaternaryColor());
+        teams.setWikipediaLogoUrl(teamsDto.getWikipediaLogoUrl());
+        teams.setWikipediaWordMarkUrl(teamsDto.getWikipediaWordMarkUrl());
+        teams.setGlobalTeamId(teamsDto.getGlobalTeamId());
+
         //查询当前是否存在该运动员
         TeamsExample teamsExample = new TeamsExample();
         TeamsExample.Criteria criteria = teamsExample.createCriteria();
@@ -110,7 +126,7 @@ public class GamesAsynTaskService {
 
     /**
      * 比赛
-     * @param teams
+     * @param games
      */
     @Async("GameAnsycExecutor")
     public void saveGames(Games games){
@@ -123,13 +139,13 @@ public class GamesAsynTaskService {
             Games oldGames = gamesDAO.selectByExample(gamesExample).get(0);
             if(!oldGames.equals(games)){
                 gamesDAO.updateByExample(games,gamesExample);
-                logger.info("更新比赛{}VS{}的信息",games.getHomeTeam(),games.getAwayTeam());
+                logger.info("更新比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
             } else {
-                logger.info("比赛{}VS{}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
+                logger.info("比赛{} VS {}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
             }
         } else {
             gamesDAO.insert(games);
-            logger.info("插入比赛{}VS{}的信息",games.getHomeTeam(),games.getAwayTeam());
+            logger.info("插入比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.nba.server;
 
 import com.alibaba.fastjson.JSON;
+import com.nba.facade.dto.TeamsDto;
 import com.nba.mapper.TeamsDAO;
 import com.nba.model.Games;
 import com.nba.model.News;
@@ -124,7 +125,7 @@ public class GetGamesService {
         String teamContent = curlGet(url);
         logger.info(teamContent);
         try {
-            List<TeamsDAO> teamsList = JSON.parseArray(teamContent, TeamsDAO.class);
+            List<TeamsDto> teamsList = JSON.parseArray(teamContent, TeamsDto.class);
             teamsList.parallelStream().forEach((teams -> {
                 gamesAsynTaskService.saveTeam(teams);
             }));
