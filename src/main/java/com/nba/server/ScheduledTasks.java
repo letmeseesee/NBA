@@ -48,4 +48,15 @@ public class ScheduledTasks {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球员。");
         getGamesService.getPlayers();
     }
+
+    /**
+     * 定时抓取球队,每天中午抓取
+     *  @Scheduled(cron = "0 0/57 * * * ?")
+     */
+//    @Scheduled(cron = "0 0 0/12 * * ?")
+    @Scheduled(fixedRate = 1000 * 60)
+    public void scheduledGetTeams() {
+        logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球队。");
+        getGamesService.getAllTeams();
+    }
 }

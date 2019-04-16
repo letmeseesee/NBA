@@ -1,6 +1,8 @@
 package com.nba.server;
 
 import com.alibaba.fastjson.JSON;
+import com.nba.mapper.TeamsDAO;
+import com.nba.model.Games;
 import com.nba.model.News;
 import com.nba.model.Players;
 import com.nba.model.Teams;
@@ -54,20 +56,6 @@ public class GetGamesService {
 
     @Autowired
     GamesAsynTaskService gamesAsynTaskService;
-    /**
-     * 根据日期查询比赛
-     * @param date
-     */
-    public void getGameByTime(String date) {
-
-    }
-
-    /**
-     * 查询当前正在进行中的比赛
-     */
-    public void getCurrentGame(){
-
-    }
 
     /**
      * 获取所有新闻
@@ -78,28 +66,51 @@ public class GetGamesService {
         logger.info(content);
         //将获取的新闻保存到数据库中
         try {
-            List<News> newsList = JSON.parseArray(content,News.class);
-            newsList.parallelStream().forEach((news -> {gamesAsynTaskService.saveNews(news);}));
-        }catch (Exception e){
+            List<News> newsList = JSON.parseArray(content, News.class);
+            newsList.parallelStream().forEach((news -> {
+                gamesAsynTaskService.saveNews(news);
+            }));
+        } catch (Exception e) {
             logger.warn(e.getMessage());
         }
     }
 
     /**
      * 根据日期获取新闻
+     *
      * @param date
      */
     public void getNewsByDate(String date) {
         String url = baseUrl + getNewsByDateUrl + date;
-        logger.info("从地址{}获取新闻信息" , url);
+        logger.info("从地址{}获取新闻信息", url);
         String content = curlGet(url);
         logger.info(content);
         //将获取的新闻
         //将获取的新闻保存到数据库中
         try {
-            List<News> newsList = JSON.parseArray(content,News.class);
-            newsList.parallelStream().forEach((news -> {gamesAsynTaskService.saveNews(news);}));
-        }catch (Exception e){
+            List<News> newsList = JSON.parseArray(content, News.class);
+            newsList.parallelStream().forEach((news -> {
+                gamesAsynTaskService.saveNews(news);
+            }));
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取所有的球员
+     */
+    public void getPlayers() {
+        String url = baseUrl + getPlayersUrl;
+        String content = curlGet(url);
+        logger.info(content);
+        try {
+            List<Players> playersList = JSON.parseArray(content, Players.class);
+            playersList.parallelStream().forEach((player -> {
+                gamesAsynTaskService.savePlayer(player);
+            }));
+        } catch (Exception e) {
             logger.warn(e.getMessage());
         }
     }
@@ -107,45 +118,47 @@ public class GetGamesService {
     /**
      * 获取所有的球队
      */
-    public void getAllTeams(){
+    public void getAllTeams() {
         String url = baseUrl + getAllTeamsUrl;
-        logger.info("从地址{}获取球队信息" , url);
+        logger.info("从地址{}获取球队信息", url);
         String teamContent = curlGet(url);
         logger.info(teamContent);
         try {
-            List<Teams> teamsList = JSON.parseArray(teamContent, Teams.class);
-            teamsList.parallelStream().forEach((teams -> {gamesAsynTaskService.saveTeam(teams);}));
-        }catch (Exception e){
+            List<TeamsDAO> teamsList = JSON.parseArray(teamContent, TeamsDAO.class);
+            teamsList.parallelStream().forEach((teams -> {
+                gamesAsynTaskService.saveTeam(teams);
+            }));
+        } catch (Exception e) {
             logger.warn(e.getMessage());
         }
     }
 
     /**
-     * 获取所有的球员
+     * 获取所有的比赛
      */
-    public void getPlayers(){
-        String url = baseUrl + getPlayersUrl;
-        String content = curlGet(url);
-        logger.info(content);
-        try {
-            List<Players> playersList = JSON.parseArray(content,Players.class);
-            playersList.parallelStream().forEach((player -> {gamesAsynTaskService.savePlayer(player);}));
-        }catch (Exception e){
-            logger.warn(e.getMessage());
-        }
-    }
-
-
-    /**
-     * 获取所有的比赛-----一年执行一次
-     */
-    public void getGamesByDate(String date){
+    public void getGamesByDate(String date) {
         String url = baseUrl + getTimeLine + date;
         String content = curlGet(url);
         logger.info(content);
+        try {
+            List<Games> gamesList = JSON.parseArray(content, Games.class);
+            gamesList.parallelStream().forEach((games ->
+            {
+                gamesAsynTaskService.saveGames(games);
+            }));
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+        }
     }
 
-    private String curlGet(String url){
+    /**
+     * 查询当前正在进行中的比赛
+     */
+    public void getCurrentGame() {
+        //
+    }
+
+    private String curlGet(String url) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         //请求地址设置
@@ -170,17 +183,17 @@ public class GetGamesService {
             HttpEntity httpEntity = response.getEntity();
             content = EntityUtils.toString(httpEntity, HTTP.UTF_8);
             return content;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.getStackTrace();
             return null;
-        }finally {
+        } finally {
             try {
                 response.close();
                 httpGet.abort();
                 httpClient.close();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.getStackTrace();
             }
         }

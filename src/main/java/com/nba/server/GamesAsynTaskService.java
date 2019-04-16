@@ -1,5 +1,7 @@
 package com.nba.server;
 
+import com.nba.facade.dto.TeamsDto;
+import com.nba.mapper.GamesDAO;
 import com.nba.mapper.NewsDAO;
 import com.nba.mapper.PlayersDAO;
 import com.nba.mapper.TeamsDAO;
@@ -25,6 +27,13 @@ public class GamesAsynTaskService {
     @Autowired
     TeamsDAO teamsDAO;
 
+    @Autowired
+    GamesDAO gamesDAO;
+
+    /**
+     * 新闻
+     * @param news
+     */
     @Async("GameAnsycExecutor")
     public void saveNews(News news){
         //判断该数据是否在数据库总存在
@@ -42,6 +51,10 @@ public class GamesAsynTaskService {
         }
     }
 
+    /**
+     * 球员
+     * @param players
+     */
     @Async("GameAnsycExecutor")
     public void savePlayer(Players players){
         //查询当前是否存在该运动员
@@ -64,8 +77,18 @@ public class GamesAsynTaskService {
     }
 
 
+    /**
+     * 球队
+     * @param teams
+     */
     @Async("GameAnsycExecutor")
-    public void saveTeam(Teams teams){
+    public void saveTeam(TeamsDto teamsDto){
+        Teams teams = new Teams();
+        if(teamsDto.getActive()){
+            teams.setActive(1);
+        }else {
+            teams.setActive(0);
+        }
         //查询当前是否存在该运动员
         TeamsExample teamsExample = new TeamsExample();
         TeamsExample.Criteria criteria = teamsExample.createCriteria();
@@ -82,6 +105,31 @@ public class GamesAsynTaskService {
         } else {
             teamsDAO.insert(teams);
             logger.info("插入球队{}的信息",teams.getName());
+        }
+    }
+
+    /**
+     * 比赛
+     * @param teams
+     */
+    @Async("GameAnsycExecutor")
+    public void saveGames(Games games){
+        //查询当前是否存在该运动员
+        GamesExample gamesExample = new GamesExample();
+        GamesExample.Criteria criteria = gamesExample.createCriteria();
+        criteria.andGameIdEqualTo(games.getGameId());
+        if(gamesDAO.countByExample(gamesExample) > 0){
+            //判断是否要更新
+            Games oldGames = gamesDAO.selectByExample(gamesExample).get(0);
+            if(!oldGames.equals(games)){
+                gamesDAO.updateByExample(games,gamesExample);
+                logger.info("更新比赛{}VS{}的信息",games.getHomeTeam(),games.getAwayTeam());
+            } else {
+                logger.info("比赛{}VS{}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
+            }
+        } else {
+            gamesDAO.insert(games);
+            logger.info("插入比赛{}VS{}的信息",games.getHomeTeam(),games.getAwayTeam());
         }
     }
 
