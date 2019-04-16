@@ -43,7 +43,7 @@ public class ScheduledTasks {
      * 定时抓取球员,每天中午抓取
      *  @Scheduled(cron = "0 0/57 * * * ?")
      */
-    @Scheduled(cron = "0 0 /12 * * ?")
+    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledGetPlayers() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球员。");
         getGamesService.getPlayers();

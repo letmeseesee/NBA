@@ -2,10 +2,8 @@ package com.nba.server;
 
 import com.nba.mapper.NewsDAO;
 import com.nba.mapper.PlayersDAO;
-import com.nba.model.News;
-import com.nba.model.NewsExample;
-import com.nba.model.Players;
-import com.nba.model.PlayersExample;
+import com.nba.mapper.TeamsDAO;
+import com.nba.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +21,9 @@ public class GamesAsynTaskService {
 
     @Autowired
     PlayersDAO playersDAO;
+
+    @Autowired
+    TeamsDAO teamsDAO;
 
     @Async("GameAnsycExecutor")
     public void saveNews(News news){
@@ -59,6 +60,28 @@ public class GamesAsynTaskService {
         } else {
             playersDAO.insert(players);
             logger.info("插入球员{}的信息",players.getFirstName());
+        }
+    }
+
+
+    @Async("GameAnsycExecutor")
+    public void saveTeam(Teams teams){
+        //查询当前是否存在该运动员
+        TeamsExample teamsExample = new TeamsExample();
+        TeamsExample.Criteria criteria = teamsExample.createCriteria();
+        criteria.andTeamIdEqualTo(teams.getTeamId());
+        if(teamsDAO.countByExample(teamsExample) > 0){
+            //判断是否要更新
+            Teams oldTeams = teamsDAO.selectByExample(teamsExample).get(0);
+            if(!oldTeams.equals(teams)){
+                teamsDAO.updateByExample(teams,teamsExample);
+                logger.info("更新球队{}的信息",teams.getName());
+            } else {
+                logger.info("球队{}的信息一致不更新",teams.getName());
+            }
+        } else {
+            teamsDAO.insert(teams);
+            logger.info("插入球队{}的信息",teams.getName());
         }
     }
 
