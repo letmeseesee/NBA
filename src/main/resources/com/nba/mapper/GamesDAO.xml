@@ -35,6 +35,42 @@
     <result column="game_end_date_time" jdbcType="TIMESTAMP" property="gameEndDateTime" />
     <result column="quarters" jdbcType="VARCHAR" property="quarters" />
   </resultMap>
+  <resultMap id="BaseResultMapJoinTeam" type="com.nba.facade.dto.LastGameDot">
+    <id column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="season" jdbcType="INTEGER" property="season" />
+    <result column="seasonType" jdbcType="INTEGER" property="seasontype" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="day" jdbcType="TIMESTAMP" property="day" />
+    <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
+    <result column="away_team" jdbcType="VARCHAR" property="awayTeam" />
+    <result column="home_team" jdbcType="VARCHAR" property="homeTeam" />
+    <result column="away_team_id" jdbcType="INTEGER" property="awayTeamId" />
+    <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
+    <result column="stadium_id" jdbcType="INTEGER" property="stadiumId" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="attendance" jdbcType="VARCHAR" property="attendance" />
+    <result column="away_team_score" jdbcType="INTEGER" property="awayTeamScore" />
+    <result column="home_team_score" jdbcType="INTEGER" property="homeTeamScore" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="quarter" jdbcType="VARCHAR" property="quarter" />
+    <result column="time_remaining_minutes" jdbcType="INTEGER" property="timeRemainingMinutes" />
+    <result column="time_remaining_seconds" jdbcType="INTEGER" property="timeRemainingSeconds" />
+    <result column="point_spread" jdbcType="DOUBLE" property="pointSpread" />
+    <result column="over_under" jdbcType="DOUBLE" property="overUnder" />
+    <result column="away_team_money_line" jdbcType="DOUBLE" property="awayTeamMoneyLine" />
+    <result column="home_team_money_line" jdbcType="DOUBLE" property="homeTeamMoneyLine" />
+    <result column="global_game_id" jdbcType="INTEGER" property="globalGameId" />
+    <result column="global_away_team_id" jdbcType="INTEGER" property="globalAwayTeamId" />
+    <result column="global_home_team_id" jdbcType="INTEGER" property="globalHomeTeamId" />
+    <result column="point_spread_away_team_money_line" jdbcType="INTEGER" property="pointSpreadAwayTeamMoneyLine" />
+    <result column="point_spread_home_team_noney_line" jdbcType="INTEGER" property="pointSpreadHomeTeamNoneyLine" />
+    <result column="last_play" jdbcType="VARCHAR" property="lastPlay" />
+    <result column="is_closed" jdbcType="VARCHAR" property="isClosed" />
+    <result column="game_end_date_time" jdbcType="TIMESTAMP" property="gameEndDateTime" />
+    <result column="quarters" jdbcType="VARCHAR" property="quarters" />
+    <result column="home_team_logo" jdbcType="VARCHAR" property="homeTeamLogo" />
+    <result column="away_team_logo" jdbcType="VARCHAR" property="awayTeamLogo" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -114,6 +150,14 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
     <if test="forUpdate != null and forUpdate == true">
       for update
     </if>
@@ -123,6 +167,32 @@
     <include refid="Base_Column_List" />
     from games
     where game_id = #{gameId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExampleJoinTeam" parameterType="com.nba.model.GamesExample" resultMap="BaseResultMapJoinTeam">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    games.*,home_team.wikipedia_logo_url as home_team_logo,away_team.wikipedia_logo_url as away_team_logo
+    from games INNER JOIN teams as home_team on games.home_team_id = home_team.team_id
+    INNER JOIN teams as away_team on games.away_team_id = away_team.team_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from games

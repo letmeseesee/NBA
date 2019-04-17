@@ -28,7 +28,7 @@ public class ScheduledTasks {
      * 定时抓取新闻 半小时一次
      *  @Scheduled(cron = "0 0/57 * * * ?")
      */
-    @Scheduled(fixedRate = 1000 * 60 * 30)
+//    @Scheduled(fixedRate = 1000 * 60 * 30)
     public void scheduledGetNews() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取新闻。");
         //抓取当天的新闻 （模拟数据取得三天前的新闻）
@@ -79,7 +79,7 @@ public class ScheduledTasks {
     /**
      * 抓取一个月内的比赛 五分钟抓取一次
      */
-    @Scheduled(fixedRate = 1000 * 60 * 5)
+//    @Scheduled(fixedRate = 1000 * 60 * 5)
     public void scheduledGetDayGames() {
         Calendar calendar = Calendar.getInstance();
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取当月的比赛。");

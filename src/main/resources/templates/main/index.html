@@ -147,18 +147,27 @@
 
           <!-- 关注的比赛和即将开始的比赛-->
           <section class="projects no-padding-top">
-            <div class="container-fluid">
+            <div class="container-fluid" th:each="game : ${gamesList}">
               <!-- 一个比赛-->
               <div class="project">
                 <div class="row bg-white has-shadow">
                   <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                     <div class="project-title d-flex align-items-center">
-                      <div class="image has-shadow"><img th:src="@{/img/project-1.jpg}" alt="..." class="img-fluid"></div>
-                      <div class="text">
-                        <h3 class="h4">Project Title</h3><small>Lorem Ipsum Dolor</small>
+                      <div class="image has-shadow">
+                        <img th:src="${game.homeTeamLogo}" alt="..." class="img-fluid">
                       </div>
                     </div>
-                    <div class="project-date"><span class="hidden-sm-down">Today at 4:24 AM</span></div>
+                    <div class="text text-center">
+                      <h3 class="h4" th:text="${game.homeTeam + ' VS ' + game.awayTeam + ' (' +game.status + ')'}">
+                        Project Title
+                      </h3>
+                      <small th:text="${game.dateTime}">Lorem Ipsum Dolor</small>
+                    </div>
+                    <div class="project-title d-flex align-items-center">
+                    <div class="image has-shadow">
+                      <img th:src="${game.awayTeamLogo}" alt="..." class="img-fluid">
+                    </div>
+                    </div>
                   </div>
                   <div class="right-col col-lg-6 d-flex align-items-center">
                     <div class="time"><i class="fa fa-clock-o"></i>12:00 PM </div>

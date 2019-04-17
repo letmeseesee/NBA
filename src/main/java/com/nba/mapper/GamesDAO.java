@@ -1,5 +1,6 @@
 package com.nba.mapper;
 
+import com.nba.facade.dto.LastGameDot;
 import com.nba.model.Games;
 import com.nba.model.GamesExample;
 import java.util.List;
@@ -19,6 +20,8 @@ public interface GamesDAO {
     int insertSelective(Games record);
 
     List<Games> selectByExample(GamesExample example);
+
+    List<LastGameDot> selectByExampleJoinTeam(GamesExample example);
 
     Games selectByPrimaryKey(Integer gameId);
 

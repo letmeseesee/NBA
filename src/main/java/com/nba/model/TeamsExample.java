@@ -10,6 +10,10 @@ public class TeamsExample {
 
     protected List<Criteria> oredCriteria;
 
+    private Integer limit;
+
+    private Long offset;
+
     private Boolean forUpdate;
 
     public TeamsExample() {
@@ -63,6 +67,22 @@ public class TeamsExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setOffset(Long offset) {
+        this.offset = offset;
+    }
+
+    public Long getOffset() {
+        return offset;
     }
 
     public void setForUpdate(Boolean forUpdate) {
