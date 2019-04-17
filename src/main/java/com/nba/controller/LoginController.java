@@ -61,7 +61,10 @@ public class LoginController implements LoginApi {
             model.addAttribute("gamesList",gamesList);
             //获取最新的新闻
             List<News> newsList = newsService.getLasterNews();
+            System.out.println(newsList);
             model.addAttribute("newsList",newsList);
+//            model.addAttribute("news",newsList.get(0));
+            model.addAttribute("newsCount",newsList.size());
 
 
 
