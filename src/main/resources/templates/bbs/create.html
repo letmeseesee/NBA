@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mini Nba</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/font-awesome.min.css}">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" th:href="@{/css/fontastic.css}">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <header class="header">
+        <nav class="navbar">
+            <!-- Search Box-->
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="What are you looking for..." class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <!-- 导航栏标题-->
+                    <div class="navbar-header">
+                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><span>mini </span><strong>NBA</strong></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
+                    </a>
+                        <!-- Toggle Button--><a id="toggle-btn" href="#"
+                                                class="menu-btn active"><span></span><span></span><span></span></a>
+                    </div>
+                    <!-- 导航栏 Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                        <!-- 搜索-->
+                        <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i
+                                class="icon-search"></i></a></li>
+                        <!-- 登出    -->
+                        <li class="nav-item">
+                            <a href="/login/logout" class="nav-link logout">
+                                <span class="d-none d-sm-inline">Logout</span>
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <nav class="side-navbar">
+            <!-- 边栏 Header-->
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img th:src="@{/img/avatar-1.jpg}" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4" th:text="${name}">admin</h1>
+                    <p th:text="${email}">example@demo.com</p>
+                </div>
+            </div>
+            <span class="heading">Main</span>
+            <!-- 边栏 网页列表-->
+            <ul class="list-unstyled">
+                <li class="active"><a href="/login/doLogin"> <i class="icon-home"></i>My page </a></li>
+                <li><a href="/game/main"> <i class="icon-grid"></i>GAMES</a></li>
+                <li><a href="/bbs/main"> <i class="fa fa-bar-chart"></i>BBS</a></li>
+            </ul>
+        </nav>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Create Thread</h2>
+                </div>
+            </header>
+
+            <section class="projects no-padding-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="/bbs/doCreate" method="post" id="form">
+                                        <!--标题-->
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Title" name="subject"
+                                                   value="" id="subject">
+                                        </div>
+
+                                        <!--关联-->
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Relate" name="subject"
+                                                   value="" id="subject">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-control edui-body-container" contenteditable="true" style="width: 100%; min-height: 300px; z-index: 999;"><p><br></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary" id="submit"
+                                                        data-loading-text="Posting..."> Post Thread
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <footer class="main-footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Mini Nba Demo</p>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <p>Design by Bootstrap</p>
+                            <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+<!-- JavaScript files-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"></script>
+<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendor/jquery-validation/jquery.validate.min.js}"></script>
+<script th:src="@{/js/charts-home.js}"></script>
+<!-- Main File-->
+<script th:src="@{/js/front.js}"></script>
+<script>
+    var jform = $('#form');
+    var jsubmit = $('#submit');
+    jform.on('submit', function() {
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.ajax(jform.attr('action'), postdata, function(message) {
+            if(code == 0) {
+                var s = '<ul>'+message+'</ul>';
+                var jli = $(s).find('li');
+                jli.insertBefore($('.postlist > .post').last());
+                jsubmit.button('reset');
+                $('#message').val('');
+
+                // 楼层 +1
+                var jfloor = $('#newfloor');
+                jfloor.html(xn.intval(jfloor.html()) + 1);
+
+                // 回复数 +1
+                var jposts = $('.posts');
+                jposts.html(xn.intval(jposts.html()) + 1);
+
+            } else if(code < 0) {
+                $.alert(message);
+                jsubmit.button('reset');
+            } else {
+                jform.find('[name="'+code+'"]').alert(message).focus();
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+</script>
+</body>
+</html>
