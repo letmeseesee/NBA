@@ -1,11 +1,864 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-    <title>SpringBoot模版渲染</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta name="description" content="12223" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <title>12223-默认版块-Xiuno BBS</title>
+
+
+
+    <link rel="shortcut icon" href="view/img/favicon.ico" />
+    <link rel="icon" sizes="32x32" href="view/img/favicon.ico">
+    <link rel="Bookmark" href="view/img/favicon.ico" />
+
+
+    <link rel="stylesheet" href="view/css/bootstrap.css?1.0">
+
+
+
+    <link rel="stylesheet" href="view/css/bootstrap-bbs.css?1.0">
+
+
+    <style>
+        /*
+        box-shadow: 0 0 5px red;
+        */
+        @keyframes xndigest {
+            0% { color: red; text-shadow: 0 0 3px #FF8D8D;}
+            20% { color: orange; text-shadow: 0 0 3px #FFE1AD;}
+            40% { color: green; text-shadow: 0 0 3px #B3FFAF;}
+            65% { color: blue; text-shadow: 0 0 3px #AFE4FF;}
+            80% { color: purple; text-shadow: 0 0 3px #FFC9F3;}
+            100% { color: red; text-shadow: 0 0 3px #FF8D8D;}
+        }
+
+        /*水晶闪烁效果 占内存*/
+        i.icon-diamond.flash{color: #D53D38;  /*animation: xndigest 5s linear infinite;*/ }
+
+        i.icon-digest-1 {  text-shadow: 0 0 3px #AFE4FF; }
+        i.icon-digest-2 {  text-shadow: 0 0 3px #FFF177; }
+        i.icon-digest-3 {  text-shadow: 0 0 3px #FF8D8D; }
+        .icon-digest-1:before { content: "\f219";  color: #5BC0DE;} /* "\f0a5" */
+        .icon-digest-2:before { content: "\f219";  color: #ECA541;}
+        .icon-digest-3:before { content: "\f219"; color: #D53D38;}
+        .icon-digest-3:afteer { content: "精"; color: #D53D38;}
+    </style>
+
 </head>
+
 <body>
-<p th:text="'用户ID：' + ${uid}"/>
-<p th:text="'用户名称：' + ${name}"/>
+
+
+
+<!--
+二级导航：一般用作 CMS 、企业站、商城、等多频道需求的站点
+Xiuno BBS 4.0 的 PC/Mobile 分离写法
+优点：结构清晰
+缺点：有重复代码
+-->
+
+
+<header id="header">
+
+    <!-- PC Navigation start -->
+    <div class="navbar navbar-dark bg-dark navbar-expand-lg hidden-sm hidden-md">
+        <div class="container" id="pc_nav">
+
+            <!-- PC: logo -->
+
+            <a class="navbar-brand text-truncate" href="?forum-1.htm">
+                <img src="plugin/xn_nav_2/view/img/logo_pc.png" class="logo-2">
+            </a>
+
+
+            <!-- PC: 左侧：主要导航菜单 -->
+            <ul class="navbar-nav mr-auto">
+
+
+                <li class="nav-item home" data-active="index"><a class="nav-link" href=".">首页</a></li>
+
+
+
+
+
+            </ul>
+
+            <!-- PC: 右侧：用户 -->
+            <ul class="navbar-nav">
+
+
+
+                <li class="nav-item username"><a class="nav-link" href="?my.htm"><img class="avatar-1" src="view/img/avatar.png"> admin</a></li>
+
+
+                <!-- 管理员 -->
+                <li class="nav-item"><a class="nav-link" href="admin/"><i class="icon-home"></i> 后台管理</a></li>
+
+
+
+                <li class="nav-item"><a class="nav-link" href="?user-logout.htm"><i class="icon-sign-out"></i> 退出</a></li>
+
+
+
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- pc 的版块列表 -->
+    <!-- 版块放在第二级别显示 -->
+    <!-- PC Navigation end -->
+
+
+
+
+    <!-- Mobile Navigation start -->
+    <div  class="navbar navbar-dark bg-dark navbar-expand-lg  hidden-lg">
+        <div class="container" id="mobile_nav">
+
+            <!-- 左侧：菜单按钮 -->
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile_nav_dropdown" aria-controls="navbar_collapse" aria-expanded="false" aria-label="展开菜单">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <!-- 中间的 LOGO、网站标题 -->
+
+            <a class="navbar-brand text-truncate" href="?forum-1.htm">
+                <img src="view/img/logo.png" class="logo-2">
+                <span>默认版块</span>
+            </a>
+
+
+            <!-- 右侧的用户登录、发帖图标 -->
+
+            <a class="navbar-brand" href="?thread-create-1.htm" aria-label="发表主题"><i class="icon-edit icon"></i></a>
+
+
+
+            <!-- 左侧：菜单按钮，点击弹出的下拉菜单 -->
+            <div class="collapse navbar-collapse" id="mobile_nav_dropdown">
+
+                <!-- 手机: 左侧：版块 -->
+
+
+                <h5>频道：</h5>
+                <nav class="nav navbar-nav channel">
+
+                    <a class="nav-link" href="./" data-active="index">首页</a>
+
+
+
+
+                </nav>
+
+
+
+
+
+
+                <h5>我的：</h5>
+                <nav class="nav navbar-nav my">
+
+                    <a class="nav-link" href="?my.htm">个人资料</a>
+
+
+
+                    <a class="nav-link" href="?my-thread.htm">主题</a>
+
+                </nav>
+
+
+
+                <h5></h5>
+                <nav class="nav navbar-nav user">
+
+                    <div class="col"><a class="btn btn-outline-secondary btn-block" href="?my.htm"><img class="avatar-1" src="view/img/avatar.png"> admin</a></div>
+
+                    <div class="col"><a class="btn btn-outline-secondary btn-block" href="?user-logout.htm"><i class="icon-sign-out"></i> 退出</a></div>
+
+                </nav>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Navigation end -->
+
+
+</header>
+
+
+<main id="body">
+    <div class="container">
+
+
+
+
+
+        <div class="row">
+            <div class="col-lg-9 main">
+
+
+                <div class="card card-thread">
+                    <div class="card-body">
+                        <div class="media">
+                            <a href="?user-1.htm" tabindex="-1">
+                                <img class="avatar-3 mr-3" src="view/img/avatar.png">
+                            </a>
+                            <div class="media-body">
+
+                                <h4 class="break-all">
+
+                                    12223
+
+                                </h4>
+
+                                <div class="d-flex justify-content-between small">
+                                    <div>
+
+								<span class="username">
+									<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+								</span>
+                                        <span class="date text-grey ml-2">12分钟前</span>
+                                        <span class="text-grey ml-2"><i class="icon-eye"></i> 12</span>
+
+                                    </div>
+                                    <div>
+
+                                        <a href="?post-update-1.htm" class="text-grey mr-2 post_update"><i class="icon-edit"></i> 编辑</a>
+
+                                        <a data-href="?post-delete-1.htm" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> 删除</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="message break-all" isfirst="1">
+
+
+                            <p>323312212</p>
+
+
+
+                        </div>
+
+
+                        <div class="plugin d-flex justify-content-center mt-3">
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="card card-postlist">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <b>最新回复</b> (<span class="posts">4</span>)
+                                </div>
+
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled postlist">
+
+
+                            <li class="media post" data-pid="2" data-uid="1">
+                                <a href="?user-1.htm" class="mr-3" tabindex="-1">
+                                    <img class="avatar-3" src="view/img/avatar.png">
+                                </a>
+
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+
+									<span class="username">
+										<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+									</span>
+
+
+
+                                            <span class="date text-grey ml-2">12分钟前</span>
+
+                                        </div>
+                                        <div class="text-right text-grey">
+
+                                            <a href="javascript:void(0)" data-tid="1" data-pid="2" class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i> <span class="d-none">引用</span></a>
+
+
+
+                                            <a href="?post-update-2.htm" class="text-grey post_update mr-3"><i class="icon-edit" title="编辑"></i> <span class="d-none">编辑</span></a>
+
+
+
+                                            <a data-href="?post-delete-2.htm" data-confirm-text="确定删除吗？" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="删除"></i> <span class="d-none">删除</span></a>
+
+
+
+                                            <span class="floor-parent">
+										<span class="floor mr-0">2</span>楼									</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="message mt-1 break-all">
+
+
+
+
+
+                                        ccccccc
+
+
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="media post" data-pid="3" data-uid="1">
+                                <a href="?user-1.htm" class="mr-3" tabindex="-1">
+                                    <img class="avatar-3" src="view/img/avatar.png">
+                                </a>
+
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+
+									<span class="username">
+										<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+									</span>
+
+
+
+                                            <span class="date text-grey ml-2">12分钟前</span>
+
+                                        </div>
+                                        <div class="text-right text-grey">
+
+                                            <a href="javascript:void(0)" data-tid="1" data-pid="3" class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i> <span class="d-none">引用</span></a>
+
+
+
+                                            <a href="?post-update-3.htm" class="text-grey post_update mr-3"><i class="icon-edit" title="编辑"></i> <span class="d-none">编辑</span></a>
+
+
+
+                                            <a data-href="?post-delete-3.htm" data-confirm-text="确定删除吗？" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="删除"></i> <span class="d-none">删除</span></a>
+
+
+
+                                            <span class="floor-parent">
+										<span class="floor mr-0">3</span>楼									</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="message mt-1 break-all">
+
+
+
+
+
+                                        vvvvvdvdvdvd
+
+
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="media post" data-pid="4" data-uid="1">
+                                <a href="?user-1.htm" class="mr-3" tabindex="-1">
+                                    <img class="avatar-3" src="view/img/avatar.png">
+                                </a>
+
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+
+									<span class="username">
+										<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+									</span>
+
+
+
+                                            <span class="date text-grey ml-2">12分钟前</span>
+
+                                        </div>
+                                        <div class="text-right text-grey">
+
+                                            <a href="javascript:void(0)" data-tid="1" data-pid="4" class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i> <span class="d-none">引用</span></a>
+
+
+
+                                            <a href="?post-update-4.htm" class="text-grey post_update mr-3"><i class="icon-edit" title="编辑"></i> <span class="d-none">编辑</span></a>
+
+
+
+                                            <a data-href="?post-delete-4.htm" data-confirm-text="确定删除吗？" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="删除"></i> <span class="d-none">删除</span></a>
+
+
+
+                                            <span class="floor-parent">
+										<span class="floor mr-0">4</span>楼									</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="message mt-1 break-all">
+
+
+
+
+
+                                        vvfdsdsdsdsd
+
+
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="media post" data-pid="5" data-uid="1">
+                                <a href="?user-1.htm" class="mr-3" tabindex="-1">
+                                    <img class="avatar-3" src="view/img/avatar.png">
+                                </a>
+
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+
+									<span class="username">
+										<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+									</span>
+
+
+
+                                            <span class="date text-grey ml-2">2分钟前</span>
+
+                                        </div>
+                                        <div class="text-right text-grey">
+
+                                            <a href="javascript:void(0)" data-tid="1" data-pid="5" class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i> <span class="d-none">引用</span></a>
+
+
+
+                                            <a href="?post-update-5.htm" class="text-grey post_update mr-3"><i class="icon-edit" title="编辑"></i> <span class="d-none">编辑</span></a>
+
+
+
+                                            <a data-href="?post-delete-5.htm" data-confirm-text="确定删除吗？" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="删除"></i> <span class="d-none">删除</span></a>
+
+
+
+                                            <span class="floor-parent">
+										<span class="floor mr-0">5</span>楼									</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="message mt-1 break-all">
+
+
+
+
+
+                                        <blockquote class="blockquote">
+                                            <a href="?user-1.htm" class="text-small text-muted user">
+                                                <img class="avatar-1" src="view/img/avatar.png">
+                                                admin
+                                            </a>
+                                            ccccccc
+                                        </blockquote>21213221212212
+
+
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            <li class="post newpost media">
+                                <a href="?user-1.htm" class="mr-3" tabindex="-1">
+                                    <img class="avatar-3" src="view/img/avatar.png">
+                                </a>
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+                                            <div>admin</div>
+                                        </div>
+                                        <div>
+                                            <span class="floor" id="newfloor">6</span>楼								</div>
+                                    </div>
+                                    <div>
+                                        <form action="?post-create-1-1.htm" method="post" id="quick_reply_form" class="d-block">
+                                            <input type="hidden" name="doctype" value="1" />
+                                            <input type="hidden" name="return_html" value="1" />
+                                            <input type="hidden" name="quotepid" value="0" />
+
+                                            <div class="message mt-1">
+                                                <textarea class="form-control" placeholder="内容" name="message" id="message"></textarea>
+                                            </div>
+
+                                            <div class="text-muted mt-2 small">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-sm btn-secondary" id="submit" data-loading-text="正在提交..."> 回帖 </button>
+
+                                                    </div>
+                                                    <div>
+
+                                                        <a class="icon-mail-forward text-muted" href="?post-create-1.htm" id="advanced_reply"> 高级回复</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="d-none threadlist"><input type="checkbox" name="modtid" value="1" checked /></div>
+                <div class="text-center">
+
+                    <div class="btn-group mod-button my-3" role="group" aria-label="">
+
+                        <button class="btn btn-secondary delete" data-modal-url="?mod-delete.htm" data-modal-title="删除" data-modal-arg=".threadlist" data-modal-size="md">删除</button>
+
+                        <button class="btn btn-secondary move" data-modal-url="?mod-move.htm" data-modal-title="移动" data-modal-arg=".threadlist" data-modal-size="md">移动</button>
+
+                        <button class="btn btn-secondary top" data-modal-url="?mod-top.htm" data-modal-title="置顶" data-modal-arg=".threadlist" data-modal-size="md">置顶</button>
+
+                        <button class="btn btn-secondary _close" data-modal-url="?mod-close.htm" data-modal-title="关闭" data-modal-arg=".threadlist" data-modal-size="md">关闭</button>
+                        <button class="btn btn-secondary digest" data-modal-url="?mod-digest.htm" data-modal-title="精华" data-modal-arg=".threadlist" data-modal-size="md">精华</button>
+                    </div>
+                </div>
+
+
+
+
+                <a role="button" class="btn btn-secondary btn-block xn-back col-lg-6 mx-auto mb-3" href="javascript:history.back();">返回</a>
+
+            </div>
+            <div class="col-lg-3 d-none d-lg-block aside">
+
+                <a role="button" class="btn btn-primary btn-block mb-3" href="?thread-create-1.htm">发新帖</a>
+
+                <div class="card card-user-info">
+                    <div class="m-3 text-center">
+                        <a href="?user-1.htm" tabindex="-1">
+                            <img class="avatar-5" src="view/img/avatar.png">
+                        </a>
+                        <h5><a href="?user-1.htm">admin</a></h5>
+
+                    </div>
+                    <div class="card-footer p-2">
+                        <table class="w-100 small">
+                            <tr align="center">
+                                <td>
+                                    <span class="text-muted">主题数</span><br>
+                                    <b>1</b>
+                                </td>
+
+                                <td>
+                                    <span class="text-muted">帖子数</span><br>
+                                    <b>4</b>
+                                </td>
+                                <td>
+                                    <span class="text-muted">精华数</span><br>
+                                    <b></b>
+                                </td>
+                                <td>
+                                    <span class="text-muted">注册排名</span><br>
+                                    <b>1</b>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</main>
+
+
+
+<footer class="text-muted small bg-dark py-4 mt-3" id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                Powered by <a href="http://bbs.xiuno.com/" target="_blank" class="text-muted"><b>Xiuno BBS <span>4.0.4</span></b></a>
+            </div>
+            <div class="col text-right">
+
+                Processed: <b>0.046</b>, SQL: <b>15</b>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!--[if ltg IE 9]>
+<script>window.location = '?browser.htm';</script>
+<![endif]-->
+
+
+
+<script src="lang/zh-cn/bbs.js?1.0"></script>
+<script src="view/js/jquery-3.1.0.js?1.0"></script>
+<script src="view/js/popper.js?1.0"></script>
+<script src="view/js/bootstrap.js?1.0"></script>
+<script src="view/js/xiuno.js?1.0"></script>
+<script src="view/js/bootstrap-plugin.js?1.0"></script>
+<script src="view/js/async.js?1.0"></script>
+<script src="view/js/form.js?1.0"></script>
+<script>
+    var debug = DEBUG = 0;
+    var url_rewrite_on = 0;
+    var forumarr = {
+        "1": "默认版块"
+    };
+    var fid = 1;
+    var uid = 1;
+    var gid = 1;
+    xn.options.water_image_url = 'view/img/water-small.png';	// 水印图片 / watermark image
+</script>
+<script src="view/js/bbs.js?1.0"></script>
+<script>
+    // 版主管理：精华
+    /*
+    $('.mod-button button.digest').on('click', function() {
+        var modtid = $('input[name="modtid"]').checked();
+        if(modtid.length == 0) return $.alert(lang.please_choose_thread);
+        var radios = xn.form_radio('digest', {"0": "取消精华", "1": "一级精华","2": "二级精华", "3": "三级精华"});
+        $.confirm("设置主题为精华", function() {
+            var tids = xn.implode('_', modtid);
+            var digest = $('input[name="digest"]').checked();
+            var postdata = {digest: digest};
+            $.xpost(xn.url('mod-digest-'+tids), postdata, function(code, message) {
+                if(code != 0) return $.alert(message);
+                $.alert(message).delay(1000).location('');
+            });
+        }, {'body': '<p>'+"精华等级"+'：'+radios+'</p>'});
+    })*/
+</script><script>
+    function xn_read_unread(tids, tid) {
+
+        // 当前时间
+        var time = xn.time();
+
+        // 多长时间内的主题为最新主题
+        var time_range = 86400 * 3;
+
+        // 三天内的 tids
+        var recent_tids = $.pdata('recent_tids') || {};
+
+        // 已读的 tids
+        var view_tids = $.pdata('view_tids') || {};
+        // 提取列表页的 tid
+        function fetch_recent_tids(tids) {
+            var changed = false;
+            $.each(tids, function(tid, last_date) {
+                if(time - last_date < time_range) {
+                    recent_tids[tid] = last_date;
+                    changed = true;
+                }
+            });
+            if(changed) $.pdata('recent_tids', recent_tids);
+        }
+
+        // 清理最近的 tid
+        function gc_recent_tids() {
+            var changed = false;
+            $.each(recent_tids, function(tid, last_date) {
+                if(time - last_date > time_range) {
+                    delete recent_tids[tid];
+                    changed = true;
+                }
+            });
+            if(changed) $.pdata('recent_tids', recent_tids);
+        }
+
+        function gc_view_tids() {
+            var changed = false;
+            $.each(view_tids, function(tid, last_date) {
+                if(!recent_tids[tid]) {
+                    delete view_tids[tid];
+                    changed = true;
+                }
+            });
+            if(changed) $.pdata('view_tids', view_tids);
+        }
+
+        function save_view_tid(tid) {
+            if(!recent_tids[tid]) return;
+            view_tids[tid] = time;
+            $.pdata('view_tids', view_tids);
+        }
+
+        if(tids) {
+            fetch_recent_tids(tids);
+            gc_recent_tids();
+            //gc_view_tids();
+        }
+        if(tid) save_view_tid(tid);
+
+        // 三天内的主题标记为已读
+
+        // 遍历主题列表，标记最近的，并且未读的为加粗
+
+        $('.thread').each(function() {
+            var jthis = $(this);
+            var tid = jthis.attr('tid') || jthis.data('tid');
+            if(recent_tids[tid] && recent_tids[tid] > xn.intval(view_tids[tid])) {
+                jthis.find('.subject').addClass('font-weight-bold');
+            }
+        });
+    }
+
+</script>
+
 </body>
+
 </html>
+
+
+
+<script>
+    var jform = $('#quick_reply_form');
+    var jsubmit = $('#submit');
+    jform.on('submit', function() {
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.xpost(jform.attr('action'), postdata, function(code, message) {
+            if(code == 0) {
+                var s = '<ul>'+message+'</ul>';
+                var jli = $(s).find('li');
+                jli.insertBefore($('.postlist > .post').last());
+                jsubmit.button('reset');
+                $('#message').val('');
+
+                // 楼层 +1
+                var jfloor = $('#newfloor');
+                jfloor.html(xn.intval(jfloor.html()) + 1);
+
+                // 回复数 +1
+                var jposts = $('.posts');
+                jposts.html(xn.intval(jposts.html()) + 1);
+
+            } else if(code < 0) {
+                $.alert(message);
+                jsubmit.button('reset');
+            } else {
+                jform.find('[name="'+code+'"]').alert(message).focus();
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+
+
+    // 缩放图片，适应屏幕大小。
+    function resize_image() {
+        var jmessagelist = $('div.message');
+        var first_width = jmessagelist.width(); // 815 : 746; //  734 746
+        jmessagelist.each(function() {
+            var jdiv = $(this);
+            var maxwidth = jdiv.attr('isfirst') ? first_width : jdiv.width(); //  734 746
+            var jmessage_width = Math.min(jdiv.width(), maxwidth);
+            jdiv.find('img, embed, iframe, video').each(function() {
+                var jimg = $(this);
+                var img_width = this.org_width;
+                var img_height = this.org_height;
+                if(!img_width) {
+                    var img_width = jimg.attr('width');
+                    var img_height = jimg.attr('height');
+                    this.org_width = img_width;
+                    this.org_height = img_height;
+                }
+                //var percent = xn.min(100, xn.ceil((img_width / jmessage_width) * 100));
+                if(img_width > jmessage_width) {
+                    if(this.tagName == 'IMG') {
+                        jimg.width(jmessage_width);
+                        jimg.css('height', 'auto');
+                        jimg.css('cursor', 'pointer');
+                        jimg.on('click', function() {
+                            //window.open(jimg.attr('src'));
+                        });
+                    } else {
+                        jimg.width(jmessage_width);
+                        var height = (img_height / img_width) * jimg.width();
+                        jimg.height(height);
+                    }
+                }
+            });
+        });
+    }
+
+    // 对于超宽的表格，加上响应式
+    function resize_table() {
+        $('div.message').each(function() {
+            var jdiv = $(this);
+            jdiv.find('table').addClass('table').wrap('<div class="table-responsive"></div>');
+        });
+    }
+
+    $(function() {
+        resize_image();
+        resize_table();
+        $(window).on('resize', resize_image);
+    });
+
+    // 输入框自动伸缩
+
+    var jmessage = $('#message');
+    jmessage.on('focus', function() {if(jmessage.t) { clearTimeout(jmessage.t); jmessage.t = null; } jmessage.css('height', '8rem'); });
+    jmessage.on('blur', function() {jmessage.t = setTimeout(function() { jmessage.css('height', '2.5rem');}, 1000); });
+
+    $('li[data-active="fid-1"]').addClass('active');
+
+</script>
+
+<script>
+    $('li[data-active="index"]').addClass('active');
+</script><script>
+    xn_read_unread({"1": "1555771067"}, 1);
+</script>

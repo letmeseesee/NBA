@@ -100,36 +100,56 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 mx-auto">
-                            <div class="card">
+                            <div class="card card-thread">
                                 <div class="card-body">
-                                    <form action="/bbs/doCreate" method="post" id="form">
-                                        <!--标题-->
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Title" name="subject"
-                                                   value="" id="related">
-                                        </div>
+                                    <div class="media">
+                                        <a href="#" tabindex="-1">
+                                            <img class="avatar-3 mr-3 small" style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" >
+                                        </a>
+                                        <div class="media-body">
 
-                                        <!--关联-->
-                                        <div class="form-group hide">
-                                            <input type="text" class="form-control" placeholder="Relate" name="subject"
-                                                   value="" id="subject">
-                                        </div>
+                                            <h4 class="break-all">
 
-                                        <div class="form-group">
-                                            <div class="form-control edui-body-container" contenteditable="true"
-                                                 style="width: 100%; min-height: 300px; z-index: 999;" id="content"><p><br>
-                                            </p>
+                                                12223
+
+                                            </h4>
+
+                                            <div class="d-flex justify-content-between small">
+                                                <div>
+
+								<span class="username">
+									<a href="?user-1.htm" class="text-muted font-weight-bold">admin</a>
+								</span>
+                                                    <span class="date text-grey ml-2">12分钟前</span>
+                                                    <span class="text-grey ml-2"><i class="icon-eye"></i> 12</span>
+
+                                                </div>
+                                                <div>
+
+                                                    <a href="?post-update-1.htm" class="text-grey mr-2 post_update"><i class="icon-edit"></i> 编辑</a>
+
+                                                    <a data-href="?post-delete-1.htm" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> 删除</a>
+
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <hr />
+                                    <div class="message break-all" isfirst="1">
 
-                                        <div class="d-flex justify-content-between">
-                                            <div class="text-right">
-                                                <button type="submit" class="btn btn-primary" id="submit"
-                                                        data-loading-text="Posting..."> Post Thread
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
+
+                                        <p>323312212</p>
+
+
+
+                                    </div>
+
+
+                                    <div class="plugin d-flex justify-content-center mt-3">
+
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -167,21 +187,21 @@
 <script>
     var jform = $('#form');
     var jsubmit = $('#submit');
-    jform.on('submit', function() {
+    jform.on('submit', function () {
         jsubmit.button('loading');
         $.ajax({
-            'type':'post',
-            'dataType':'json',
-            'url':jform.attr('action'),
-            'data':{
-                subject:$("#subject").val(),
-                related:$("#related").val(),
-                content:$("#content").html()
+            'type': 'post',
+            'dataType': 'json',
+            'url': jform.attr('action'),
+            'data': {
+                subject: $("#subject").val(),
+                related: $("#related").val(),
+                content: $("#content").html()
             },
-            'success':function(res){
-                if(res.code > 0){
+            'success': function (res) {
+                if (res.code > 0) {
                     alert("创建失败");
-                }else {
+                } else {
                     //转到帖子详细页面
                 }
             }

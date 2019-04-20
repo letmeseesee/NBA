@@ -9,4 +9,9 @@ public class BbsApiImpl implements BbsApi {
     public String create() {
         return "/bbs/create";
     }
+
+    @Override
+    public String detail() {
+        return "/bbs/detail";
+    }
 }

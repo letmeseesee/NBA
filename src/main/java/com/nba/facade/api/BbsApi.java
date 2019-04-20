@@ -10,4 +10,8 @@ public interface BbsApi {
     @ApiOperation(value = "创建帖子页面")
     @RequestMapping(value = "/bbs/create",method = RequestMethod.GET)
     String create();
+
+    @ApiOperation(value = "帖子详情")
+    @RequestMapping(value = "/bbs/detail",method = RequestMethod.GET)
+    public String detail();
 }
