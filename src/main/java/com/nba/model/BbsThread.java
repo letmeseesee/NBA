@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class BbsThread implements Serializable {
     private Integer tid;
 
-    private Boolean top;
+    private Integer type;
 
     private Integer uid;
 
@@ -37,12 +37,12 @@ public class BbsThread implements Serializable {
         this.tid = tid;
     }
 
-    public Boolean getTop() {
-        return top;
+    public Integer getType() {
+        return type;
     }
 
-    public void setTop(Boolean top) {
-        this.top = top;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getUid() {
@@ -122,7 +122,7 @@ public class BbsThread implements Serializable {
         }
         BbsThread other = (BbsThread) that;
         return (this.getTid() == null ? other.getTid() == null : this.getTid().equals(other.getTid()))
-            && (this.getTop() == null ? other.getTop() == null : this.getTop().equals(other.getTop()))
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
             && (this.getSubject() == null ? other.getSubject() == null : this.getSubject().equals(other.getSubject()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
@@ -138,7 +138,7 @@ public class BbsThread implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getTid() == null) ? 0 : getTid().hashCode());
-        result = prime * result + ((getTop() == null) ? 0 : getTop().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
         result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
@@ -157,7 +157,7 @@ public class BbsThread implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", tid=").append(tid);
-        sb.append(", top=").append(top);
+        sb.append(", type=").append(type);
         sb.append(", uid=").append(uid);
         sb.append(", subject=").append(subject);
         sb.append(", createDate=").append(createDate);

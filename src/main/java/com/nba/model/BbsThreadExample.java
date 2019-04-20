@@ -10,10 +10,6 @@ public class BbsThreadExample {
 
     protected List<Criteria> oredCriteria;
 
-    private Integer limit;
-
-    private Long offset;
-
     private Boolean forUpdate;
 
     public BbsThreadExample() {
@@ -67,22 +63,6 @@ public class BbsThreadExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setOffset(Long offset) {
-        this.offset = offset;
-    }
-
-    public Long getOffset() {
-        return offset;
     }
 
     public void setForUpdate(Boolean forUpdate) {
@@ -194,63 +174,63 @@ public class BbsThreadExample {
             return (Criteria) this;
         }
 
-        public Criteria andTopIsNull() {
-            addCriterion("`top` is null");
+        public Criteria andTypeIsNull() {
+            addCriterion("`type` is null");
             return (Criteria) this;
         }
 
-        public Criteria andTopIsNotNull() {
-            addCriterion("`top` is not null");
+        public Criteria andTypeIsNotNull() {
+            addCriterion("`type` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTopEqualTo(Boolean value) {
-            addCriterion("`top` =", value, "top");
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("`type` =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopNotEqualTo(Boolean value) {
-            addCriterion("`top` <>", value, "top");
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("`type` <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopGreaterThan(Boolean value) {
-            addCriterion("`top` >", value, "top");
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("`type` >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("`top` >=", value, "top");
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`type` >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopLessThan(Boolean value) {
-            addCriterion("`top` <", value, "top");
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("`type` <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopLessThanOrEqualTo(Boolean value) {
-            addCriterion("`top` <=", value, "top");
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("`type` <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopIn(List<Boolean> values) {
-            addCriterion("`top` in", values, "top");
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("`type` in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopNotIn(List<Boolean> values) {
-            addCriterion("`top` not in", values, "top");
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("`type` not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopBetween(Boolean value1, Boolean value2) {
-            addCriterion("`top` between", value1, value2, "top");
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("`type` between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTopNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("`top` not between", value1, value2, "top");
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 

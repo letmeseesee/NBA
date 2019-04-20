@@ -3,7 +3,7 @@
 <mapper namespace="com.nba.mapper.BbsThreadDAO">
   <resultMap id="BaseResultMap" type="com.nba.model.BbsThread">
     <id column="tid" jdbcType="INTEGER" property="tid" />
-    <result column="top" jdbcType="BIT" property="top" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="subject" jdbcType="CHAR" property="subject" />
     <result column="create_date" jdbcType="INTEGER" property="createDate" />
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    tid, `top`, `uid`, subject, create_date, last_date, views, posts, closed, firstpid
+    tid, `type`, `uid`, subject, create_date, last_date, views, posts, closed, firstpid
   </sql>
   <select id="selectByExample" parameterType="com.nba.model.BbsThreadExample" resultMap="BaseResultMap">
     select
@@ -86,14 +86,6 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
-    </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
     </if>
     <if test="forUpdate != null and forUpdate == true">
       for update
@@ -116,13 +108,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nba.model.BbsThread">
-    insert into bbs_thread (tid, `top`, `uid`, subject, 
-      create_date, last_date, views, 
-      posts, closed, firstpid
+    insert into bbs_thread (tid, `type`, `uid`, 
+      subject, create_date, last_date, 
+      views, posts, closed, firstpid
       )
-    values (#{tid,jdbcType=INTEGER}, #{top,jdbcType=BIT}, #{uid,jdbcType=INTEGER}, #{subject,jdbcType=CHAR}, 
-      #{createDate,jdbcType=INTEGER}, #{lastDate,jdbcType=INTEGER}, #{views,jdbcType=INTEGER}, 
-      #{posts,jdbcType=INTEGER}, #{closed,jdbcType=BIT}, #{firstpid,jdbcType=INTEGER}
+    values (#{tid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{subject,jdbcType=CHAR}, #{createDate,jdbcType=INTEGER}, #{lastDate,jdbcType=INTEGER}, 
+      #{views,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, #{closed,jdbcType=BIT}, #{firstpid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.nba.model.BbsThread">
@@ -131,8 +123,8 @@
       <if test="tid != null">
         tid,
       </if>
-      <if test="top != null">
-        `top`,
+      <if test="type != null">
+        `type`,
       </if>
       <if test="uid != null">
         `uid`,
@@ -163,8 +155,8 @@
       <if test="tid != null">
         #{tid,jdbcType=INTEGER},
       </if>
-      <if test="top != null">
-        #{top,jdbcType=BIT},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="uid != null">
         #{uid,jdbcType=INTEGER},
@@ -204,8 +196,8 @@
       <if test="record.tid != null">
         tid = #{record.tid,jdbcType=INTEGER},
       </if>
-      <if test="record.top != null">
-        `top` = #{record.top,jdbcType=BIT},
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.uid != null">
         `uid` = #{record.uid,jdbcType=INTEGER},
@@ -239,7 +231,7 @@
   <update id="updateByExample" parameterType="map">
     update bbs_thread
     set tid = #{record.tid,jdbcType=INTEGER},
-      `top` = #{record.top,jdbcType=BIT},
+      `type` = #{record.type,jdbcType=INTEGER},
       `uid` = #{record.uid,jdbcType=INTEGER},
       subject = #{record.subject,jdbcType=CHAR},
       create_date = #{record.createDate,jdbcType=INTEGER},
@@ -255,8 +247,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.BbsThread">
     update bbs_thread
     <set>
-      <if test="top != null">
-        `top` = #{top,jdbcType=BIT},
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="uid != null">
         `uid` = #{uid,jdbcType=INTEGER},
@@ -287,7 +279,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.nba.model.BbsThread">
     update bbs_thread
-    set `top` = #{top,jdbcType=BIT},
+    set `type` = #{type,jdbcType=INTEGER},
       `uid` = #{uid,jdbcType=INTEGER},
       subject = #{subject,jdbcType=CHAR},
       create_date = #{createDate,jdbcType=INTEGER},
