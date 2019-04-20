@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ajaxRsp {
     @ApiModelProperty(value = "操作结果")
-    private Boolean result;
+    private Integer resultId;
 
 
     @ApiModelProperty(value = "操作返回码")
