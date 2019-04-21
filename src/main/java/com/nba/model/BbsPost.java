@@ -19,6 +19,12 @@ public class BbsPost implements Serializable {
 
     private String message;
 
+    private Integer quotepid;
+
+    private String messageFmt;
+
+    private String uname;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getPid() {
@@ -69,6 +75,30 @@ public class BbsPost implements Serializable {
         this.message = message;
     }
 
+    public Integer getQuotepid() {
+        return quotepid;
+    }
+
+    public void setQuotepid(Integer quotepid) {
+        this.quotepid = quotepid;
+    }
+
+    public String getMessageFmt() {
+        return messageFmt;
+    }
+
+    public void setMessageFmt(String messageFmt) {
+        this.messageFmt = messageFmt;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -86,7 +116,10 @@ public class BbsPost implements Serializable {
             && (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
             && (this.getIsfirst() == null ? other.getIsfirst() == null : this.getIsfirst().equals(other.getIsfirst()))
             && (this.getCreateDate() == null ? other.getCreateDate() == null : this.getCreateDate().equals(other.getCreateDate()))
-            && (this.getMessage() == null ? other.getMessage() == null : this.getMessage().equals(other.getMessage()));
+            && (this.getMessage() == null ? other.getMessage() == null : this.getMessage().equals(other.getMessage()))
+            && (this.getQuotepid() == null ? other.getQuotepid() == null : this.getQuotepid().equals(other.getQuotepid()))
+            && (this.getMessageFmt() == null ? other.getMessageFmt() == null : this.getMessageFmt().equals(other.getMessageFmt()))
+            && (this.getUname() == null ? other.getUname() == null : this.getUname().equals(other.getUname()));
     }
 
     @Override
@@ -99,6 +132,9 @@ public class BbsPost implements Serializable {
         result = prime * result + ((getIsfirst() == null) ? 0 : getIsfirst().hashCode());
         result = prime * result + ((getCreateDate() == null) ? 0 : getCreateDate().hashCode());
         result = prime * result + ((getMessage() == null) ? 0 : getMessage().hashCode());
+        result = prime * result + ((getQuotepid() == null) ? 0 : getQuotepid().hashCode());
+        result = prime * result + ((getMessageFmt() == null) ? 0 : getMessageFmt().hashCode());
+        result = prime * result + ((getUname() == null) ? 0 : getUname().hashCode());
         return result;
     }
 
@@ -114,6 +150,9 @@ public class BbsPost implements Serializable {
         sb.append(", isfirst=").append(isfirst);
         sb.append(", createDate=").append(createDate);
         sb.append(", message=").append(message);
+        sb.append(", quotepid=").append(quotepid);
+        sb.append(", messageFmt=").append(messageFmt);
+        sb.append(", uname=").append(uname);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

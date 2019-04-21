@@ -663,66 +663,6 @@ public class BbsThreadExample {
             addCriterion("closed not between", value1, value2, "closed");
             return (Criteria) this;
         }
-
-        public Criteria andFirstpidIsNull() {
-            addCriterion("firstpid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidIsNotNull() {
-            addCriterion("firstpid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidEqualTo(Integer value) {
-            addCriterion("firstpid =", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidNotEqualTo(Integer value) {
-            addCriterion("firstpid <>", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidGreaterThan(Integer value) {
-            addCriterion("firstpid >", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("firstpid >=", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidLessThan(Integer value) {
-            addCriterion("firstpid <", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidLessThanOrEqualTo(Integer value) {
-            addCriterion("firstpid <=", value, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidIn(List<Integer> values) {
-            addCriterion("firstpid in", values, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidNotIn(List<Integer> values) {
-            addCriterion("firstpid not in", values, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidBetween(Integer value1, Integer value2) {
-            addCriterion("firstpid between", value1, value2, "firstpid");
-            return (Criteria) this;
-        }
-
-        public Criteria andFirstpidNotBetween(Integer value1, Integer value2) {
-            addCriterion("firstpid not between", value1, value2, "firstpid");
-            return (Criteria) this;
-        }
     }
 
     /**

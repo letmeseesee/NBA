@@ -4,10 +4,13 @@ import com.nba.facade.vo.request.CreateThreadReq;
 import com.nba.mapper.BbsPostDAO;
 import com.nba.mapper.BbsThreadDAO;
 import com.nba.model.BbsPost;
+import com.nba.model.BbsPostExample;
 import com.nba.model.BbsThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ThreadService {
@@ -23,8 +26,8 @@ public class ThreadService {
      * @param userId 当前用户
      * @return boolean
      */
-    @Transactional(rollbackFor = Exception.class)
-    public Integer create(CreateThreadReq createThreadReq,Integer userId){
+    @Transactional
+    public Integer create(CreateThreadReq createThreadReq,Integer userId,String uName){
         //插入主表信息
         BbsThread bbsThread = new BbsThread();
         bbsThread.setUid(userId);
@@ -32,17 +35,43 @@ public class ThreadService {
         bbsThread.setLastDate(new Long(System.currentTimeMillis()).intValue());
         bbsThread.setSubject(createThreadReq.getSubject());
         bbsThread.setType(0);
+        bbsThread.setViews(1);
+        bbsThread.setPosts(1);
+        bbsThread.setClosed(false);
         Integer tid = bbsThreadDAO.insert(bbsThread);
 
         //插入明细
         BbsPost bbsPost = new BbsPost();
-        bbsPost.setPid(tid);
+        bbsPost.setTid(tid);
         bbsPost.setUid(userId);
         bbsPost.setIsfirst(1);
         bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
         bbsPost.setMessage(createThreadReq.getContent());
+        bbsPost.setMessageFmt("");
+        bbsPost.setQuotepid(0);
+        bbsPost.setUname(uName);
         Integer pid = bbsPostDAO.insert(bbsPost);
 
         return tid;
+    }
+
+    public BbsThread getBbsThreadById(Integer id){
+        return bbsThreadDAO.selectByPrimaryKey(id);
+    }
+
+    public BbsPost getFirstBbsPostBySubject(Integer id){
+        BbsPostExample bbsPostExample = new BbsPostExample();
+        BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
+        criteria.andTidEqualTo(id);
+        criteria.andIsfirstEqualTo(1);
+        return bbsPostDAO.selectByExample(bbsPostExample).get(0);
+    }
+
+    public List<BbsPost> getBbsPostBySubject(Integer id){
+        BbsPostExample bbsPostExample = new BbsPostExample();
+        BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
+        criteria.andTidEqualTo(id);
+        criteria.andIsfirstEqualTo(0);
+        return bbsPostDAO.selectByExample(bbsPostExample);
     }
 }

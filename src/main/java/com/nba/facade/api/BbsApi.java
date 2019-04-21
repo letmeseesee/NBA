@@ -2,8 +2,10 @@ package com.nba.facade.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Api(value = "Spring-Boot-swagger", tags = "Wms-Package-API")
 public interface BbsApi {
@@ -13,5 +15,5 @@ public interface BbsApi {
 
     @ApiOperation(value = "帖子详情")
     @RequestMapping(value = "/bbs/detail",method = RequestMethod.GET)
-    public String detail();
+    String detail(@RequestParam Integer subjectId,Model model);
 }

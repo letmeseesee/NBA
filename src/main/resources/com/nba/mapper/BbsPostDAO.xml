@@ -7,9 +7,10 @@
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="isfirst" jdbcType="INTEGER" property="isfirst" />
     <result column="create_date" jdbcType="INTEGER" property="createDate" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.nba.model.BbsPost">
-    <result column="message" jdbcType="LONGVARCHAR" property="message" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="quotepid" jdbcType="INTEGER" property="quotepid" />
+    <result column="message_fmt" jdbcType="VARCHAR" property="messageFmt" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,38 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    pid, tid, `uid`, isfirst, create_date
+    pid, tid, `uid`, isfirst, create_date, message, quotepid, message_fmt, uname
   </sql>
-  <sql id="Blob_Column_List">
-    message
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.nba.model.BbsPostExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from bbs_post
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
-    <if test="forUpdate != null and forUpdate == true">
-      for update
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.nba.model.BbsPostExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -115,23 +86,13 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
     <if test="forUpdate != null and forUpdate == true">
       for update
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from bbs_post
     where pid = #{pid,jdbcType=INTEGER}
   </select>
@@ -147,10 +108,12 @@
   </delete>
   <insert id="insert" parameterType="com.nba.model.BbsPost">
     insert into bbs_post (pid, tid, `uid`, 
-      isfirst, create_date, message
+      isfirst, create_date, message, 
+      quotepid, message_fmt, uname
       )
     values (#{pid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
-      #{isfirst,jdbcType=INTEGER}, #{createDate,jdbcType=INTEGER}, #{message,jdbcType=LONGVARCHAR}
+      #{isfirst,jdbcType=INTEGER}, #{createDate,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
+      #{quotepid,jdbcType=INTEGER}, #{messageFmt,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.nba.model.BbsPost">
@@ -174,6 +137,15 @@
       <if test="message != null">
         message,
       </if>
+      <if test="quotepid != null">
+        quotepid,
+      </if>
+      <if test="messageFmt != null">
+        message_fmt,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pid != null">
@@ -192,7 +164,16 @@
         #{createDate,jdbcType=INTEGER},
       </if>
       <if test="message != null">
-        #{message,jdbcType=LONGVARCHAR},
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="quotepid != null">
+        #{quotepid,jdbcType=INTEGER},
+      </if>
+      <if test="messageFmt != null">
+        #{messageFmt,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,21 +202,18 @@
         create_date = #{record.createDate,jdbcType=INTEGER},
       </if>
       <if test="record.message != null">
-        message = #{record.message,jdbcType=LONGVARCHAR},
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotepid != null">
+        quotepid = #{record.quotepid,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageFmt != null">
+        message_fmt = #{record.messageFmt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uname != null">
+        uname = #{record.uname,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update bbs_post
-    set pid = #{record.pid,jdbcType=INTEGER},
-      tid = #{record.tid,jdbcType=INTEGER},
-      `uid` = #{record.uid,jdbcType=INTEGER},
-      isfirst = #{record.isfirst,jdbcType=INTEGER},
-      create_date = #{record.createDate,jdbcType=INTEGER},
-      message = #{record.message,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -246,7 +224,11 @@
       tid = #{record.tid,jdbcType=INTEGER},
       `uid` = #{record.uid,jdbcType=INTEGER},
       isfirst = #{record.isfirst,jdbcType=INTEGER},
-      create_date = #{record.createDate,jdbcType=INTEGER}
+      create_date = #{record.createDate,jdbcType=INTEGER},
+      message = #{record.message,jdbcType=VARCHAR},
+      quotepid = #{record.quotepid,jdbcType=INTEGER},
+      message_fmt = #{record.messageFmt,jdbcType=VARCHAR},
+      uname = #{record.uname,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -267,18 +249,18 @@
         create_date = #{createDate,jdbcType=INTEGER},
       </if>
       <if test="message != null">
-        message = #{message,jdbcType=LONGVARCHAR},
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="quotepid != null">
+        quotepid = #{quotepid,jdbcType=INTEGER},
+      </if>
+      <if test="messageFmt != null">
+        message_fmt = #{messageFmt,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
       </if>
     </set>
-    where pid = #{pid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nba.model.BbsPost">
-    update bbs_post
-    set tid = #{tid,jdbcType=INTEGER},
-      `uid` = #{uid,jdbcType=INTEGER},
-      isfirst = #{isfirst,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=INTEGER},
-      message = #{message,jdbcType=LONGVARCHAR}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.nba.model.BbsPost">
@@ -286,7 +268,11 @@
     set tid = #{tid,jdbcType=INTEGER},
       `uid` = #{uid,jdbcType=INTEGER},
       isfirst = #{isfirst,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=INTEGER}
+      create_date = #{createDate,jdbcType=INTEGER},
+      message = #{message,jdbcType=VARCHAR},
+      quotepid = #{quotepid,jdbcType=INTEGER},
+      message_fmt = #{messageFmt,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
 </mapper>

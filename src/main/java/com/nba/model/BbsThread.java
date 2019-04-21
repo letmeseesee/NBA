@@ -25,8 +25,6 @@ public class BbsThread implements Serializable {
 
     private Boolean closed;
 
-    private Integer firstpid;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getTid() {
@@ -101,14 +99,6 @@ public class BbsThread implements Serializable {
         this.closed = closed;
     }
 
-    public Integer getFirstpid() {
-        return firstpid;
-    }
-
-    public void setFirstpid(Integer firstpid) {
-        this.firstpid = firstpid;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -129,8 +119,7 @@ public class BbsThread implements Serializable {
             && (this.getLastDate() == null ? other.getLastDate() == null : this.getLastDate().equals(other.getLastDate()))
             && (this.getViews() == null ? other.getViews() == null : this.getViews().equals(other.getViews()))
             && (this.getPosts() == null ? other.getPosts() == null : this.getPosts().equals(other.getPosts()))
-            && (this.getClosed() == null ? other.getClosed() == null : this.getClosed().equals(other.getClosed()))
-            && (this.getFirstpid() == null ? other.getFirstpid() == null : this.getFirstpid().equals(other.getFirstpid()));
+            && (this.getClosed() == null ? other.getClosed() == null : this.getClosed().equals(other.getClosed()));
     }
 
     @Override
@@ -146,7 +135,6 @@ public class BbsThread implements Serializable {
         result = prime * result + ((getViews() == null) ? 0 : getViews().hashCode());
         result = prime * result + ((getPosts() == null) ? 0 : getPosts().hashCode());
         result = prime * result + ((getClosed() == null) ? 0 : getClosed().hashCode());
-        result = prime * result + ((getFirstpid() == null) ? 0 : getFirstpid().hashCode());
         return result;
     }
 
@@ -165,7 +153,6 @@ public class BbsThread implements Serializable {
         sb.append(", views=").append(views);
         sb.append(", posts=").append(posts);
         sb.append(", closed=").append(closed);
-        sb.append(", firstpid=").append(firstpid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

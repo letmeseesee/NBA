@@ -18,21 +18,15 @@ public interface BbsPostDAO {
 
     int insertSelective(BbsPost record);
 
-    List<BbsPost> selectByExampleWithBLOBs(BbsPostExample example);
-
     List<BbsPost> selectByExample(BbsPostExample example);
 
     BbsPost selectByPrimaryKey(Integer pid);
 
     int updateByExampleSelective(@Param("record") BbsPost record, @Param("example") BbsPostExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") BbsPost record, @Param("example") BbsPostExample example);
-
     int updateByExample(@Param("record") BbsPost record, @Param("example") BbsPostExample example);
 
     int updateByPrimaryKeySelective(BbsPost record);
-
-    int updateByPrimaryKeyWithBLOBs(BbsPost record);
 
     int updateByPrimaryKey(BbsPost record);
 }

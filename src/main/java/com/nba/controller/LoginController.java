@@ -49,8 +49,10 @@ public class LoginController implements LoginApi {
     public String doLogin(Model model, LoginReq loginReq) {
         User result = loginService.doLogin(loginReq.getUsername(),loginReq.getPassword());
         if(result != null){
-            request.setAttribute("username",loginReq.getUsername());
-            request.setAttribute("userId",loginReq.getUsername());
+            request.getSession().setAttribute("username",loginReq.getUsername());
+            request.getSession().setAttribute("userId",result.getUid());
+
+            //
             model.addAttribute("name",loginReq.getUsername());
             model.addAttribute("email",result.getEmail());
             model.addAttribute("gold",result.getGolds());
@@ -64,11 +66,7 @@ public class LoginController implements LoginApi {
             List<News> newsList = newsService.getLasterNews();
             System.out.println(newsList);
             model.addAttribute("newsList",newsList);
-//            model.addAttribute("news",newsList.get(0));
             model.addAttribute("newsCount",newsList.size());
-
-
-
             return "main/index";
         }
         return "login/index";

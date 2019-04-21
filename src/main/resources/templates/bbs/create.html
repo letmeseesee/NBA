@@ -106,14 +106,14 @@
                                         <!--标题-->
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="Title" name="subject"
-                                                   value="" id="related">
+                                                   value="" id="subject">
                                         </div>
 
                                         <!--关联-->
-                                        <div class="form-group hide">
-                                            <input type="text" class="form-control" placeholder="Relate" name="subject"
-                                                   value="" id="subject">
-                                        </div>
+<!--                                        <div class="form-group hide">-->
+<!--                                            <input type="text" class="form-control" placeholder="Relate" name="subject"-->
+<!--                                                   value="" id="subject">-->
+<!--                                        </div>-->
 
                                         <div class="form-group">
                                             <div class="form-control edui-body-container" contenteditable="true"
@@ -182,7 +182,9 @@
                 if(res.code > 0){
                     alert("创建失败");
                 }else {
+                    alert(res.result_id);
                     //转到帖子详细页面
+                    window.open("/bbs/detail?subjectId=" + res.result_id)
                 }
             }
         });

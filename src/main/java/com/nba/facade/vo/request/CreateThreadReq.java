@@ -13,10 +13,10 @@ public class CreateThreadReq {
     @ApiModelProperty(value = "主题", example = "admin", required = true)
     private String subject;
 
-    @ApiModelProperty(value = "关联", example = "admin", required = true)
+    @ApiModelProperty(value = "关联", example = "admin", required = false)
     private String related;
 
-    @ApiModelProperty(value = "内容", example = "admin", required = false)
+    @ApiModelProperty(value = "内容", example = "admin", required = true)
     private String content;
 
 }
