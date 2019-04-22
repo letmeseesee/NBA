@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -129,6 +130,7 @@ public class GamesAsynTaskService {
      * @param games
      */
     @Async("GameAnsycExecutor")
+    @Transactional(rollbackFor = Exception.class)
     public void saveGames(Games games){
         //查询当前是否存在该运动员
         GamesExample gamesExample = new GamesExample();
@@ -145,6 +147,8 @@ public class GamesAsynTaskService {
             }
         } else {
             gamesDAO.insert(games);
+            //生成比赛对应的竞猜
+
             logger.info("插入比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
         }
     }
