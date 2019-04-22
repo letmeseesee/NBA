@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.CompetitionDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.Competition">
+    <id column="competition_id" jdbcType="INTEGER" property="competitionId" />
+    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
+    <result column="away_team_id" jdbcType="INTEGER" property="awayTeamId" />
+    <result column="home_team_offical_support" jdbcType="INTEGER" property="homeTeamOfficalSupport" />
+    <result column="away_team_offical_support" jdbcType="INTEGER" property="awayTeamOfficalSupport" />
+    <result column="home_team_support" jdbcType="INTEGER" property="homeTeamSupport" />
+    <result column="away_team_support" jdbcType="INTEGER" property="awayTeamSupport" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    competition_id, game_id, `status`, add_time, home_team_id, away_team_id, home_team_offical_support, 
+    away_team_offical_support, home_team_support, away_team_support
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.CompetitionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from competition
+    where competition_id = #{competitionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from competition
+    where competition_id = #{competitionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.CompetitionExample">
+    delete from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="competition_id" keyProperty="competitionId" parameterType="com.nba.model.Competition" useGeneratedKeys="true">
+    insert into competition (game_id, `status`, add_time, 
+      home_team_id, away_team_id, home_team_offical_support, 
+      away_team_offical_support, home_team_support, 
+      away_team_support)
+    values (#{gameId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{homeTeamId,jdbcType=INTEGER}, #{awayTeamId,jdbcType=INTEGER}, #{homeTeamOfficalSupport,jdbcType=INTEGER}, 
+      #{awayTeamOfficalSupport,jdbcType=INTEGER}, #{homeTeamSupport,jdbcType=INTEGER}, 
+      #{awayTeamSupport,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="competition_id" keyProperty="competitionId" parameterType="com.nba.model.Competition" useGeneratedKeys="true">
+    insert into competition
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        game_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="homeTeamId != null">
+        home_team_id,
+      </if>
+      <if test="awayTeamId != null">
+        away_team_id,
+      </if>
+      <if test="homeTeamOfficalSupport != null">
+        home_team_offical_support,
+      </if>
+      <if test="awayTeamOfficalSupport != null">
+        away_team_offical_support,
+      </if>
+      <if test="homeTeamSupport != null">
+        home_team_support,
+      </if>
+      <if test="awayTeamSupport != null">
+        away_team_support,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeTeamId != null">
+        #{homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamId != null">
+        #{awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamOfficalSupport != null">
+        #{homeTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamOfficalSupport != null">
+        #{awayTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamSupport != null">
+        #{homeTeamSupport,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamSupport != null">
+        #{awayTeamSupport,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.CompetitionExample" resultType="java.lang.Long">
+    select count(*) from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update competition
+    <set>
+      <if test="record.competitionId != null">
+        competition_id = #{record.competitionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameId != null">
+        game_id = #{record.gameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.homeTeamId != null">
+        home_team_id = #{record.homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.awayTeamId != null">
+        away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeTeamOfficalSupport != null">
+        home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="record.awayTeamOfficalSupport != null">
+        away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeTeamSupport != null">
+        home_team_support = #{record.homeTeamSupport,jdbcType=INTEGER},
+      </if>
+      <if test="record.awayTeamSupport != null">
+        away_team_support = #{record.awayTeamSupport,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update competition
+    set competition_id = #{record.competitionId,jdbcType=INTEGER},
+      game_id = #{record.gameId,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      home_team_id = #{record.homeTeamId,jdbcType=INTEGER},
+      away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
+      home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=INTEGER},
+      away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=INTEGER},
+      home_team_support = #{record.homeTeamSupport,jdbcType=INTEGER},
+      away_team_support = #{record.awayTeamSupport,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.Competition">
+    update competition
+    <set>
+      <if test="gameId != null">
+        game_id = #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeTeamId != null">
+        home_team_id = #{homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamId != null">
+        away_team_id = #{awayTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamOfficalSupport != null">
+        home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamOfficalSupport != null">
+        away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamSupport != null">
+        home_team_support = #{homeTeamSupport,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamSupport != null">
+        away_team_support = #{awayTeamSupport,jdbcType=INTEGER},
+      </if>
+    </set>
+    where competition_id = #{competitionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.Competition">
+    update competition
+    set game_id = #{gameId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      home_team_id = #{homeTeamId,jdbcType=INTEGER},
+      away_team_id = #{awayTeamId,jdbcType=INTEGER},
+      home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=INTEGER},
+      away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=INTEGER},
+      home_team_support = #{homeTeamSupport,jdbcType=INTEGER},
+      away_team_support = #{awayTeamSupport,jdbcType=INTEGER}
+    where competition_id = #{competitionId,jdbcType=INTEGER}
+  </update>
+</mapper>

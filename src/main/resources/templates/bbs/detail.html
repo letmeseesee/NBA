@@ -159,7 +159,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="message mt-1 break-all" th:text="${post.messageFmt + post.message}">
-                                                    <!--回复对象-->
+                                                    <!--回复引用对象-->
                                                     <blockquote class="blockquote">
                                                         <a href="?user-1.htm" class="text-small text-muted user">
                                                             <img class="avatar-3 mr-3 small" style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" >
@@ -167,7 +167,7 @@
                                                         </a>
                                                         ccccccc
                                                     </blockquote>
-                                                    <!--内容-->
+                                                    <!--回复内容-->
                                                     21213221212212
                                                 </div>
                                             </div>
@@ -280,6 +280,30 @@
                 }
             }
         });
+        return false;
+    });
+
+    $('body').on('click', '.post_reply', function() {
+        var jthis = $(this);
+        var tid = jthis.data('tid');
+        var pid = jthis.data('pid');
+        var jmessage = $('#message');
+        var jli = jthis.closest('.post');
+        var jpostlist = jli.closest('.postlist');
+        var jadvanced_reply = $('#advanced_reply');
+        var jform = $('#quick_reply_form');
+        if(jli.hasClass('quote')) {
+            jli.removeClass('quote');
+            jform.find('input[name="quotepid"]').val(0);
+            jadvanced_reply.attr('href', xn.url('post-create-'+tid));
+        } else {
+            jpostlist.find('.post').removeClass('quote');
+            jli.addClass('quote');
+            var s = jmessage.val();
+            jform.find('input[name="quotepid"]').val(pid);
+            jadvanced_reply.attr('href', xn.url('post-create-'+tid+'-0-'+pid));
+        }
+        jmessage.focus();
         return false;
     });
 </script>
