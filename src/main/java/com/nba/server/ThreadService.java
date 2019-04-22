@@ -1,5 +1,6 @@
 package com.nba.server;
 
+import com.nba.facade.vo.request.CreatePostReq;
 import com.nba.facade.vo.request.CreateThreadReq;
 import com.nba.mapper.BbsPostDAO;
 import com.nba.mapper.BbsThreadDAO;
@@ -27,7 +28,7 @@ public class ThreadService {
      * @return boolean
      */
     @Transactional
-    public Integer create(CreateThreadReq createThreadReq,Integer userId,String uName){
+    public Integer create(CreateThreadReq createThreadReq, Integer userId, String uName){
         //插入主表信息
         BbsThread bbsThread = new BbsThread();
         bbsThread.setUid(userId);
@@ -73,5 +74,19 @@ public class ThreadService {
         criteria.andTidEqualTo(id);
         criteria.andIsfirstEqualTo(0);
         return bbsPostDAO.selectByExample(bbsPostExample);
+    }
+
+    public Integer createPost(CreatePostReq createPostReq,Integer userId, String uName){
+        //插入明细
+        BbsPost bbsPost = new BbsPost();
+        bbsPost.setTid(createPostReq.getSubjectId());
+        bbsPost.setUid(userId);
+        bbsPost.setIsfirst(0);
+        bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsPost.setMessage(createPostReq.getMessage());
+        bbsPost.setMessageFmt(createPostReq.getQuoteMsg());
+        bbsPost.setQuotepid(createPostReq.getQuoteId());
+        bbsPost.setUname(uName);
+        return bbsPostDAO.insert(bbsPost);
     }
 }
