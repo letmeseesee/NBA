@@ -38,11 +38,11 @@ public class ThreadService {
         bbsThread.setViews(1);
         bbsThread.setPosts(1);
         bbsThread.setClosed(false);
-        Integer tid = bbsThreadDAO.insert(bbsThread);
+        bbsThreadDAO.insertSelective(bbsThread);
 
         //插入明细
         BbsPost bbsPost = new BbsPost();
-        bbsPost.setTid(tid);
+        bbsPost.setTid(bbsThread.getTid());
         bbsPost.setUid(userId);
         bbsPost.setIsfirst(1);
         bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
@@ -50,9 +50,9 @@ public class ThreadService {
         bbsPost.setMessageFmt("");
         bbsPost.setQuotepid(0);
         bbsPost.setUname(uName);
-        Integer pid = bbsPostDAO.insert(bbsPost);
+        bbsPostDAO.insert(bbsPost);
 
-        return tid;
+        return bbsThread.getTid();
     }
 
     public BbsThread getBbsThreadById(Integer id){

@@ -42,9 +42,9 @@ public class BbsController implements BbsApi {
         //获取回复
         List<BbsPost> bbsPostList = threadService.getBbsPostBySubject(subjectId);
 
-        model.addAttribute("",bbsThread);
-        model.addAttribute("",bbsPost);
-        model.addAttribute("",bbsPostList);
+        model.addAttribute("bbsThread",bbsThread);
+        model.addAttribute("bbsPost",bbsPost);
+        model.addAttribute("bbsPostList",bbsPostList);
         return "/bbs/detail";
     }
 }

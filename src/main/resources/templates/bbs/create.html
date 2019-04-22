@@ -182,9 +182,9 @@
                 if(res.code > 0){
                     alert("创建失败");
                 }else {
-                    alert(res.result_id);
                     //转到帖子详细页面
-                    window.open("/bbs/detail?subjectId=" + res.result_id)
+                    // window.open("/bbs/detail?subjectId=" + res.result_id)
+                    window.location.href="/bbs/detail?subjectId=" + res.result_id;
                 }
             }
         });
