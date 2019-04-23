@@ -8,6 +8,7 @@ import com.nba.server.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -21,14 +22,14 @@ public class BbsRestApiController implements BbsRestApi {
 
     @Override
     public ajaxRsp doCreateThread(CreateThreadReq createThreadReq) {
-        Integer id = threadService.create(createThreadReq,(int)request.getSession().getAttribute("userId"),
+        Integer id = threadService.create(createThreadReq, (int) request.getSession().getAttribute("userId"),
                 (String) request.getSession().getAttribute("username"));
 
         ajaxRsp ajaxRsp = new ajaxRsp();
-        if(id > 0){
+        if (id > 0) {
             ajaxRsp.setCode(0);
             ajaxRsp.setResultId(id);
-        }else {
+        } else {
             ajaxRsp.setCode(1);
         }
         return ajaxRsp;
@@ -37,14 +38,17 @@ public class BbsRestApiController implements BbsRestApi {
 
     @Override
     public ajaxRsp doCreatePost(@RequestBody CreatePostReq createPostReq) {
-        Integer id = threadService.createPost(createPostReq,(int)request.getSession().getAttribute("userId"),
+        Integer id = threadService.createPost(createPostReq, (int) request.getSession().getAttribute("userId"),
                 (String) request.getSession().getAttribute("username"));
 
+        String html = threadService.formetPostLiHtml(createPostReq.getSubjectId(), id, createPostReq.getMessage(), createPostReq.getQuoteMsg());
         ajaxRsp ajaxRsp = new ajaxRsp();
-        if(id > 0){
+        if (id > 0) {
+            //生成对应的html
             ajaxRsp.setCode(0);
             ajaxRsp.setResultId(id);
-        }else {
+            ajaxRsp.setMsg(html);
+        } else {
             ajaxRsp.setCode(1);
         }
         return ajaxRsp;

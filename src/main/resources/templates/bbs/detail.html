@@ -61,7 +61,7 @@
                                     <div class="card-title">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <b>Total Posts</b> (<span class="posts" th:text="${bbsThread.posts}">9</span>)
+                                                <b>Total Posts</b> (<span class="posts" th:text="${bbsPostListCount}">9</span>)
                                             </div>
                                             <div>
                                             </div>
@@ -70,7 +70,7 @@
 
                                     <!--回复消息，暂时不做分页-->
                                     <ul class="list-unstyled postlist" th:each="post,iterStat : ${bbsPostList}" id="postList">
-                                        <li class="media post" th:data-pid=“${post.pid}” th:data-uid=“${userid}” >
+                                        <li class="media post" th:data-pid="${post.pid}" th:data-uid="${userid}" >
                                             <a href="#" class="mr-3" tabindex="-1">
                                                 <img class="avatar-3 mr-3 small" style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" >
                                             </a>
@@ -84,7 +84,7 @@
                                                     </div>
                                                     <!--操作和楼层-->
                                                     <div class="text-right text-grey">
-                                                        <a href="javascript:void(0)" th:data-tid=“${post.tid}” th:data-pid=“${post.pid}” class="text-grey post_reply mr-3">
+                                                        <a href="javascript:void(0)" th:data-tid="${post.tid}" th:data-pid="${post.pid}" class="text-grey post_reply mr-3">
                                                             <i class="fa fa-mail-reply" title="Reply"></i> <span class="d-none">Reply</span>
                                                         </a>
                                                         <span class="floor-parent">
@@ -114,6 +114,9 @@
                                                 <div class="d-flex justify-content-between small text-muted">
                                                     <div>
                                                         <div th:text="${username}">admin</div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="floor" id="newfloor" th:text="${bbsPostList.size()+1}">11</span>Floor
                                                     </div>
                                                 </div>
                                                 <div>
@@ -179,12 +182,12 @@
             },
             contentType:'application/json; charset=utf-8',
             'success':function(res){
-                if(res.code < 0){
-                    var s = '<ul>'+res.message+'</ul>';
+                if(res.code <= 0){
+                    var s = '<ul> '+res.msg+' </ul>';
                     var jli = $(s).find('li');
+                    alert(jli);
                     jli.insertBefore($('.postlist > .post').last());
                     jsubmit.button('reset');
-                    $('#message').val('');
 
                     // 楼层 +1
                     var jfloor = $('#newfloor');
@@ -195,7 +198,6 @@
                     jposts.html(parseInt(jposts.html()) + 1);
 
                 } else if(res.code < 0) {
-                    $.alert(res.message);
                     jsubmit.button('reset');
                 }
             }

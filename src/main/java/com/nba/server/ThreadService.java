@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -21,14 +22,18 @@ public class ThreadService {
     @Autowired
     BbsPostDAO bbsPostDAO;
 
+    @Autowired
+    HttpServletRequest request;
+
     /**
      * 创建帖子
+     *
      * @param createThreadReq 帖子信息
-     * @param userId 当前用户
+     * @param userId          当前用户
      * @return boolean
      */
     @Transactional
-    public Integer create(CreateThreadReq createThreadReq, Integer userId, String uName){
+    public Integer create(CreateThreadReq createThreadReq, Integer userId, String uName) {
         //插入主表信息
         BbsThread bbsThread = new BbsThread();
         bbsThread.setUid(userId);
@@ -56,11 +61,11 @@ public class ThreadService {
         return bbsThread.getTid();
     }
 
-    public BbsThread getBbsThreadById(Integer id){
+    public BbsThread getBbsThreadById(Integer id) {
         return bbsThreadDAO.selectByPrimaryKey(id);
     }
 
-    public BbsPost getFirstBbsPostBySubject(Integer id){
+    public BbsPost getFirstBbsPostBySubject(Integer id) {
         BbsPostExample bbsPostExample = new BbsPostExample();
         BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
         criteria.andTidEqualTo(id);
@@ -68,7 +73,7 @@ public class ThreadService {
         return bbsPostDAO.selectByExample(bbsPostExample).get(0);
     }
 
-    public List<BbsPost> getBbsPostBySubject(Integer id){
+    public List<BbsPost> getBbsPostBySubject(Integer id) {
         BbsPostExample bbsPostExample = new BbsPostExample();
         BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
         criteria.andTidEqualTo(id);
@@ -76,7 +81,7 @@ public class ThreadService {
         return bbsPostDAO.selectByExample(bbsPostExample);
     }
 
-    public Integer createPost(CreatePostReq createPostReq,Integer userId, String uName){
+    public Integer createPost(CreatePostReq createPostReq, Integer userId, String uName) {
         //插入明细
         BbsPost bbsPost = new BbsPost();
         bbsPost.setTid(createPostReq.getSubjectId());
@@ -84,10 +89,51 @@ public class ThreadService {
         bbsPost.setIsfirst(0);
         bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
         bbsPost.setMessage(createPostReq.getMessage());
-        bbsPost.setMessageFmt(createPostReq.getQuoteMsg());
+        bbsPost.setMessageFmt(createPostReq.getQuoteMsg() != null ? createPostReq.getQuoteMsg() : "");
         bbsPost.setQuotepid(createPostReq.getQuoteId());
         bbsPost.setUname(uName);
         bbsPostDAO.insert(bbsPost);
         return bbsPost.getPid();
+    }
+
+    public String formetPostLiHtml(Integer tid, Integer pid, String message, String messageQ) {
+
+        //获取回复数
+        BbsPostExample bbsPostExample = new BbsPostExample();
+        BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
+        criteria.andTidEqualTo(tid);
+        Long count = bbsPostDAO.countByExample(bbsPostExample);
+        String html = "<li class=\"media post\" data-pid=\"" + pid + "\" " +
+                "data-uid=\"" + (int) request.getSession().getAttribute("userId") + "\" >\n" +
+                "                                            <a href=\"#\" class=\"mr-3\" tabindex=\"-1\">\n" +
+                "                                                <img class=\"avatar-3 mr-3 small\" style=\"width: 30px;height: 30px\" src=\"/vendor/timg.jpeg\" >\n" +
+                "                                            </a>\n" +
+                "                                            <div class=\"media-body\">\n" +
+                "                                                <div class=\"d-flex justify-content-between small text-muted\">\n" +
+                "                                                    <!--回复人-->\n" +
+                "                                                    <div>\n" +
+                "\t\t\t\t\t\t\t\t\t                    <span class=\"username\">\n" +
+                "\t\t\t\t\t\t\t\t\t\t                    <a href=\"?user-1.htm\" class=\"text-muted font-weight-bold\">" +
+                (String) request.getSession().getAttribute("username")
+                + "</a>\n" +
+                "\t\t\t\t\t\t\t\t\t                    </span>\n" +
+                "                                                    </div>\n" +
+                "                                                    <!--操作和楼层-->\n" +
+                "                                                    <div class=\"text-right text-grey\">\n" +
+                "                                                        <a href=\"javascript:void(0)\" data-tid=\"" + tid + "\" data-pid=\"" + pid + "\" class=\"text-grey post_reply mr-3\">\n" +
+                "                                                            <i class=\"fa fa-mail-reply\" title=\"Reply\"></i> " +
+                "<span class=\"d-none\">Reply</span>\n" +
+                "                                                        </a>\n" +
+                "                                                        <span class=\"floor-parent\">\n" +
+                "\t\t\t\t\t\t\t\t\t\t                    <span class=\"floor mr-0\">" + (count - 1) + "</span>Floor\n" +
+                "                                                        </span>\n" +
+                "                                                    </div>\n" +
+                "                                                </div>\n" +
+                "                                                <div class=\"message mt-1 break-all\">\n" +
+                messageQ + message +
+                "                                                </div>\n" +
+                "                                            </div>\n" +
+                "                                        </li>";
+        return html;
     }
 }

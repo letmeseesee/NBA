@@ -13,7 +13,7 @@ public class BaseService {
 
 
     public void setUser( Model model){
-        model.addAttribute("username",request.getAttribute("username"));
-        model.addAttribute("userid",request.getAttribute("userId"));
+        model.addAttribute("username",request.getSession().getAttribute("username"));
+        model.addAttribute("userid",request.getSession().getAttribute("userId"));
     }
 }

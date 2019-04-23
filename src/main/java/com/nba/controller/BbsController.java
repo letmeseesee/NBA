@@ -45,6 +45,7 @@ public class BbsController implements BbsApi {
         model.addAttribute("bbsThread",bbsThread);
         model.addAttribute("bbsPost",bbsPost);
         model.addAttribute("bbsPostList",bbsPostList);
+        model.addAttribute("bbsPostListCount",bbsPostList.size());
         return "/bbs/detail";
     }
 }
