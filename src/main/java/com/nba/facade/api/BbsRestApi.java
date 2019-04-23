@@ -27,5 +27,5 @@ public interface BbsRestApi {
      */
     @ApiOperation(value = "创建帖子回复接口")
     @RequestMapping(value = "/bbs/doCreatePost",method = RequestMethod.POST)
-    ajaxRsp doCreatePost(CreatePostReq createPostReq);
+    ajaxRsp doCreatePost(@RequestBody CreatePostReq createPostReq);
 }

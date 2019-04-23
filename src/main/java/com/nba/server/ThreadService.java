@@ -87,6 +87,7 @@ public class ThreadService {
         bbsPost.setMessageFmt(createPostReq.getQuoteMsg());
         bbsPost.setQuotepid(createPostReq.getQuoteId());
         bbsPost.setUname(uName);
-        return bbsPostDAO.insert(bbsPost);
+        bbsPostDAO.insert(bbsPost);
+        return bbsPost.getPid();
     }
 }

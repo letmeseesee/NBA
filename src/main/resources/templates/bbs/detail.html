@@ -167,12 +167,17 @@
             'type':'post',
             'dataType':'json',
             'url':jform.attr('action'),
-            'data':{
+            'data':JSON.stringify({
                 subject_id:$("#tid").val(),
                 quote_id:$("#quote_id").val(),
                 message:$("#message").val(),
                 quote_msg:$("#quote_msg").html(),
+            }),
+            cache: false,
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
             },
+            contentType:'application/json; charset=utf-8',
             'success':function(res){
                 if(res.code < 0){
                     var s = '<ul>'+res.message+'</ul>';

@@ -6,6 +6,7 @@ import com.nba.facade.vo.request.CreateThreadReq;
 import com.nba.facade.vo.response.ajaxRsp;
 import com.nba.server.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +36,7 @@ public class BbsRestApiController implements BbsRestApi {
 
 
     @Override
-    public ajaxRsp doCreatePost(CreatePostReq createPostReq) {
+    public ajaxRsp doCreatePost(@RequestBody CreatePostReq createPostReq) {
         Integer id = threadService.createPost(createPostReq,(int)request.getSession().getAttribute("userId"),
                 (String) request.getSession().getAttribute("username"));
 
