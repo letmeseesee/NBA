@@ -89,20 +89,31 @@ public class ThreadService {
         bbsPost.setIsfirst(0);
         bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
         bbsPost.setMessage(createPostReq.getMessage());
-        bbsPost.setMessageFmt(createPostReq.getQuoteMsg() != null ? createPostReq.getQuoteMsg() : "");
+        if(createPostReq.getQuoteId() == 0) {
+            bbsPost.setMessageFmt(" ");
+        }else {
+            String QuoteHtml = formatQuoteHtml(createPostReq.getQuoteId());
+            bbsPost.setMessageFmt(QuoteHtml);
+        }
         bbsPost.setQuotepid(createPostReq.getQuoteId());
         bbsPost.setUname(uName);
         bbsPostDAO.insert(bbsPost);
+
+        //添加回复数
         return bbsPost.getPid();
     }
 
-    public String formetPostLiHtml(Integer tid, Integer pid, String message, String messageQ) {
-
-        //获取回复数
+    public String formatPostLiHtml(Integer tid, Integer pid) {
         BbsPostExample bbsPostExample = new BbsPostExample();
         BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
-        criteria.andTidEqualTo(tid);
-        Long count = bbsPostDAO.countByExample(bbsPostExample);
+        criteria.andPidEqualTo(pid);
+        BbsPost bbsPost = bbsPostDAO.selectByExample(bbsPostExample).get(0);
+        //获取回复数
+        BbsPostExample bbsPostExample1 = new BbsPostExample();
+        BbsPostExample.Criteria criteria1 = bbsPostExample1.createCriteria();
+        criteria1.andTidEqualTo(tid);
+        Long count = bbsPostDAO.countByExample(bbsPostExample1);
+
         String html = "<li class=\"media post\" data-pid=\"" + pid + "\" " +
                 "data-uid=\"" + (int) request.getSession().getAttribute("userId") + "\" >\n" +
                 "                                            <a href=\"#\" class=\"mr-3\" tabindex=\"-1\">\n" +
@@ -130,10 +141,24 @@ public class ThreadService {
                 "                                                    </div>\n" +
                 "                                                </div>\n" +
                 "                                                <div class=\"message mt-1 break-all\">\n" +
-                messageQ + message +
+                bbsPost.getMessageFmt() + bbsPost.getMessage() +
                 "                                                </div>\n" +
                 "                                            </div>\n" +
                 "                                        </li>";
+        return html;
+    }
+
+    public String formatQuoteHtml(Integer quotePid){
+        BbsPostExample bbsPostExample = new BbsPostExample();
+        BbsPostExample.Criteria criteria = bbsPostExample.createCriteria();
+        criteria.andPidEqualTo(quotePid);
+        BbsPost bbsPost = bbsPostDAO.selectByExample(bbsPostExample).get(0);
+        String html = " <blockquote class=\"blockquote\">\n" +
+                "                                                        <a href=\"#\" class=\"text-small text-muted user\">\n" +
+                (String) request.getSession().getAttribute("username") +
+                "                                                        </a>\n" +
+                bbsPost.getMessage() +
+                "                                                    </blockquote>";
         return html;
     }
 }

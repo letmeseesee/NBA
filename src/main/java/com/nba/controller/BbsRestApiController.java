@@ -41,7 +41,7 @@ public class BbsRestApiController implements BbsRestApi {
         Integer id = threadService.createPost(createPostReq, (int) request.getSession().getAttribute("userId"),
                 (String) request.getSession().getAttribute("username"));
 
-        String html = threadService.formetPostLiHtml(createPostReq.getSubjectId(), id, createPostReq.getMessage(), createPostReq.getQuoteMsg());
+        String html = threadService.formatPostLiHtml(createPostReq.getSubjectId(), id);
         ajaxRsp ajaxRsp = new ajaxRsp();
         if (id > 0) {
             //生成对应的html

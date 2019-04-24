@@ -75,6 +75,7 @@ public class LoginController implements LoginApi {
     @Override
     public String logout() {
         request.setAttribute("username","");
+        request.setAttribute("userid",0);
         return "login/index";
     }
 }

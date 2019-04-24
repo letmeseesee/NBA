@@ -44,6 +44,6 @@ public interface LoginApi {
      * @return
      */
     @ApiOperation(value = "退出登陆")
-    @RequestMapping(value = "/login/logout",method = RequestMethod.POST)
+    @RequestMapping(value = "/login/logout",method = RequestMethod.GET  )
     String logout();
 }

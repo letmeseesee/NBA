@@ -92,7 +92,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="message mt-1 break-all" th:text="${post.messageFmt + post.message}">
+                                                <div class="message mt-1 break-all" th:utext="${post.messageFmt + post.message}">
                                                     <!--回复引用对象-->
                                                     <blockquote class="blockquote">
                                                         <a href="?user-1.htm" class="text-small text-muted user">
@@ -185,7 +185,6 @@
                 if(res.code <= 0){
                     var s = '<ul> '+res.msg+' </ul>';
                     var jli = $(s).find('li');
-                    alert(jli);
                     jli.insertBefore($('.postlist > .post').last());
                     jsubmit.button('reset');
 
@@ -216,14 +215,12 @@
         var jform = $('#quick_reply_form');
         if(jli.hasClass('quote')) {
             jli.removeClass('quote');
-            jform.find('input[name="quotepid"]').val(0);
-            jadvanced_reply.attr('href', xn.url('post-create-'+tid));
+            jform.find('input[name="quote_id"]').val(0);
         } else {
             jpostlist.find('.post').removeClass('quote');
             jli.addClass('quote');
             var s = jmessage.val();
-            jform.find('input[name="quotepid"]').val(pid);
-            jadvanced_reply.attr('href', xn.url('post-create-'+tid+'-0-'+pid));
+            jform.find('input[name="quote_id"]').val(pid);
         }
         jmessage.focus();
         return false;
