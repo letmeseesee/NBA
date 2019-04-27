@@ -1,6 +1,7 @@
 package com.nba.controller;
 
 import com.nba.facade.api.BbsApi;
+import com.nba.facade.dto.BbsThreadDto;
 import com.nba.model.BbsPost;
 import com.nba.model.BbsThread;
 import com.nba.server.BaseService;
@@ -48,4 +49,16 @@ public class BbsController implements BbsApi {
         model.addAttribute("bbsPostListCount",bbsPostList.size());
         return "/bbs/detail";
     }
+
+    @Override
+    public String mainPage(Long start, Integer limit, Model model) {
+        //设置当前用户
+        baseService.setUser(model);
+
+        //获取帖子
+        List<BbsThreadDto> bbsThreadList = threadService.getBbsThreadList(start,limit);
+        model.addAttribute("bbsThreadList",bbsThreadList);
+        return "/bbs/mainPage";
+    }
+
 }

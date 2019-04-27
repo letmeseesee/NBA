@@ -12,6 +12,18 @@
     <result column="posts" jdbcType="INTEGER" property="posts" />
     <result column="closed" jdbcType="BIT" property="closed" />
   </resultMap>
+  <resultMap id="CreaterResultMap" type="com.nba.facade.dto.BbsThreadDto">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="subject" jdbcType="CHAR" property="subject" />
+    <result column="create_date" jdbcType="INTEGER" property="createDate" />
+    <result column="last_date" jdbcType="INTEGER" property="lastDate" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="posts" jdbcType="INTEGER" property="posts" />
+    <result column="closed" jdbcType="BIT" property="closed" />
+    <result column="username" jdbcType="CHAR" property="userName" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -73,6 +85,10 @@
   <sql id="Base_Column_List">
     tid, `type`, `uid`, subject, create_date, last_date, views, posts, closed
   </sql>
+  <sql id="Creater_Column_List">
+    tid, `type`, bbs_thread.`uid` as uid, subject, bbs_thread.create_date as create_date, last_date, views,
+    bbs_thread.posts as posts, closed ,user.username as username
+  </sql>
   <select id="selectByExample" parameterType="com.nba.model.BbsThreadExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -80,6 +96,31 @@
     </if>
     <include refid="Base_Column_List" />
     from bbs_thread
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByExampleAndCreater" parameterType="com.nba.model.BbsThreadExample" resultMap="CreaterResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Creater_Column_List" />
+    from bbs_thread INNER JOIN user on bbs_thread.uid = user.uid
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

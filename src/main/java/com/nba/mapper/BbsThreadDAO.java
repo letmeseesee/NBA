@@ -1,5 +1,6 @@
 package com.nba.mapper;
 
+import com.nba.facade.dto.BbsThreadDto;
 import com.nba.model.BbsThread;
 import com.nba.model.BbsThreadExample;
 import java.util.List;
@@ -19,6 +20,8 @@ public interface BbsThreadDAO {
     int insertSelective(BbsThread record);
 
     List<BbsThread> selectByExample(BbsThreadExample example);
+
+    List<BbsThreadDto> selectByExampleAndCreater(BbsThreadExample example);
 
     BbsThread selectByPrimaryKey(Integer tid);
 

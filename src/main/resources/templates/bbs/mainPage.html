@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Thread List</h2>
+                </div>
+            </header>
+
+            <!--帖子列表-->
+            <section class="projects" style="padding-top: 15px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+<!--                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>-->
+                                            <a href="/bbs/create" class="dropdown-item edit">
+                                                <i class="fa fa-edit"></i>Create</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Trending Lists   </h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${bbsThreadList.size() + ' New'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img style="width: 20px;height: 20px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/bbs/detail?subjectId=1" th:href="'/bbs/detail?subjectId='+${bbsThread.tid}">
+                                            <h3 class="h5" th:text="${bbsThread.subject}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${'Posted on ' + bbsThread.createDate + ' by ' + bbsThread.userName}">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

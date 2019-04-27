@@ -62,11 +62,15 @@ public class LoginController implements LoginApi {
             //获取最新的比赛
             List<LastGameDot> gamesList = gameService.getLastGames();
             model.addAttribute("gamesList",gamesList);
+
             //获取最新的新闻
             List<News> newsList = newsService.getLasterNews();
             System.out.println(newsList);
             model.addAttribute("newsList",newsList);
             model.addAttribute("newsCount",newsList.size());
+
+            //获取最新的帖子
+
             return "main/index";
         }
         return "login/index";

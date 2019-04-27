@@ -16,4 +16,8 @@ public interface BbsApi {
     @ApiOperation(value = "帖子详情")
     @RequestMapping(value = "/bbs/detail",method = RequestMethod.GET)
     String detail(@RequestParam Integer subjectId,Model model);
+
+    @ApiOperation(value = "帖子列表")
+    @RequestMapping(value = "/bbs/main",method = RequestMethod.GET)
+    String mainPage(@RequestParam Long start,@RequestParam Integer limit,Model model);
 }

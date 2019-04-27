@@ -1,5 +1,6 @@
 package com.nba.server;
 
+import com.nba.facade.dto.BbsThreadDto;
 import com.nba.facade.vo.request.CreatePostReq;
 import com.nba.facade.vo.request.CreateThreadReq;
 import com.nba.mapper.BbsPostDAO;
@@ -7,6 +8,7 @@ import com.nba.mapper.BbsThreadDAO;
 import com.nba.model.BbsPost;
 import com.nba.model.BbsPostExample;
 import com.nba.model.BbsThread;
+import com.nba.model.BbsThreadExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +61,15 @@ public class ThreadService {
         bbsPostDAO.insert(bbsPost);
 
         return bbsThread.getTid();
+    }
+
+    public List<BbsThreadDto> getBbsThreadList(Long page, Integer limit){
+        BbsThreadExample bbsThreadExample = new BbsThreadExample();
+        BbsThreadExample.Criteria criteria = bbsThreadExample.createCriteria();
+        bbsThreadExample.setOrderByClause("tid DESC");
+        bbsThreadExample.setOffset((page-1)*limit);
+        bbsThreadExample.setLimit(limit);
+        return bbsThreadDAO.selectByExampleAndCreater(bbsThreadExample);
     }
 
     public BbsThread getBbsThreadById(Integer id) {
