@@ -1,6 +1,7 @@
 package com.nba.controller;
 
 import com.nba.facade.api.LoginApi;
+import com.nba.facade.dto.BbsThreadDto;
 import com.nba.facade.dto.LastGameDot;
 import com.nba.facade.vo.request.LoginReq;
 import com.nba.model.Games;
@@ -9,6 +10,7 @@ import com.nba.model.User;
 import com.nba.server.GameService;
 import com.nba.server.LoginService;
 import com.nba.server.NewsService;
+import com.nba.server.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class LoginController implements LoginApi {
 
     @Autowired
     GameService gameService;
+
+    @Autowired
+    ThreadService threadService;
 
     @Autowired
     HttpServletRequest request;
@@ -70,6 +75,8 @@ public class LoginController implements LoginApi {
             model.addAttribute("newsCount",newsList.size());
 
             //获取最新的帖子
+            List<BbsThreadDto> bbsThreadDtoList = threadService.getLastBbsThreadList();
+            model.addAttribute("bbsThreadDtoList",bbsThreadDtoList);
 
             return "main/index";
         }

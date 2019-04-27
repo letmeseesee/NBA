@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,6 +71,16 @@ public class ThreadService {
         bbsThreadExample.setOffset((page-1)*limit);
         bbsThreadExample.setLimit(limit);
         return bbsThreadDAO.selectByExampleAndCreater(bbsThreadExample);
+    }
+
+    public List<BbsThreadDto> getLastBbsThreadList(){
+        List<BbsThreadDto> bbsThreadDtoList = new ArrayList<>();
+        //获取今天新增的帖子
+        BbsThreadExample bbsThreadExample = new BbsThreadExample();
+        bbsThreadExample.setLimit(10);
+        bbsThreadExample.setOrderByClause("tid desc");
+        bbsThreadDtoList = bbsThreadDAO.selectByExampleAndCreater(bbsThreadExample);
+        return bbsThreadDtoList;
     }
 
     public BbsThread getBbsThreadById(Integer id) {

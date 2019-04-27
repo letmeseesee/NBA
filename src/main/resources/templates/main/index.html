@@ -144,17 +144,18 @@
                         </button>
                         <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
                           <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
-                          <a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+                          <a href="/bbs/create" class="dropdown-item edit"> <i class="fa fa-gear"></i>Create</a>
                         </div>
                       </div>
                     </div>
                     <div class="card-header d-flex align-items-center">
                       <h2 class="h3">Trending Lists   </h2>
-                      <div class="badge badge-rounded bg-green" th:text="${bbsThreadList.size() + ' New'}">4 New</div>
+                      <div class="badge badge-rounded bg-green" th:text="${bbsThreadDtoList.size() + ' New'}">4 New</div>
                     </div>
-                    <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadList}">
+                    <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadDtoList}">
                       <div class="item d-flex align-items-center">
-                        <div class="image"><img style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
+                        <div class="image">
+                          <img style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
                         </div>
                         <div class="text">
                           <a href="/bbs/detail?subjectId=1" th:href="'/bbs/detail?subjectId='+${bbsThread.tid}">
