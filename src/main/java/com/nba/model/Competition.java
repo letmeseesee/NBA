@@ -26,9 +26,9 @@ public class Competition implements Serializable {
 
     private Integer awayTeamId;
 
-    private Integer homeTeamOfficalSupport;
+    private Double homeTeamOfficalSupport;
 
-    private Integer awayTeamOfficalSupport;
+    private Double awayTeamOfficalSupport;
 
     private Integer homeTeamSupport;
 
@@ -84,19 +84,19 @@ public class Competition implements Serializable {
         this.awayTeamId = awayTeamId;
     }
 
-    public Integer getHomeTeamOfficalSupport() {
+    public Double getHomeTeamOfficalSupport() {
         return homeTeamOfficalSupport;
     }
 
-    public void setHomeTeamOfficalSupport(Integer homeTeamOfficalSupport) {
+    public void setHomeTeamOfficalSupport(Double homeTeamOfficalSupport) {
         this.homeTeamOfficalSupport = homeTeamOfficalSupport;
     }
 
-    public Integer getAwayTeamOfficalSupport() {
+    public Double getAwayTeamOfficalSupport() {
         return awayTeamOfficalSupport;
     }
 
-    public void setAwayTeamOfficalSupport(Integer awayTeamOfficalSupport) {
+    public void setAwayTeamOfficalSupport(Double awayTeamOfficalSupport) {
         this.awayTeamOfficalSupport = awayTeamOfficalSupport;
     }
 

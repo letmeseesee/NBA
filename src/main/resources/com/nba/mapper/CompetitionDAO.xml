@@ -8,8 +8,8 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
     <result column="away_team_id" jdbcType="INTEGER" property="awayTeamId" />
-    <result column="home_team_offical_support" jdbcType="INTEGER" property="homeTeamOfficalSupport" />
-    <result column="away_team_offical_support" jdbcType="INTEGER" property="awayTeamOfficalSupport" />
+    <result column="home_team_offical_support" jdbcType="DOUBLE" property="homeTeamOfficalSupport" />
+    <result column="away_team_offical_support" jdbcType="DOUBLE" property="awayTeamOfficalSupport" />
     <result column="home_team_support" jdbcType="INTEGER" property="homeTeamSupport" />
     <result column="away_team_support" jdbcType="INTEGER" property="awayTeamSupport" />
   </resultMap>
@@ -116,19 +116,22 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="competition_id" keyProperty="competitionId" parameterType="com.nba.model.Competition" useGeneratedKeys="true">
-    insert into competition (game_id, `status`, add_time, 
-      home_team_id, away_team_id, home_team_offical_support, 
-      away_team_offical_support, home_team_support, 
-      away_team_support)
-    values (#{gameId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{homeTeamId,jdbcType=INTEGER}, #{awayTeamId,jdbcType=INTEGER}, #{homeTeamOfficalSupport,jdbcType=INTEGER}, 
-      #{awayTeamOfficalSupport,jdbcType=INTEGER}, #{homeTeamSupport,jdbcType=INTEGER}, 
-      #{awayTeamSupport,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.nba.model.Competition">
+    insert into competition (competition_id, game_id, `status`, 
+      add_time, home_team_id, away_team_id, 
+      home_team_offical_support, away_team_offical_support, 
+      home_team_support, away_team_support)
+    values (#{competitionId,jdbcType=INTEGER}, #{gameId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{homeTeamId,jdbcType=INTEGER}, #{awayTeamId,jdbcType=INTEGER}, 
+      #{homeTeamOfficalSupport,jdbcType=DOUBLE}, #{awayTeamOfficalSupport,jdbcType=DOUBLE}, 
+      #{homeTeamSupport,jdbcType=INTEGER}, #{awayTeamSupport,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="competition_id" keyProperty="competitionId" parameterType="com.nba.model.Competition" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="com.nba.model.Competition">
     insert into competition
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="competitionId != null">
+        competition_id,
+      </if>
       <if test="gameId != null">
         game_id,
       </if>
@@ -158,6 +161,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="competitionId != null">
+        #{competitionId,jdbcType=INTEGER},
+      </if>
       <if test="gameId != null">
         #{gameId,jdbcType=INTEGER},
       </if>
@@ -174,10 +180,10 @@
         #{awayTeamId,jdbcType=INTEGER},
       </if>
       <if test="homeTeamOfficalSupport != null">
-        #{homeTeamOfficalSupport,jdbcType=INTEGER},
+        #{homeTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="awayTeamOfficalSupport != null">
-        #{awayTeamOfficalSupport,jdbcType=INTEGER},
+        #{awayTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="homeTeamSupport != null">
         #{homeTeamSupport,jdbcType=INTEGER},
@@ -215,10 +221,10 @@
         away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
       </if>
       <if test="record.homeTeamOfficalSupport != null">
-        home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=INTEGER},
+        home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="record.awayTeamOfficalSupport != null">
-        away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=INTEGER},
+        away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="record.homeTeamSupport != null">
         home_team_support = #{record.homeTeamSupport,jdbcType=INTEGER},
@@ -239,8 +245,8 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       home_team_id = #{record.homeTeamId,jdbcType=INTEGER},
       away_team_id = #{record.awayTeamId,jdbcType=INTEGER},
-      home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=INTEGER},
-      away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=INTEGER},
+      home_team_offical_support = #{record.homeTeamOfficalSupport,jdbcType=DOUBLE},
+      away_team_offical_support = #{record.awayTeamOfficalSupport,jdbcType=DOUBLE},
       home_team_support = #{record.homeTeamSupport,jdbcType=INTEGER},
       away_team_support = #{record.awayTeamSupport,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -266,10 +272,10 @@
         away_team_id = #{awayTeamId,jdbcType=INTEGER},
       </if>
       <if test="homeTeamOfficalSupport != null">
-        home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=INTEGER},
+        home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="awayTeamOfficalSupport != null">
-        away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=INTEGER},
+        away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=DOUBLE},
       </if>
       <if test="homeTeamSupport != null">
         home_team_support = #{homeTeamSupport,jdbcType=INTEGER},
@@ -287,8 +293,8 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       home_team_id = #{homeTeamId,jdbcType=INTEGER},
       away_team_id = #{awayTeamId,jdbcType=INTEGER},
-      home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=INTEGER},
-      away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=INTEGER},
+      home_team_offical_support = #{homeTeamOfficalSupport,jdbcType=DOUBLE},
+      away_team_offical_support = #{awayTeamOfficalSupport,jdbcType=DOUBLE},
       home_team_support = #{homeTeamSupport,jdbcType=INTEGER},
       away_team_support = #{awayTeamSupport,jdbcType=INTEGER}
     where competition_id = #{competitionId,jdbcType=INTEGER}

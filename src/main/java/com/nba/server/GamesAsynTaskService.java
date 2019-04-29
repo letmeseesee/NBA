@@ -6,6 +6,7 @@ import com.nba.mapper.NewsDAO;
 import com.nba.mapper.PlayersDAO;
 import com.nba.mapper.TeamsDAO;
 import com.nba.model.*;
+import com.nba.status.GameStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,7 +133,7 @@ public class GamesAsynTaskService {
     @Async("GameAnsycExecutor")
     @Transactional(rollbackFor = Exception.class)
     public void saveGames(Games games){
-        //查询当前是否存在该运动员
+        //查询当前是否存改比赛
         GamesExample gamesExample = new GamesExample();
         GamesExample.Criteria criteria = gamesExample.createCriteria();
         criteria.andGameIdEqualTo(games.getGameId());
@@ -146,9 +147,8 @@ public class GamesAsynTaskService {
                 logger.info("比赛{} VS {}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
             }
         } else {
+            //如果当前比赛是NOT_START或者STARTING则生产竞猜信息
             gamesDAO.insert(games);
-            //生成比赛对应的竞猜
-
             logger.info("插入比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
         }
     }

@@ -505,52 +505,52 @@ public class CompetitionExample {
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportEqualTo(Integer value) {
+        public Criteria andHomeTeamOfficalSupportEqualTo(Double value) {
             addCriterion("home_team_offical_support =", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportNotEqualTo(Integer value) {
+        public Criteria andHomeTeamOfficalSupportNotEqualTo(Double value) {
             addCriterion("home_team_offical_support <>", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportGreaterThan(Integer value) {
+        public Criteria andHomeTeamOfficalSupportGreaterThan(Double value) {
             addCriterion("home_team_offical_support >", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportGreaterThanOrEqualTo(Integer value) {
+        public Criteria andHomeTeamOfficalSupportGreaterThanOrEqualTo(Double value) {
             addCriterion("home_team_offical_support >=", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportLessThan(Integer value) {
+        public Criteria andHomeTeamOfficalSupportLessThan(Double value) {
             addCriterion("home_team_offical_support <", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportLessThanOrEqualTo(Integer value) {
+        public Criteria andHomeTeamOfficalSupportLessThanOrEqualTo(Double value) {
             addCriterion("home_team_offical_support <=", value, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportIn(List<Integer> values) {
+        public Criteria andHomeTeamOfficalSupportIn(List<Double> values) {
             addCriterion("home_team_offical_support in", values, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportNotIn(List<Integer> values) {
+        public Criteria andHomeTeamOfficalSupportNotIn(List<Double> values) {
             addCriterion("home_team_offical_support not in", values, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportBetween(Integer value1, Integer value2) {
+        public Criteria andHomeTeamOfficalSupportBetween(Double value1, Double value2) {
             addCriterion("home_team_offical_support between", value1, value2, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andHomeTeamOfficalSupportNotBetween(Integer value1, Integer value2) {
+        public Criteria andHomeTeamOfficalSupportNotBetween(Double value1, Double value2) {
             addCriterion("home_team_offical_support not between", value1, value2, "homeTeamOfficalSupport");
             return (Criteria) this;
         }
@@ -565,52 +565,52 @@ public class CompetitionExample {
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportEqualTo(Integer value) {
+        public Criteria andAwayTeamOfficalSupportEqualTo(Double value) {
             addCriterion("away_team_offical_support =", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportNotEqualTo(Integer value) {
+        public Criteria andAwayTeamOfficalSupportNotEqualTo(Double value) {
             addCriterion("away_team_offical_support <>", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportGreaterThan(Integer value) {
+        public Criteria andAwayTeamOfficalSupportGreaterThan(Double value) {
             addCriterion("away_team_offical_support >", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportGreaterThanOrEqualTo(Integer value) {
+        public Criteria andAwayTeamOfficalSupportGreaterThanOrEqualTo(Double value) {
             addCriterion("away_team_offical_support >=", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportLessThan(Integer value) {
+        public Criteria andAwayTeamOfficalSupportLessThan(Double value) {
             addCriterion("away_team_offical_support <", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportLessThanOrEqualTo(Integer value) {
+        public Criteria andAwayTeamOfficalSupportLessThanOrEqualTo(Double value) {
             addCriterion("away_team_offical_support <=", value, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportIn(List<Integer> values) {
+        public Criteria andAwayTeamOfficalSupportIn(List<Double> values) {
             addCriterion("away_team_offical_support in", values, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportNotIn(List<Integer> values) {
+        public Criteria andAwayTeamOfficalSupportNotIn(List<Double> values) {
             addCriterion("away_team_offical_support not in", values, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportBetween(Integer value1, Integer value2) {
+        public Criteria andAwayTeamOfficalSupportBetween(Double value1, Double value2) {
             addCriterion("away_team_offical_support between", value1, value2, "awayTeamOfficalSupport");
             return (Criteria) this;
         }
 
-        public Criteria andAwayTeamOfficalSupportNotBetween(Integer value1, Integer value2) {
+        public Criteria andAwayTeamOfficalSupportNotBetween(Double value1, Double value2) {
             addCriterion("away_team_offical_support not between", value1, value2, "awayTeamOfficalSupport");
             return (Criteria) this;
         }

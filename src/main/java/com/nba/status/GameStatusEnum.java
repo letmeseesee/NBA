@@ -8,9 +8,13 @@ public enum GameStatusEnum {
     /**
      * 1未开始 2开始 3结束
      */
-    NOT_START((byte) 1, "未开始"),
-    STARTING((byte) 2, "开始"),
-    CLOSE((byte) 3, "结束");
+    NOT_START((byte) 1, "Scheduled"),
+    STARTING((byte) 2, "InProgress"),
+    CLOSE((byte) 3, "Final"),
+    FOT((byte) 4, "F/OT"),
+    Suspended((byte) 5, "Suspended"),
+    Postponed((byte) 6, "Postponed"),
+    Canceled((byte) 7, "Canceled");
 
     @Getter
     private Byte code;
