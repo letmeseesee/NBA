@@ -45,7 +45,7 @@ public class ScheduledTasks {
      * 定时抓取球员,每天中午抓取
      *  @Scheduled(cron = "0 0/57 * * * ?")
      */
-    @Scheduled(cron = "0 0 0/12 * * ?")
+//    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledGetPlayers() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球员。");
         getGamesService.getPlayers();
@@ -56,7 +56,7 @@ public class ScheduledTasks {
      *  @Scheduled(cron = "0 0/57 * * * ?")
      *      @Scheduled(fixedRate = 1000 * 60)
      */
-    @Scheduled(cron = "0 0 0/12 * * ?")
+//    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledGetTeams() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球队。");
         getGamesService.getAllTeams();
@@ -65,7 +65,7 @@ public class ScheduledTasks {
     /**
      * 抓取今年的比赛 一月抓取
      */
-    @Scheduled(cron = "0 0 0 0/1 * ?")
+//    @Scheduled(cron = "0 0 0 0/1 * ?")
     public void scheduledGetAllGames() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取全年比赛。");
         Calendar calendar = Calendar.getInstance();
