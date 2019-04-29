@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Api(value = "Spring-Boot-swagger", tags = "Wms-Package-API")
+@Api(value = "帖子页面", tags = "BBSAPI")
 public interface BbsApi {
     @ApiOperation(value = "创建帖子页面")
     @RequestMapping(value = "/bbs/create",method = RequestMethod.GET)

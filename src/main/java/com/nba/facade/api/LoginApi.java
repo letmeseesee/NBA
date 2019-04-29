@@ -40,6 +40,17 @@ public interface LoginApi {
 
 
     /**
+     * 登陆结果
+     * @param model 视图
+     * @param loginReq 请求体
+     * @return String
+     */
+    @ApiOperation(value = "登陆操作")
+    @RequestMapping(value = "/login/main",method = RequestMethod.GET)
+    String index(Model model);
+
+
+    /**
      * 登出
      * @return
      */

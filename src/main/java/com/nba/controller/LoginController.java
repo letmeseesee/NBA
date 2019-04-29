@@ -7,10 +7,7 @@ import com.nba.facade.vo.request.LoginReq;
 import com.nba.model.Games;
 import com.nba.model.News;
 import com.nba.model.User;
-import com.nba.server.GameService;
-import com.nba.server.LoginService;
-import com.nba.server.NewsService;
-import com.nba.server.ThreadService;
+import com.nba.server.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +35,9 @@ public class LoginController implements LoginApi {
 
     @Autowired
     HttpServletRequest request;
+
+    @Autowired
+    BaseService baseService;
 
     @RequestMapping("/")
     public String index() {
@@ -81,6 +81,24 @@ public class LoginController implements LoginApi {
             return "main/index";
         }
         return "login/index";
+    }
+
+    @Override
+    public String index(Model model) {
+        //设置当前用户
+        baseService.setUser(model);
+        //获取最新的比赛
+        List<LastGameDot> gamesList = gameService.getLastGames();
+        model.addAttribute("gamesList",gamesList);
+        //获取最新的新闻
+        List<News> newsList = newsService.getLasterNews();
+        System.out.println(newsList);
+        model.addAttribute("newsList",newsList);
+        model.addAttribute("newsCount",newsList.size());
+        //获取最新的帖子
+        List<BbsThreadDto> bbsThreadDtoList = threadService.getLastBbsThreadList();
+        model.addAttribute("bbsThreadDtoList",bbsThreadDtoList);
+        return "main/index";
     }
 
     @Override

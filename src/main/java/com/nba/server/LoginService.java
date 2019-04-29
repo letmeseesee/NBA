@@ -36,4 +36,10 @@ public class LoginService {
             return null;
         }
     }
+
+
+    public User getUser(Integer uid){
+        return userDAO.selectByPrimaryKey(uid);
+    }
+
 }
