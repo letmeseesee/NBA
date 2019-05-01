@@ -166,7 +166,7 @@ public class GetGamesService {
      *
      * @param gameId 比赛id
      */
-    @Async("GameAnsycExecutor")
+//    @Async("GameAnsycExecutor")
     public void PlayByPlayByGameId(Integer gameId) {
         String url = sportsdataUrl + PlayByPlayUrl + gameId;
         logger.info("从地址{}获取比赛详情", url);

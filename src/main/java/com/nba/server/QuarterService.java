@@ -17,7 +17,7 @@ public class QuarterService {
         QuartersExample quartersExample = new QuartersExample();
         QuartersExample.Criteria criteria = quartersExample.createCriteria();
         criteria.andQuarterIdEqualTo(id);
-        return quartersDAO.selectByExample(quartersExample).get(0);
+        return quartersDAO.selectByPrimaryKey(id);
     }
 
     void updateByQuter(Quarters quarters) {

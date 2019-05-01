@@ -34,4 +34,9 @@ public class ScheduledTasksTest {
     public void scheduledGetDayGames() {
         scheduledTasks.scheduledGetDayGames();
     }
+
+    @Test
+    public void scheduledGetGamesNotClose(){
+        scheduledTasks.scheduledGetGamesNotClose();
+    }
 }
