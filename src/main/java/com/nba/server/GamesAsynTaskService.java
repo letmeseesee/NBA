@@ -15,6 +15,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class GamesAsynTaskService {
@@ -31,6 +34,12 @@ public class GamesAsynTaskService {
 
     @Autowired
     GamesDAO gamesDAO;
+
+    @Autowired
+    QuarterService  quarterService;
+
+    @Autowired
+    GameDetailService gameDetailService;
 
     /**
      * 新闻
@@ -150,6 +159,35 @@ public class GamesAsynTaskService {
             //如果当前比赛是NOT_START或者STARTING则生产竞猜信息
             gamesDAO.insert(games);
             logger.info("插入比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
+        }
+    }
+
+    void saveQuarters(List<Quarters> quartersList){
+        //查询当前是否存改比赛
+       for (Quarters quarter:quartersList){
+           //
+           Quarters oldQuter = quarterService.getQutersById(quarter.getQuarterId());
+           if(oldQuter != null) {
+               if (!oldQuter.equals(quarter)) {
+                   quarterService.updateByQuter(quarter);
+               }
+           }else {
+               quarterService.insertByQuter(quarter);
+           }
+       }
+    }
+
+    void saveGameDetail(List<GameDetail> gameDetailList){
+        List<GameDetail> notExistDetail = new ArrayList<>();
+        //查询当前是否存改比赛
+        for (GameDetail detail:gameDetailList){
+            //
+            if(gameDetailService.selectByPrimary(detail.getPlayId()) == null) {
+                notExistDetail.add(detail);
+            }
+        }
+        if(notExistDetail.size() > 0){
+            gameDetailService.batchInsertDeatil(notExistDetail);
         }
     }
 

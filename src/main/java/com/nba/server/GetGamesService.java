@@ -1,6 +1,8 @@
 package com.nba.server;
 
 import com.alibaba.fastjson.JSON;
+import com.nba.facade.dto.LastGameDot;
+import com.nba.facade.dto.PlayByPlayDto;
 import com.nba.facade.dto.TeamsDto;
 import com.nba.mapper.TeamsDAO;
 import com.nba.model.Games;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -32,6 +35,9 @@ public class GetGamesService {
 
     @Value("${fantasy.url}")
     private String baseUrl;
+
+    @Value("${fantasy.url}")
+    private String sportsdataUrl;
 
     @Value("${fantasy.key}")
     private String key;
@@ -54,6 +60,9 @@ public class GetGamesService {
 
     @Value("${fantasy.getTimeLine}")
     private String getTimeLine;
+
+    @Value("${fantasy.PlayByPlay}")
+    private String PlayByPlayUrl;
 
     @Autowired
     GamesAsynTaskService gamesAsynTaskService;
@@ -153,10 +162,24 @@ public class GetGamesService {
     }
 
     /**
-     * 查询当前正在进行中的比赛
+     * 获取比赛详情,并更新比赛信息
+     *
+     * @param gameId 比赛id
      */
-    public void getCurrentGame() {
-        //
+    @Async("GameAnsycExecutor")
+    public void PlayByPlayByGameId(Integer gameId) {
+        String url = sportsdataUrl + PlayByPlayUrl + gameId;
+        logger.info("从地址{}获取比赛详情", url);
+        String sportsContent = curlGet(url);
+        logger.info(sportsContent);
+        PlayByPlayDto playByPlayDto = JSON.parseObject(sportsContent, PlayByPlayDto.class);
+        //保存比赛信息
+        gamesAsynTaskService.saveGames(playByPlayDto.getGame());
+        //保存节信息
+        gamesAsynTaskService.saveQuarters(playByPlayDto.getQuarters());
+        //保存比赛明细
+        gamesAsynTaskService.saveGameDetail(playByPlayDto.getPlays());
+
     }
 
     private String curlGet(String url) {

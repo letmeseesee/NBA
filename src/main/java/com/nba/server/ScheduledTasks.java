@@ -1,5 +1,7 @@
 package com.nba.server;
 
+import com.nba.facade.dto.LastGameDot;
+import com.nba.model.Games;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,11 +27,14 @@ public class ScheduledTasks {
     @Autowired
     GetGamesService getGamesService;
 
+    @Autowired
+    GameService gameService;
+
     /**
      * 定时抓取新闻 半小时一次
      *  @Scheduled(cron = "0 0/57 * * * ?")
      */
-//    @Scheduled(fixedRate = 1000 * 60 * 30)
+    @Scheduled(fixedRate = 1000 * 60 * 30)
     public void scheduledGetNews() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取新闻。");
         //抓取当天的新闻 （模拟数据取得三天前的新闻）
@@ -45,7 +51,7 @@ public class ScheduledTasks {
      * 定时抓取球员,每天中午抓取
      *  @Scheduled(cron = "0 0/57 * * * ?")
      */
-//    @Scheduled(cron = "0 0 0/12 * * ?")
+    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledGetPlayers() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球员。");
         getGamesService.getPlayers();
@@ -56,7 +62,7 @@ public class ScheduledTasks {
      *  @Scheduled(cron = "0 0/57 * * * ?")
      *      @Scheduled(fixedRate = 1000 * 60)
      */
-//    @Scheduled(cron = "0 0 0/12 * * ?")
+    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledGetTeams() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取球队。");
         getGamesService.getAllTeams();
@@ -65,7 +71,7 @@ public class ScheduledTasks {
     /**
      * 抓取今年的比赛 一月抓取
      */
-//    @Scheduled(cron = "0 0 0 0/1 * ?")
+    @Scheduled(cron = "0 0 0 0/1 * ?")
     public void scheduledGetAllGames() {
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取全年比赛。");
         Calendar calendar = Calendar.getInstance();
@@ -77,9 +83,9 @@ public class ScheduledTasks {
     }
 
     /**
-     * 抓取一个月内的比赛 五分钟抓取一次
+     * 抓取一个月内的比赛 一天抓取一次
      */
-//    @Scheduled(fixedRate = 1000 * 60 * 5)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
     public void scheduledGetDayGames() {
         Calendar calendar = Calendar.getInstance();
         logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取当月的比赛。");
@@ -93,5 +99,18 @@ public class ScheduledTasks {
         date = calendar.getTime();
         System.out.println(simpleDateDay.format(date));
         getGamesService.getGamesByDate(simpleDateYear.format(date));
+    }
+
+    /**
+     * 抓取未结束的比赛 5秒抓取一次
+     */
+    @Scheduled(fixedRate = 1000 * 50)
+    public void scheduledGetGamesNotClose() {
+        logger.info("现在时间：" + simpleDateTimeFormat.format(new Date())+ "抓取未结束的比赛的信息");
+        //获取所有未结束的比赛
+        List<Games> gamesList = gameService.getNotFinishGames();
+        gamesList.parallelStream().forEach(games -> {
+            getGamesService.PlayByPlayByGameId(games.getGameId());
+        });
     }
 }

@@ -40,4 +40,9 @@ public class GetGamesServiceTest {
     public void test04(){
         getGamesService.getGamesByDate("2019");
     }
+
+    @Test
+    public void test05(){
+        getGamesService.PlayByPlayByGameId(12481);
+    }
 }

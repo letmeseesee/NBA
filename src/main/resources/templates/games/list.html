@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">GamePage</h2>
+                </div>
+            </header>
+
+
+            <!-- 关注的比赛和即将开始的比赛-->
+            <section class="projects no-padding-top">
+                <div class="container-fluid" th:each="game : ${gamesList}">
+                    <!-- 一个比赛-->
+                    <div class="project">
+                        <div class="row bg-white has-shadow">
+                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.homeTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="text text-center">
+                                    <h3 class="h4" th:text="${game.homeTeam + ' VS ' + game.awayTeam + ' (' +game.status + ')'}">
+                                        Project Title
+                                    </h3>
+                                    <small th:text="${game.homeTeamScore + ' : ' + game.awayTeamScore}" class="text-red">Lorem Ipsum Dolor</small>
+                                </div>
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.awayTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right-col col-lg-6 d-flex align-items-center">
+                                <div class="text text-center text-red">
+                                    <small th:text="${game.dateTime}">
+                                        Project Title
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
