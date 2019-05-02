@@ -167,7 +167,7 @@ public class GetGamesService {
      *
      * @param gameId 比赛id
      */
-//    @Async("GameAnsycExecutor")
+    @Async("GameAnsycExecutor")
     @Transactional(rollbackFor = Exception.class)
     public void PlayByPlayByGameId(Integer gameId) {
         String url = sportsdataUrl + PlayByPlayUrl + gameId;
