@@ -8,6 +8,8 @@ import com.nba.status.CompetitionEnum;
 import com.nba.status.GameStatusEnum;
 import org.apache.commons.collections4.bag.CollectionSortedBag;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,8 @@ import java.util.List;
 
 @Service
 public class CompetitionService {
+    private Logger logger = LoggerFactory.getLogger(GetGamesService.class);
+
     @Autowired
     CompetitionDAO competitionDAO;
 
@@ -45,7 +49,7 @@ public class CompetitionService {
         CompetitionExample.Criteria criteria = example.createCriteria();
         criteria.andGameIdEqualTo(games.getGameId());
         List<Competition> competitionList = competitionDAO.selectByExample(example);
-
+        logger.info("处理比赛{}的竞猜",games.getGameId());
         if(competitionList.isEmpty()){
             //生成比赛对应的竞猜
             if(games.getStatus() == GameStatusEnum.code2Desc((byte) 1) ||

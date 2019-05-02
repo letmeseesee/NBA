@@ -5,10 +5,7 @@ import com.nba.facade.vo.request.CreatePostReq;
 import com.nba.facade.vo.request.CreateThreadReq;
 import com.nba.mapper.BbsPostDAO;
 import com.nba.mapper.BbsThreadDAO;
-import com.nba.model.BbsPost;
-import com.nba.model.BbsPostExample;
-import com.nba.model.BbsThread;
-import com.nba.model.BbsThreadExample;
+import com.nba.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +24,9 @@ public class ThreadService {
 
     @Autowired
     HttpServletRequest request;
+
+    @Autowired
+    LoginService loginService;
 
     /**
      * 创建帖子
@@ -61,6 +61,45 @@ public class ThreadService {
         bbsPost.setUname(uName);
         bbsPostDAO.insert(bbsPost);
 
+        return bbsThread.getTid();
+    }
+
+    @Transactional
+    public Integer createGameThread(Games games) {
+        //获取管理员信息
+        User adminUser = loginService.getAdminUser();
+        Integer userId ;
+        String  uName;
+        if(adminUser != null){
+            userId = adminUser.getUid();
+            uName = adminUser.getUsername();
+        }else {
+            userId = 0;
+            uName = "root";
+        }
+        //插入主表信息
+        BbsThread bbsThread = new BbsThread();
+        bbsThread.setUid(userId);
+        bbsThread.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsThread.setLastDate(new Long(System.currentTimeMillis()).intValue());
+        bbsThread.setSubject(games.getHomeTeam() + " VS " +games.getHomeTeam());
+        bbsThread.setType(1);
+        bbsThread.setViews(1);
+        bbsThread.setPosts(1);
+        bbsThread.setClosed(false);
+        bbsThreadDAO.insertSelective(bbsThread);
+
+        //插入明细
+        BbsPost bbsPost = new BbsPost();
+        bbsPost.setTid(bbsThread.getTid());
+        bbsPost.setUid(userId);
+        bbsPost.setIsfirst(1);
+        bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsPost.setMessage(games.getHomeTeam() + " VS " +games.getHomeTeam());
+        bbsPost.setMessageFmt("");
+        bbsPost.setQuotepid(0);
+        bbsPost.setUname(uName);
+        bbsPostDAO.insert(bbsPost);
         return bbsThread.getTid();
     }
 

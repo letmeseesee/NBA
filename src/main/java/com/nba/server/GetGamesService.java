@@ -175,12 +175,12 @@ public class GetGamesService {
         String sportsContent = curlGet(url);
         logger.info(sportsContent);
         PlayByPlayDto playByPlayDto = JSON.parseObject(sportsContent, PlayByPlayDto.class);
-        //保存比赛信息
-        gamesAsynTaskService.saveGames(playByPlayDto.getGame());
         //保存节信息
         gamesAsynTaskService.saveQuarters(playByPlayDto.getQuarters());
         //保存比赛明细
         gamesAsynTaskService.saveGameDetail(playByPlayDto.getPlays());
+        //保存比赛信息
+        gamesAsynTaskService.saveGames(playByPlayDto.getGame());
 
     }
 

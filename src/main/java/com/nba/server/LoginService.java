@@ -42,4 +42,16 @@ public class LoginService {
         return userDAO.selectByPrimaryKey(uid);
     }
 
+    public User getAdminUser(){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIsadminEqualTo(1);
+        List<User> users =  userDAO.selectByExample(userExample);
+        if(users.size() > 0){
+            return  users.get(0);
+        }else {
+            return null;
+        }
+    }
+
 }

@@ -41,6 +41,12 @@ public class GamesAsynTaskService {
     @Autowired
     GameDetailService gameDetailService;
 
+    @Autowired
+    CompetitionService competitionService;
+
+    @Autowired
+    ThreadService threadService;
+
     /**
      * 新闻
      * @param news
@@ -139,7 +145,7 @@ public class GamesAsynTaskService {
      * 比赛
      * @param games
      */
-    @Async("GameAnsycExecutor")
+//    @Async("GameAnsycExecutor")
     @Transactional(rollbackFor = Exception.class)
     public void saveGames(Games games){
         //查询当前是否存改比赛
@@ -152,12 +158,17 @@ public class GamesAsynTaskService {
             if(!oldGames.equals(games)){
                 gamesDAO.updateByExample(games,gamesExample);
                 logger.info("更新比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
+                //结算
+                competitionService.insertOrUpdateCompetition(games);
             } else {
                 logger.info("比赛{} VS {}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
             }
         } else {
             //如果当前比赛是NOT_START或者STARTING则生产竞猜信息
             gamesDAO.insert(games);
+            //插入竞猜和话题
+            competitionService.insertOrUpdateCompetition(games);
+            threadService.createGameThread(games);
             logger.info("插入比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
         }
     }
@@ -170,9 +181,13 @@ public class GamesAsynTaskService {
            if(oldQuter != null) {
                if (!oldQuter.equals(quarter)) {
                    quarterService.updateByQuter(quarter);
+                   logger.info("更新quarter的信息",quarter.getQuarterId());
+               }else {
+                   logger.info("无需更新quarter的信息",quarter.getQuarterId());
                }
            }else {
                quarterService.insertByQuter(quarter);
+               logger.info("插入quarter的信息",quarter.getQuarterId());
            }
        }
     }
@@ -188,6 +203,8 @@ public class GamesAsynTaskService {
         }
         if(notExistDetail.size() > 0){
             gameDetailService.batchInsertDeatil(notExistDetail);
+        }else {
+            logger.info("比赛详情无需更新");
         }
     }
 
