@@ -174,14 +174,18 @@ public class GetGamesService {
         logger.info("从地址{}获取比赛详情", url);
         String sportsContent = curlGet(url);
         logger.info(sportsContent);
-        PlayByPlayDto playByPlayDto = JSON.parseObject(sportsContent, PlayByPlayDto.class);
-        //保存节信息
-        gamesAsynTaskService.saveQuarters(playByPlayDto.getQuarters());
-        //保存比赛明细
-        gamesAsynTaskService.saveGameDetail(playByPlayDto.getPlays());
-        //保存比赛信息
-        gamesAsynTaskService.saveGames(playByPlayDto.getGame());
-
+        try {
+            PlayByPlayDto playByPlayDto = JSON.parseObject(sportsContent, PlayByPlayDto.class);
+            //保存节信息
+            gamesAsynTaskService.saveQuarters(playByPlayDto.getQuarters());
+            //保存比赛明细
+            gamesAsynTaskService.saveGameDetail(playByPlayDto.getPlays());
+            //保存比赛信息
+            gamesAsynTaskService.saveGames(playByPlayDto.getGame());
+        }catch (Exception e){
+            logger.warn("更新失败");
+            e.printStackTrace();
+        }
     }
 
     private String curlGet(String url) {

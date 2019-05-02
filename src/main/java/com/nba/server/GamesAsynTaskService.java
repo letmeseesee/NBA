@@ -148,6 +148,8 @@ public class GamesAsynTaskService {
 //    @Async("GameAnsycExecutor")
     @Transactional(rollbackFor = Exception.class)
     public void saveGames(Games games){
+        //
+        games.setStatus(GameStatusEnum.STARTING.getDescription());
         //查询当前是否存改比赛
         GamesExample gamesExample = new GamesExample();
         GamesExample.Criteria criteria = gamesExample.createCriteria();

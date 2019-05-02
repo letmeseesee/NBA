@@ -6,11 +6,12 @@ import java.util.Objects;
 
 public enum CompetitionEnum {
     /**
-     * 1未开始 2开始 3结束
+     * 1未开始 2开始 3结束 4取消
      */
     NOT_START((byte)1, "Scheduled"),
     STARTING((byte)2, "InProgress"),
-    CLOSE((byte)3, "Final");
+    CLOSE((byte)3, "Final"),
+    CANCELED((byte)4, "Canceled");
 
 
     @Getter

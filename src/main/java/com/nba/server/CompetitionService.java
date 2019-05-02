@@ -64,6 +64,13 @@ public class CompetitionService {
                 competition.setHomeTeamSupport(0);
                 competition.setAwayTeamSupport(0);
                 competition.setAddTime(new Date());
+                if(games.getStatus() == GameStatusEnum.code2Desc((byte) 1)){
+                    competition.setStatus(CompetitionEnum.NOT_START.getCode().intValue());
+                }else {
+                    competition.setStatus(CompetitionEnum.STARTING.getCode().intValue());
+                }
+                competitionDAO.insert(competition);
+                logger.info("添加比赛{}的竞猜",games.getGameId());
             }
         }else {
             Competition competition = competitionList.get(0);
@@ -79,9 +86,10 @@ public class CompetitionService {
                 if(competition.getStatus() != CompetitionEnum.CLOSE.getCode().intValue()) {
                     competition.setStatus(CompetitionEnum.CLOSE.getCode().intValue());
                     competitionDAO.updateByPrimaryKeySelective(competition);
+                    //结算竞猜金额（赢了的积分加一，输了的积分减一）
+                    competitionService.finishCompetition(games);
+                    logger.info("结算比赛{}的竞猜",games.getGameId());
                 }
-                //结算竞猜金额（赢了的积分加一，输了的积分减一）
-                competitionService.finishCompetition(games);
             }
 
                 //如果比赛已经开始但是竞猜没有则更新竞猜的状态
@@ -91,6 +99,18 @@ public class CompetitionService {
                 if(competition.getStatus() != CompetitionEnum.STARTING.getCode().intValue()){
                     competition.setStatus(CompetitionEnum.STARTING.getCode().intValue());
                     competitionDAO.updateByPrimaryKeySelective(competition);
+                    logger.info("开启比赛{}的竞猜",games.getGameId());
+                }
+            }
+
+            //比赛取消返还积分
+            if(StringUtils.equals(games.getStatus(),GameStatusEnum.Canceled.getDescription())){
+                if(competition.getStatus() != CompetitionEnum.CANCELED.getCode().intValue()) {
+                    competition.setStatus(CompetitionEnum.CANCELED.getCode().intValue());
+                    competitionDAO.updateByPrimaryKeySelective(competition);
+                    //结算竞猜金额
+                    competitionService.cancelCompetition(games);
+                    logger.info("取消比赛{}的竞猜",games.getGameId());
                 }
             }
         }
@@ -138,6 +158,32 @@ public class CompetitionService {
             for (Integer uid:winUserArr) {
                 user = userDAO.selectByPrimaryKey(uid);
                 user.setGolds(user.getGolds() + 2);
+                userDAO.updateByPrimaryKey(user);
+            }
+        }
+        return true;
+    }
+
+    @Transactional
+    public Boolean cancelCompetition(Games games){
+        //查找当前比赛的竞猜
+        CompetitionExample example = new CompetitionExample();
+        CompetitionExample.Criteria criteria = example.createCriteria();
+        criteria.andGameIdEqualTo(games.getGameId());
+        Competition competition = competitionDAO.selectByExample(example).get(0);
+
+        CompetitionListExample competitionListExample = new CompetitionListExample();
+        CompetitionListExample.Criteria criteria1List = competitionListExample.createCriteria();
+        criteria1List.andCompetitionIdEqualTo(competition.getCompetitionId());
+        List<CompetitionList> competitionLists =
+                competitionListDAO.selectByExample(competitionListExample);
+
+        //返还积分
+        if(!competitionLists.isEmpty()){
+            User user;
+            for (CompetitionList competitionList:competitionLists) {
+                user = userDAO.selectByPrimaryKey(competitionList.getUid());
+                user.setGolds(user.getGolds() + 1);
                 userDAO.updateByPrimaryKey(user);
             }
         }
