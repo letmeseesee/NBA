@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.GameDetailDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.GameDetail">
+    <id column="play_id" jdbcType="INTEGER" property="playId" />
+    <result column="quarter_id" jdbcType="INTEGER" property="quarterId" />
+    <result column="quarter_name" jdbcType="VARCHAR" property="quarterName" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="time_remaining_minutes" jdbcType="INTEGER" property="timeRemainingMinutes" />
+    <result column="time_remaining_seconds" jdbcType="INTEGER" property="timeRemainingSeconds" />
+    <result column="away_team_score" jdbcType="INTEGER" property="awayTeamScore" />
+    <result column="home_team_score" jdbcType="INTEGER" property="homeTeamScore" />
+    <result column="potential_points" jdbcType="INTEGER" property="potentialPoints" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="shot_made" jdbcType="BIT" property="shotMade" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="team" jdbcType="VARCHAR" property="team" />
+    <result column="opponent_id" jdbcType="INTEGER" property="opponentId" />
+    <result column="opponent" jdbcType="VARCHAR" property="opponent" />
+    <result column="receiving_team_id" jdbcType="INTEGER" property="receivingTeamId" />
+    <result column="receiving_team" jdbcType="VARCHAR" property="receivingTeam" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="player_id" jdbcType="INTEGER" property="playerId" />
+    <result column="assisted_by_player_id" jdbcType="INTEGER" property="assistedByPlayerId" />
+    <result column="blocked_by_player_id" jdbcType="INTEGER" property="blockedByPlayerId" />
+    <result column="fast_break" jdbcType="BIT" property="fastBreak" />
+    <result column="side_of_basket" jdbcType="VARCHAR" property="sideOfBasket" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="VARCHAR" property="created" />
+    <result column="substituteIn_player_id" jdbcType="INTEGER" property="substituteinPlayerId" />
+    <result column="substitute_out_player_id" jdbcType="INTEGER" property="substituteOutPlayerId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    play_id, quarter_id, quarter_name, `sequence`, time_remaining_minutes, time_remaining_seconds, 
+    away_team_score, home_team_score, potential_points, points, shot_made, category, 
+    `type`, team_id, team, opponent_id, opponent, receiving_team_id, receiving_team, 
+    description, player_id, assisted_by_player_id, blocked_by_player_id, fast_break, 
+    side_of_basket, updated, created, substituteIn_player_id, substitute_out_player_id
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.GameDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from game_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game_detail
+    where play_id = #{playId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from game_detail
+    where play_id = #{playId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.GameDetailExample">
+    delete from game_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="play_id" keyProperty="playId" parameterType="com.nba.model.GameDetail" useGeneratedKeys="true">
+    insert into game_detail (play_id,quarter_id, quarter_name, `sequence`,
+      time_remaining_minutes, time_remaining_seconds, 
+      away_team_score, home_team_score, potential_points, 
+      points, shot_made, category, 
+      `type`, team_id, team, 
+      opponent_id, opponent, receiving_team_id, 
+      receiving_team, description, player_id, 
+      assisted_by_player_id, blocked_by_player_id, 
+      fast_break, side_of_basket, updated, 
+      created, substituteIn_player_id, substitute_out_player_id
+      )
+    values (#{playId,jdbcType=INTEGER},#{quarterId,jdbcType=INTEGER}, #{quarterName,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER},
+      #{timeRemainingMinutes,jdbcType=INTEGER}, #{timeRemainingSeconds,jdbcType=INTEGER}, 
+      #{awayTeamScore,jdbcType=INTEGER}, #{homeTeamScore,jdbcType=INTEGER}, #{potentialPoints,jdbcType=INTEGER}, 
+      #{points,jdbcType=INTEGER}, #{shotMade,jdbcType=BIT}, #{category,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{teamId,jdbcType=INTEGER}, #{team,jdbcType=VARCHAR}, 
+      #{opponentId,jdbcType=INTEGER}, #{opponent,jdbcType=VARCHAR}, #{receivingTeamId,jdbcType=INTEGER}, 
+      #{receivingTeam,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{playerId,jdbcType=INTEGER}, 
+      #{assistedByPlayerId,jdbcType=INTEGER}, #{blockedByPlayerId,jdbcType=INTEGER}, 
+      #{fastBreak,jdbcType=BIT}, #{sideOfBasket,jdbcType=VARCHAR}, #{updated,jdbcType=TIMESTAMP}, 
+      #{created,jdbcType=VARCHAR}, #{substituteinPlayerId,jdbcType=INTEGER}, #{substituteOutPlayerId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="play_id" keyProperty="playId" parameterType="com.nba.model.GameDetail" useGeneratedKeys="true">
+    insert into game_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quarterId != null">
+        quarter_id,
+      </if>
+      <if test="quarterName != null">
+        quarter_name,
+      </if>
+      <if test="sequence != null">
+        `sequence`,
+      </if>
+      <if test="timeRemainingMinutes != null">
+        time_remaining_minutes,
+      </if>
+      <if test="timeRemainingSeconds != null">
+        time_remaining_seconds,
+      </if>
+      <if test="awayTeamScore != null">
+        away_team_score,
+      </if>
+      <if test="homeTeamScore != null">
+        home_team_score,
+      </if>
+      <if test="potentialPoints != null">
+        potential_points,
+      </if>
+      <if test="points != null">
+        points,
+      </if>
+      <if test="shotMade != null">
+        shot_made,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="team != null">
+        team,
+      </if>
+      <if test="opponentId != null">
+        opponent_id,
+      </if>
+      <if test="opponent != null">
+        opponent,
+      </if>
+      <if test="receivingTeamId != null">
+        receiving_team_id,
+      </if>
+      <if test="receivingTeam != null">
+        receiving_team,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="playerId != null">
+        player_id,
+      </if>
+      <if test="assistedByPlayerId != null">
+        assisted_by_player_id,
+      </if>
+      <if test="blockedByPlayerId != null">
+        blocked_by_player_id,
+      </if>
+      <if test="fastBreak != null">
+        fast_break,
+      </if>
+      <if test="sideOfBasket != null">
+        side_of_basket,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="substituteinPlayerId != null">
+        substituteIn_player_id,
+      </if>
+      <if test="substituteOutPlayerId != null">
+        substitute_out_player_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quarterId != null">
+        #{quarterId,jdbcType=INTEGER},
+      </if>
+      <if test="quarterName != null">
+        #{quarterName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingMinutes != null">
+        #{timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingSeconds != null">
+        #{timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamScore != null">
+        #{awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamScore != null">
+        #{homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="potentialPoints != null">
+        #{potentialPoints,jdbcType=INTEGER},
+      </if>
+      <if test="points != null">
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="shotMade != null">
+        #{shotMade,jdbcType=BIT},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="team != null">
+        #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="opponentId != null">
+        #{opponentId,jdbcType=INTEGER},
+      </if>
+      <if test="opponent != null">
+        #{opponent,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingTeamId != null">
+        #{receivingTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="receivingTeam != null">
+        #{receivingTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="playerId != null">
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="assistedByPlayerId != null">
+        #{assistedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="blockedByPlayerId != null">
+        #{blockedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fastBreak != null">
+        #{fastBreak,jdbcType=BIT},
+      </if>
+      <if test="sideOfBasket != null">
+        #{sideOfBasket,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="substituteinPlayerId != null">
+        #{substituteinPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="substituteOutPlayerId != null">
+        #{substituteOutPlayerId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.GameDetailExample" resultType="java.lang.Long">
+    select count(*) from game_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update game_detail
+    <set>
+      <if test="record.playId != null">
+        play_id = #{record.playId,jdbcType=INTEGER},
+      </if>
+      <if test="record.quarterId != null">
+        quarter_id = #{record.quarterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.quarterName != null">
+        quarter_name = #{record.quarterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null">
+        `sequence` = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeRemainingMinutes != null">
+        time_remaining_minutes = #{record.timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeRemainingSeconds != null">
+        time_remaining_seconds = #{record.timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="record.awayTeamScore != null">
+        away_team_score = #{record.awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeTeamScore != null">
+        home_team_score = #{record.homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.potentialPoints != null">
+        potential_points = #{record.potentialPoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.points != null">
+        points = #{record.points,jdbcType=INTEGER},
+      </if>
+      <if test="record.shotMade != null">
+        shot_made = #{record.shotMade,jdbcType=BIT},
+      </if>
+      <if test="record.category != null">
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamId != null">
+        team_id = #{record.teamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.team != null">
+        team = #{record.team,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opponentId != null">
+        opponent_id = #{record.opponentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.opponent != null">
+        opponent = #{record.opponent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivingTeamId != null">
+        receiving_team_id = #{record.receivingTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivingTeam != null">
+        receiving_team = #{record.receivingTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playerId != null">
+        player_id = #{record.playerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.assistedByPlayerId != null">
+        assisted_by_player_id = #{record.assistedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blockedByPlayerId != null">
+        blocked_by_player_id = #{record.blockedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fastBreak != null">
+        fast_break = #{record.fastBreak,jdbcType=BIT},
+      </if>
+      <if test="record.sideOfBasket != null">
+        side_of_basket = #{record.sideOfBasket,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=VARCHAR},
+      </if>
+      <if test="record.substituteinPlayerId != null">
+        substituteIn_player_id = #{record.substituteinPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.substituteOutPlayerId != null">
+        substitute_out_player_id = #{record.substituteOutPlayerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update game_detail
+    set play_id = #{record.playId,jdbcType=INTEGER},
+      quarter_id = #{record.quarterId,jdbcType=INTEGER},
+      quarter_name = #{record.quarterName,jdbcType=VARCHAR},
+      `sequence` = #{record.sequence,jdbcType=INTEGER},
+      time_remaining_minutes = #{record.timeRemainingMinutes,jdbcType=INTEGER},
+      time_remaining_seconds = #{record.timeRemainingSeconds,jdbcType=INTEGER},
+      away_team_score = #{record.awayTeamScore,jdbcType=INTEGER},
+      home_team_score = #{record.homeTeamScore,jdbcType=INTEGER},
+      potential_points = #{record.potentialPoints,jdbcType=INTEGER},
+      points = #{record.points,jdbcType=INTEGER},
+      shot_made = #{record.shotMade,jdbcType=BIT},
+      category = #{record.category,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
+      team_id = #{record.teamId,jdbcType=INTEGER},
+      team = #{record.team,jdbcType=VARCHAR},
+      opponent_id = #{record.opponentId,jdbcType=INTEGER},
+      opponent = #{record.opponent,jdbcType=VARCHAR},
+      receiving_team_id = #{record.receivingTeamId,jdbcType=INTEGER},
+      receiving_team = #{record.receivingTeam,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      player_id = #{record.playerId,jdbcType=INTEGER},
+      assisted_by_player_id = #{record.assistedByPlayerId,jdbcType=INTEGER},
+      blocked_by_player_id = #{record.blockedByPlayerId,jdbcType=INTEGER},
+      fast_break = #{record.fastBreak,jdbcType=BIT},
+      side_of_basket = #{record.sideOfBasket,jdbcType=VARCHAR},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      created = #{record.created,jdbcType=VARCHAR},
+      substituteIn_player_id = #{record.substituteinPlayerId,jdbcType=INTEGER},
+      substitute_out_player_id = #{record.substituteOutPlayerId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.GameDetail">
+    update game_detail
+    <set>
+      <if test="quarterId != null">
+        quarter_id = #{quarterId,jdbcType=INTEGER},
+      </if>
+      <if test="quarterName != null">
+        quarter_name = #{quarterName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        `sequence` = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingMinutes != null">
+        time_remaining_minutes = #{timeRemainingMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="timeRemainingSeconds != null">
+        time_remaining_seconds = #{timeRemainingSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="awayTeamScore != null">
+        away_team_score = #{awayTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeamScore != null">
+        home_team_score = #{homeTeamScore,jdbcType=INTEGER},
+      </if>
+      <if test="potentialPoints != null">
+        potential_points = #{potentialPoints,jdbcType=INTEGER},
+      </if>
+      <if test="points != null">
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="shotMade != null">
+        shot_made = #{shotMade,jdbcType=BIT},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="team != null">
+        team = #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="opponentId != null">
+        opponent_id = #{opponentId,jdbcType=INTEGER},
+      </if>
+      <if test="opponent != null">
+        opponent = #{opponent,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingTeamId != null">
+        receiving_team_id = #{receivingTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="receivingTeam != null">
+        receiving_team = #{receivingTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="playerId != null">
+        player_id = #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="assistedByPlayerId != null">
+        assisted_by_player_id = #{assistedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="blockedByPlayerId != null">
+        blocked_by_player_id = #{blockedByPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="fastBreak != null">
+        fast_break = #{fastBreak,jdbcType=BIT},
+      </if>
+      <if test="sideOfBasket != null">
+        side_of_basket = #{sideOfBasket,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="substituteinPlayerId != null">
+        substituteIn_player_id = #{substituteinPlayerId,jdbcType=INTEGER},
+      </if>
+      <if test="substituteOutPlayerId != null">
+        substitute_out_player_id = #{substituteOutPlayerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where play_id = #{playId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.GameDetail">
+    update game_detail
+    set quarter_id = #{quarterId,jdbcType=INTEGER},
+      quarter_name = #{quarterName,jdbcType=VARCHAR},
+      `sequence` = #{sequence,jdbcType=INTEGER},
+      time_remaining_minutes = #{timeRemainingMinutes,jdbcType=INTEGER},
+      time_remaining_seconds = #{timeRemainingSeconds,jdbcType=INTEGER},
+      away_team_score = #{awayTeamScore,jdbcType=INTEGER},
+      home_team_score = #{homeTeamScore,jdbcType=INTEGER},
+      potential_points = #{potentialPoints,jdbcType=INTEGER},
+      points = #{points,jdbcType=INTEGER},
+      shot_made = #{shotMade,jdbcType=BIT},
+      category = #{category,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      team_id = #{teamId,jdbcType=INTEGER},
+      team = #{team,jdbcType=VARCHAR},
+      opponent_id = #{opponentId,jdbcType=INTEGER},
+      opponent = #{opponent,jdbcType=VARCHAR},
+      receiving_team_id = #{receivingTeamId,jdbcType=INTEGER},
+      receiving_team = #{receivingTeam,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      player_id = #{playerId,jdbcType=INTEGER},
+      assisted_by_player_id = #{assistedByPlayerId,jdbcType=INTEGER},
+      blocked_by_player_id = #{blockedByPlayerId,jdbcType=INTEGER},
+      fast_break = #{fastBreak,jdbcType=BIT},
+      side_of_basket = #{sideOfBasket,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=VARCHAR},
+      substituteIn_player_id = #{substituteinPlayerId,jdbcType=INTEGER},
+      substitute_out_player_id = #{substituteOutPlayerId,jdbcType=INTEGER}
+    where play_id = #{playId,jdbcType=INTEGER}
+  </update>
+</mapper>

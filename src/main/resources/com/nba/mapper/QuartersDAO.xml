@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nba.mapper.QuartersDAO">
+  <resultMap id="BaseResultMap" type="com.nba.model.Quarters">
+    <id column="quarter_id" jdbcType="INTEGER" property="quarterId" />
+    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="away_score" jdbcType="INTEGER" property="awayScore" />
+    <result column="home_score" jdbcType="INTEGER" property="homeScore" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    quarter_id, game_id, `number`, `name`, away_score, home_score
+  </sql>
+  <select id="selectByExample" parameterType="com.nba.model.QuartersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from quarters
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+    <if test="forUpdate != null and forUpdate == true">
+      for update
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from quarters
+    where quarter_id = #{quarterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from quarters
+    where quarter_id = #{quarterId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nba.model.QuartersExample">
+    delete from quarters
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="quarter_id" keyProperty="quarterId" parameterType="com.nba.model.Quarters" useGeneratedKeys="true">
+    insert into quarters (quarter_id,game_id, `number`, `name`,
+      away_score, home_score)
+    values (#{quarterId,jdbcType=INTEGER},#{gameId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{awayScore,jdbcType=INTEGER}, #{homeScore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="quarter_id" keyProperty="quarterId" parameterType="com.nba.model.Quarters" useGeneratedKeys="true">
+    insert into quarters
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        game_id,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="awayScore != null">
+        away_score,
+      </if>
+      <if test="homeScore != null">
+        home_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameId != null">
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="awayScore != null">
+        #{awayScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeScore != null">
+        #{homeScore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nba.model.QuartersExample" resultType="java.lang.Long">
+    select count(*) from quarters
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quarters
+    <set>
+      <if test="record.quarterId != null">
+        quarter_id = #{record.quarterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameId != null">
+        game_id = #{record.gameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null">
+        `number` = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.awayScore != null">
+        away_score = #{record.awayScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.homeScore != null">
+        home_score = #{record.homeScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quarters
+    set quarter_id = #{record.quarterId,jdbcType=INTEGER},
+      game_id = #{record.gameId,jdbcType=INTEGER},
+      `number` = #{record.number,jdbcType=INTEGER},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      away_score = #{record.awayScore,jdbcType=INTEGER},
+      home_score = #{record.homeScore,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nba.model.Quarters">
+    update quarters
+    <set>
+      <if test="gameId != null">
+        game_id = #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="awayScore != null">
+        away_score = #{awayScore,jdbcType=INTEGER},
+      </if>
+      <if test="homeScore != null">
+        home_score = #{homeScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where quarter_id = #{quarterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nba.model.Quarters">
+    update quarters
+    set game_id = #{gameId,jdbcType=INTEGER},
+      `number` = #{number,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      away_score = #{awayScore,jdbcType=INTEGER},
+      home_score = #{homeScore,jdbcType=INTEGER}
+    where quarter_id = #{quarterId,jdbcType=INTEGER}
+  </update>
+</mapper>

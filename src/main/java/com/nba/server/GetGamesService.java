@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
@@ -167,6 +168,7 @@ public class GetGamesService {
      * @param gameId 比赛id
      */
 //    @Async("GameAnsycExecutor")
+    @Transactional(rollbackFor = Exception.class)
     public void PlayByPlayByGameId(Integer gameId) {
         String url = sportsdataUrl + PlayByPlayUrl + gameId;
         logger.info("从地址{}获取比赛详情", url);
