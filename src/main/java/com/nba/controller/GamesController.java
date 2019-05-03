@@ -38,9 +38,12 @@ public class GamesController implements GamesApi {
     public String gamesList(Integer id, Model model) {
         //获取比赛信息
         LastGameDot game = gameService.getGame(id);
+        //计算支持率
+        Double calculate = gameService.calculateSupport(game.getHomeTeamMoneyLine(),game.getAwayTeamMoneyLine());
         //获取比赛详情
         List<GameDetail> gameDetailList = gameDetailService.getGameDetailListByGame(id);
 
+        model.addAttribute("calculate",calculate);
         model.addAttribute("game",game);
         model.addAttribute("gameDetailList",gameDetailList);
 

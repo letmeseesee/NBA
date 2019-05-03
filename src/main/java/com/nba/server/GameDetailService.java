@@ -38,6 +38,8 @@ public class GameDetailService {
         List<Integer> quterIds = quarterService.getAllQuters(game_id);
         GameDetailExample gameDetailExample = new GameDetailExample();
         GameDetailExample.Criteria criteria = gameDetailExample.createCriteria();
+        gameDetailExample.setOrderByClause("play_id desc");
+        gameDetailExample.setLimit(50);
         criteria.andQuarterIdIn(quterIds);
         return gameDetailDAO.selectByExample(gameDetailExample);
     }

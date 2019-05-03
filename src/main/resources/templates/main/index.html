@@ -76,9 +76,11 @@
                       </div>
                     </div>
                     <div class="text text-center">
+                      <a th:href="${'/games/detail?id=' + game.gameId}" >
                       <h3 class="h4" th:text="${game.homeTeam + ' VS ' + game.awayTeam + ' (' +game.status + ')'}">
                         Project Title
                       </h3>
+                      </a>
                       <small th:text="${game.homeTeamScore + ' : ' + game.awayTeamScore}" class="text-red">Lorem Ipsum Dolor</small>
                     </div>
                     <div class="project-title d-flex align-items-center">

@@ -5,6 +5,7 @@ import com.nba.mapper.GamesDAO;
 import com.nba.model.Games;
 import com.nba.model.GamesExample;
 import com.nba.status.GameStatusEnum;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +74,10 @@ public class GameService {
         criteria.andStatusIn(notFinsishStatus);
         gamesExample.setOrderByClause("game_id desc");
         return gamesDAO.selectByExample(gamesExample);
+    }
+
+    public Double calculateSupport(Double Home, Double Away){
+        Double total = Math.abs(Home) + Math.abs(Away);
+        return Math.abs(Home)/total * 100;
     }
 }
