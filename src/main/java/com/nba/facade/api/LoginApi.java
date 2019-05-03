@@ -53,6 +53,16 @@ public interface LoginApi {
 
 
     /**
+     * 全文搜索
+     * @param keyword 关键字
+     * @param model 值
+     * @return String
+     */
+    @ApiOperation(value = "全文搜索")
+    @RequestMapping(value = "/index/search",method = RequestMethod.GET)
+    String search(@RequestParam String keyword,Model model);
+
+    /**
      * 登出
      * @return
      */

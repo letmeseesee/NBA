@@ -30,6 +30,24 @@ public class GameService {
         return gamesDAO.selectByExampleJoinTeam(gamesExample);
     }
 
+    /**
+     * 获取最新的比赛
+     * @return
+     */
+    public List<LastGameDot> getLastGames(String keyword){
+        GamesExample gamesExample = new GamesExample();
+        GamesExample.Criteria criteria = gamesExample.createCriteria();
+        criteria.andAwayTeamLike('%' +keyword + '%');
+        gamesExample.or(criteria);
+        GamesExample.Criteria criteria1 = gamesExample.createCriteria();
+        criteria1.andHomeTeamLike('%' +keyword + '%');
+        gamesExample.or(criteria1);
+        gamesExample.setOrderByClause("game_id desc");
+        gamesExample.setOffset((long)0);
+        gamesExample.setLimit(10);
+        return gamesDAO.selectByExampleJoinTeam(gamesExample);
+    }
+
 
     /**
      * 获取最新的比赛

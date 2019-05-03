@@ -7,8 +7,16 @@
             <!-- Search Box-->
             <div class="search-box">
                 <button class="dismiss"><i class="icon-close"></i></button>
-                <form id="searchForm" action="#" role="search">
-                    <input type="search" placeholder="What are you looking for..." class="form-control">
+                <form id="searchForm" action="/index/search" role="search" method="get">
+                    <input type="search" name="keyword" placeholder="What are you looking for..." class="form-control">
+                    <script type="text/javascript" language=JavaScript charset="UTF-8">
+                        document.onkeydown=function(event){
+                            var e = event || window.event || arguments.callee.caller.arguments[0];
+                            if(e && e.keyCode==13){ // enter 键
+                                $("#searchForm").submit();
+                            }
+                        };
+                    </script>
                 </form>
             </div>
             <div class="container-fluid">

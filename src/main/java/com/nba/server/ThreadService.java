@@ -122,6 +122,18 @@ public class ThreadService {
         return bbsThreadDtoList;
     }
 
+    public List<BbsThreadDto> getLastBbsThreadList(String keyword){
+        List<BbsThreadDto> bbsThreadDtoList = new ArrayList<>();
+        //获取今天新增的帖子
+        BbsThreadExample bbsThreadExample = new BbsThreadExample();
+        BbsThreadExample.Criteria criteria = bbsThreadExample.createCriteria();
+        criteria.andSubjectLike("%" + keyword +"%");
+        bbsThreadExample.setLimit(10);
+        bbsThreadExample.setOrderByClause("tid desc");
+        bbsThreadDtoList = bbsThreadDAO.selectByExampleAndCreater(bbsThreadExample);
+        return bbsThreadDtoList;
+    }
+
     public BbsThread getBbsThreadById(Integer id) {
         return bbsThreadDAO.selectByPrimaryKey(id);
     }

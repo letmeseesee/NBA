@@ -92,15 +92,31 @@ public class LoginController implements LoginApi {
         baseService.setUser(model);
         //获取最新的比赛
         List<LastGameDot> gamesList = gameService.getLastGames();
-        model.addAttribute("gamesList",gamesList);
         //获取最新的新闻
         List<News> newsList = newsService.getLasterNews();
-        System.out.println(newsList);
-        model.addAttribute("newsList",newsList);
-        model.addAttribute("newsCount",newsList.size());
         //获取最新的帖子
         List<BbsThreadDto> bbsThreadDtoList = threadService.getLastBbsThreadList();
+        model.addAttribute("gamesList",gamesList);
+        model.addAttribute("newsList",newsList);
+        model.addAttribute("newsCount",newsList.size());
         model.addAttribute("bbsThreadDtoList",bbsThreadDtoList);
+        return "main/index";
+    }
+
+    @Override
+    public String search(String keyword,Model model) {
+        //设置当前用户
+        baseService.setUser(model);
+        //获取最新的比赛
+        List<LastGameDot> gamesList = gameService.getLastGames(keyword);
+        //获取最新的新闻
+        List<News> newsList = newsService.getLasterNews(keyword);
+        //获取最新的帖子
+        List<BbsThreadDto> bbsThreadDtoList = threadService.getLastBbsThreadList(keyword);
+        model.addAttribute("gamesList",gamesList);
+        model.addAttribute("bbsThreadDtoList",bbsThreadDtoList);
+        model.addAttribute("newsList",newsList);
+        model.addAttribute("newsCount",newsList.size());
         return "main/index";
     }
 
