@@ -1,73 +1,51 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>登陆</title>
-    <link rel="stylesheet" media="screen" href="../../static/css/login/style.css" th:href="@{/css/login/style.css}">
-    <link rel="stylesheet" type="text/css" href="../../static/css/login/reset.css" th:href="@{/css/login/reset.css}">
-</head>
+<div th:include="/public/head :: head"></div>
 <body>
-
-<div id="particles-js">
-    <div class="login">
-        <div class="login-top">
-            登录
-        </div>
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../../static/img/login/name.png" th:src="@{/img/login/name.png}"/>
+<div class="page login-page">
+    <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+            <div class="row">
+                <!-- Logo & Information Panel-->
+                <div class="col-lg-6">
+                    <div class="info d-flex align-items-center">
+                        <div class="content">
+                            <div class="logo">
+                                <h1>Login</h1>
+                            </div>
+                            <p>Welcome to mini NBA.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Panel    -->
+                <div class="col-lg-6 bg-white">
+                    <div class="form d-flex align-items-center">
+                        <div class="content">
+                            <form class="form-validate" action="/login/doLogin" method="Post">
+                                <div class="form-group">
+                                    <input id="username" type="text" name="username" required data-msg="Please enter your username" class="input-material">
+                                    <label for="username" class="label-material">User Name</label>
+                                </div>
+                                <div class="form-group">
+                                    <input id="password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
+                                    <label for="password" class="label-material">password</label>
+                                </div>
+                                <div class="form-group">
+                                    <button id="dologin" type="submit" name="registerSubmit" class="btn btn-primary">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="login-center-input">
-                <input type="text" name="" value="" id="username" placeholder="请输入您的用户名" onfocus="this.placeholder=''"
-                       onblur="this.placeholder='请输入您的用户名'"/>
-                <div class="login-center-input-text">用户名</div>
-            </div>
-        </div>
-        <div class="login-center clearfix">
-            <div class="login-center-img"><img src="../../static/img/login/password.png"
-                                               th:src="@{/img/login/name.png}"/></div>
-            <div class="login-center-input">
-                <input type="password" name="" id="password" value="" placeholder="请输入您的密码"
-                       onfocus="this.placeholder=''"
-                       onblur="this.placeholder='请输入您的密码'"/>
-                <div class="login-center-input-text">密码</div>
-            </div>
-        </div>
-        <div class="login-button">
-            登陆
         </div>
     </div>
-    <div class="sk-rotating-plane"></div>
+    <div th:include="/public/foot :: foot"></div>
 </div>
-
-<!-- scripts -->
-<script src="../../static/js/login/particles.min.js" th:src="@{/js/login/particles.min.js}"></script>
-<script src="../../static/js/login/app.js" th:src="@{/js/login/app.js}"></script>
-<script src="../../static/js/login/jquery-3.3.1.min.js" th:src="@{/js/login/jquery-3.3.1.min.js}"></script>
+</body>
 <script type="text/javascript">
-    function hasClass(elem, cls) {
-        cls = cls || '';
-        if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
-        return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
-    }
-
-    function addClass(ele, cls) {
-        if (!hasClass(ele, cls)) {
-            ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
-        }
-    }
-
-    function removeClass(ele, cls) {
-        if (hasClass(ele, cls)) {
-            var newClass = ' ' + ele.className.replace(/[\t\r\n]/g, '') + ' ';
-            while (newClass.indexOf(' ' + cls + ' ') >= 0) {
-                newClass = newClass.replace(' ' + cls + ' ', ' ');
-            }
-            ele.className = newClass.replace(/^\s+|\s+$/g, '');
-        }
-    }
-
-    document.querySelector(".login-button").onclick = function () {
+    document.querySelector("#dologin").onclick = function () {
         var username = $("#username").val();
         var password = $("#password").val();
         var form = $("<form method='post'></form>"), input, input1;
@@ -83,7 +61,7 @@
         form.append(input1);
         $(document.body).append(form);
         form.submit();
+        return false;
     }
 </script>
-</body>
 </html>

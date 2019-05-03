@@ -6,12 +6,14 @@
 package com.nba.facade.api;
 
 import com.nba.facade.vo.request.LoginReq;
+import com.nba.facade.vo.request.RegisterReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author admin
@@ -57,4 +59,12 @@ public interface LoginApi {
     @ApiOperation(value = "退出登陆")
     @RequestMapping(value = "/login/logout",method = RequestMethod.GET  )
     String logout();
+
+    @ApiOperation(value = "注册页面")
+    @RequestMapping(value = "/login/register",method = RequestMethod.GET)
+    String register();
+
+    @ApiOperation(value = "注册")
+    @RequestMapping(value = "/login/doRegister",method = RequestMethod.GET)
+    String doRegister(@RequestParam String username,@RequestParam String email,@RequestParam String password, Model model);
 }

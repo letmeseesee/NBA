@@ -15,5 +15,5 @@ public interface GamesApi {
 
     @ApiOperation(value = "比赛详细页")
     @RequestMapping(value = "/games/detail",method = RequestMethod.GET)
-    String gamesList(@RequestParam Integer id, Model model);
+    String gamesDetail(@RequestParam Integer id, Model model);
 }

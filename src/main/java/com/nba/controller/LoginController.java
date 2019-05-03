@@ -4,6 +4,7 @@ import com.nba.facade.api.LoginApi;
 import com.nba.facade.dto.BbsThreadDto;
 import com.nba.facade.dto.LastGameDot;
 import com.nba.facade.vo.request.LoginReq;
+import com.nba.facade.vo.request.RegisterReq;
 import com.nba.model.Games;
 import com.nba.model.News;
 import com.nba.model.User;
@@ -11,7 +12,9 @@ import com.nba.server.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -107,4 +110,30 @@ public class LoginController implements LoginApi {
         request.setAttribute("userid",0);
         return "login/index";
     }
+
+    @Override
+    public String register() {
+        return "login/register";
+    }
+
+    @Override
+    public String doRegister(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model) {
+        RegisterReq registerReq = new RegisterReq();
+        registerReq.setEmail(email);
+        registerReq.setPassword(password);
+        registerReq.setUsername(username);
+        if (loginService.checkExistUser(registerReq) > 0){
+            model.addAttribute("msg","用户重复");
+            return "login/error";
+        }else {
+            if(loginService.register(registerReq) > 0){
+                return this.login(model);
+            }else {
+                model.addAttribute("msg","注册失败");
+                return "login/error";
+            }
+        }
+    }
+
+
 }

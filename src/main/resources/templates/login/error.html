@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
 <body>
+<div class="page">
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">ErrorPage</h2>
+                </div>
+            </header>
+            <!-- 用户总揽-->
+            <section class="dashboard-counts no-padding-top">
+                <div class="container-fluid" th:text="${msg}">
 
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

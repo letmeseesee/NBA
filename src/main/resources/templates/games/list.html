@@ -54,6 +54,15 @@
                                     </small>
                                 </div>
                             </div>
+                            <div class=" col-lg-12 ">
+                                <button type="button" class="btn btn-w-m btn-primary"
+                                        th:disabled="${gameIdMap.containsKey(game.gameId)}? 'true' : 'false'"
+                                        th:id="${'follow'+game.gameId}"
+                                        th:text="${'Follow'}"
+                                        th:onclick="${'follow(' + game.gameId +')'}">
+                                    btn-primary
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,4 +74,29 @@
     </div>
 </div>
 </body>
+<SCRIPT>
+    function follow(game_id) {
+        $.ajax({
+            'type':'post',
+            'dataType':'json',
+            'url':'/competition/follow',
+            'data':JSON.stringify({
+                game_id:game_id,
+            }),
+            cache: false,
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            contentType:'application/json; charset=utf-8',
+            'success':function(res){
+                if(res.code <= 0){
+                    //设置为disabled
+                    $("#follow"+game_id).attr("disabled",true);
+                } else if(res.code > 0) {
+                    alert(res.msg);
+                }
+            }
+        });
+    }
+</SCRIPT>
 </html>

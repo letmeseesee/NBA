@@ -1,6 +1,7 @@
 package com.nba.facade.api;
 
 import com.nba.facade.vo.request.BetReq;
+import com.nba.facade.vo.request.FollowReq;
 import com.nba.facade.vo.response.ajaxRsp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,4 +14,8 @@ public interface CompetitionApi {
     @ApiOperation(value = "下注")
     @RequestMapping(value = "/competition/bet",method = RequestMethod.POST)
     ajaxRsp bet(@RequestBody BetReq betReq);
+
+    @ApiOperation(value = "关注比赛")
+    @RequestMapping(value = "/competition/follow",method = RequestMethod.POST)
+    ajaxRsp follow(@RequestBody FollowReq followReq);
 }
