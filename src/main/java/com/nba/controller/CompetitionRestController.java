@@ -31,11 +31,18 @@ public class CompetitionRestController implements CompetitionApi {
             ajaxRsp.setCode(1);
             ajaxRsp.setMsg("已经竞猜过");
         } else {
-            if(competitionService.betCompetition(betReq.getGameId(),betReq.getTeamId())>0){
+            Integer code = competitionService.betCompetition(betReq.getGameId(),betReq.getTeamId());
+            if(code>0){
                 ajaxRsp.setCode(0);
             }else {
                 ajaxRsp.setCode(1);
-                ajaxRsp.setMsg("参与竞猜失败");
+                if(code == -1){
+                    ajaxRsp.setMsg("金币不足");
+                }else if(code == -2){
+                    ajaxRsp.setMsg("没有对应的竞猜");
+                }else {
+                    ajaxRsp.setMsg("参与竞猜失败");
+                }
             }
         }
         return ajaxRsp;

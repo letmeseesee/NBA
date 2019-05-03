@@ -48,7 +48,7 @@ public class ThreadService {
         bbsThread.setPosts(1);
         bbsThread.setClosed(false);
         bbsThreadDAO.insertSelective(bbsThread);
-
+        loginService.addUserThread();
         //插入明细
         BbsPost bbsPost = new BbsPost();
         bbsPost.setTid(bbsThread.getTid());
@@ -60,7 +60,6 @@ public class ThreadService {
         bbsPost.setQuotepid(0);
         bbsPost.setUname(uName);
         bbsPostDAO.insert(bbsPost);
-
         return bbsThread.getTid();
     }
 
@@ -173,6 +172,7 @@ public class ThreadService {
         bbsPostDAO.insert(bbsPost);
 
         //添加回复数
+        loginService.addUserPost();
         return bbsPost.getPid();
     }
 

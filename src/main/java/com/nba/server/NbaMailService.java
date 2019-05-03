@@ -1,18 +1,25 @@
 package com.nba.server;
 
+import com.nba.config.MailConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NbaMailService {
-//
-//    @Autowired
-//    MailProperties mailProperties;
-//
-//    @Autowired
-//    JavaMailSenderImpl javaMailSender;
-//
-//    @Value("${spring.mail.username}")  //发送人的邮箱  比如155156641XX@163.com
-//    private String from;
+    private Logger logger = LoggerFactory.getLogger(NbaMailService.class);
+
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+
+    @Autowired
+    private MailConfig mailConfig;
 //
 //    /**
 //     * 发送简单邮件
@@ -21,17 +28,17 @@ public class NbaMailService {
 //     * @param text    内容
 //     * @param to      目标
 //     */
-//    @Async  //意思是异步调用这个方法
-//    public void sendSimpleMail(String subject, String text, String to) {
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//        mailMessage.setFrom(mailProperties.getFrom());
-//        mailMessage.setTo(to);
-//
-//        mailMessage.setSubject(subject);
-//        mailMessage.setText(text);
-//
-//        javaMailSender.send(mailMessage);
-//    }
+    public void sendSimpleMail(String subject, String text, String to) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(mailConfig.getUsername());
+        mailMessage.setTo(to);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(text);
+        mailSender.send(mailMessage);
+
+        logger.info("从{}向邮箱{}发送邮件",mailConfig.getFrom(),to);
+        logger.info("从{}向邮箱{}发送邮件",mailConfig.getFrom(),to);
+    }
 //
 //    /**
 //     * 发送附件邮件

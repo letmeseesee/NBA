@@ -12,9 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author 2019-4-13
@@ -26,6 +29,9 @@ public class LoginService {
 
     @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    HttpServletRequest request;
 
     public User doLogin(String username, String password){
         UserExample userExample = new UserExample();
@@ -77,6 +83,44 @@ public class LoginService {
         user.setLoginDate((int)System.currentTimeMillis()/1000);
         user.setThreads(0);
         return userDAO.insert(user);
+    }
+
+    public List<String> getAllUserMail(List<Integer> userIds){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUidIn(userIds);
+        List<User> users = userDAO.selectByExample(userExample);
+        return users.parallelStream().map(User::getEmail).collect(Collectors.toList());
+    }
+
+    //
+    public void addUserThread(){
+        User user = this.getUser((int)request.getSession().getAttribute("userId"));
+        user.setThreads(user.getThreads() +1);
+        user.setGolds(user.getGolds() +1);
+        userDAO.updateByPrimaryKey(user);
+    }
+
+    public void addUserPost(){
+        User user = this.getUser((int)request.getSession().getAttribute("userId"));
+        user.setPosts(user.getPosts() +1);
+        user.setGolds(user.getGolds() +1);
+        userDAO.updateByPrimaryKey(user);
+    }
+
+    /**
+     * 减少金币
+     */
+    @Transactional
+    public Boolean deGold(){
+        User user = this.getUser((int)request.getSession().getAttribute("userId"));
+        if(user.getGolds() >= 1){
+            user.setGolds(user.getGolds() - 1);
+            userDAO.updateByPrimaryKey(user);
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

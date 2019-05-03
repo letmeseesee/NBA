@@ -57,11 +57,11 @@ public class LoginController implements LoginApi {
     public String doLogin(Model model, LoginReq loginReq) {
         User result = loginService.doLogin(loginReq.getUsername(),loginReq.getPassword());
         if(result != null){
-            request.getSession().setAttribute("username",loginReq.getUsername());
+            request.getSession().setAttribute("username",result.getUsername());
             request.getSession().setAttribute("userId",result.getUid());
 
             //
-            model.addAttribute("name",loginReq.getUsername());
+            model.addAttribute("username",result.getUsername());
             model.addAttribute("email",result.getEmail());
             model.addAttribute("gold",result.getGolds());
             model.addAttribute("posts",result.getPosts());

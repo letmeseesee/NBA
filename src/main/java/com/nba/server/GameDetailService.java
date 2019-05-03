@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,11 +37,15 @@ public class GameDetailService {
 
     public List<GameDetail> getGameDetailListByGame(Integer game_id){
         List<Integer> quterIds = quarterService.getAllQuters(game_id);
-        GameDetailExample gameDetailExample = new GameDetailExample();
-        GameDetailExample.Criteria criteria = gameDetailExample.createCriteria();
-        gameDetailExample.setOrderByClause("play_id desc");
-        gameDetailExample.setLimit(50);
-        criteria.andQuarterIdIn(quterIds);
-        return gameDetailDAO.selectByExample(gameDetailExample);
+        if(!quterIds.isEmpty()) {
+            GameDetailExample gameDetailExample = new GameDetailExample();
+            GameDetailExample.Criteria criteria = gameDetailExample.createCriteria();
+            gameDetailExample.setOrderByClause("play_id desc");
+            gameDetailExample.setLimit(50);
+            criteria.andQuarterIdIn(quterIds);
+            return gameDetailDAO.selectByExample(gameDetailExample);
+        }
+        List<GameDetail> emptyList = new ArrayList<>();
+        return emptyList;
     }
 }

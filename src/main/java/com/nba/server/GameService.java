@@ -6,6 +6,8 @@ import com.nba.model.Games;
 import com.nba.model.GamesExample;
 import com.nba.status.GameStatusEnum;
 import io.swagger.models.auth.In;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class GameService {
+    private Logger logger = LoggerFactory.getLogger(GameService.class);
+
     @Autowired
     GamesDAO gamesDAO;
 

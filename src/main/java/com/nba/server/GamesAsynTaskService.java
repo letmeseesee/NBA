@@ -47,6 +47,9 @@ public class GamesAsynTaskService {
     @Autowired
     ThreadService threadService;
 
+    @Autowired
+    FollowService followService;
+
     /**
      * 新闻
      * @param news
@@ -145,11 +148,8 @@ public class GamesAsynTaskService {
      * 比赛
      * @param games
      */
-//    @Async("GameAnsycExecutor")
     @Transactional(rollbackFor = Exception.class)
     public void saveGames(Games games){
-        //
-//        games.setStatus(GameStatusEnum.STARTING.getDescription());
         //查询当前是否存改比赛
         GamesExample gamesExample = new GamesExample();
         GamesExample.Criteria criteria = gamesExample.createCriteria();
@@ -162,6 +162,10 @@ public class GamesAsynTaskService {
                 logger.info("更新比赛{} VS {}的信息",games.getHomeTeam(),games.getAwayTeam());
                 //结算
                 competitionService.insertOrUpdateCompetition(games);
+                //发送提醒邮件
+                if(games.getStatus().equals(GameStatusEnum.STARTING.getDescription())){
+                    followService.sendNoticeMail(games.getGameId());
+                }
             } else {
                 logger.info("比赛{} VS {}的信息一致不更新",games.getHomeTeam(),games.getAwayTeam());
             }
@@ -175,6 +179,7 @@ public class GamesAsynTaskService {
         }
     }
 
+    @Transactional
     void saveQuarters(List<Quarters> quartersList){
         //查询当前是否存改比赛
        for (Quarters quarter:quartersList){
@@ -194,6 +199,7 @@ public class GamesAsynTaskService {
        }
     }
 
+    @Transactional
     void saveGameDetail(List<GameDetail> gameDetailList){
         List<GameDetail> notExistDetail = new ArrayList<>();
         //查询当前是否存改比赛

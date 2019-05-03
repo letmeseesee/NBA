@@ -41,6 +41,9 @@ public class CompetitionService {
     @Autowired
     CompetitionService competitionService;
 
+    @Autowired
+    LoginService loginService;
+
     /**
      * 根据比赛创建
      *
@@ -229,18 +232,28 @@ public class CompetitionService {
     /**
      *
      */
+    @Transactional
     public Integer betCompetition(Integer gameId, Integer teamId) {
-        CompetitionExample competitionExample = new CompetitionExample();
-        CompetitionExample.Criteria criteriaCom = competitionExample.createCriteria();
-        criteriaCom.andGameIdEqualTo(gameId);
-        List<Competition> competitionLists = competitionDAO.selectByExample(competitionExample);
-        Integer competitionId = competitionLists.get(0).getCompetitionId();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        CompetitionList competitionList = new CompetitionList();
-        competitionList.setAddTime(new Date());
-        competitionList.setCompetitionId(competitionId);
-        competitionList.setTeamAside(teamId);
-        competitionList.setUid((int) request.getSession().getAttribute("userId"));
-        return competitionListDAO.insert(competitionList);
+        Boolean result = loginService.deGold();
+        if(result) {
+            CompetitionExample competitionExample = new CompetitionExample();
+            CompetitionExample.Criteria criteriaCom = competitionExample.createCriteria();
+            criteriaCom.andGameIdEqualTo(gameId);
+            List<Competition> competitionLists = competitionDAO.selectByExample(competitionExample);
+            if(!competitionLists.isEmpty()) {
+                Integer competitionId = competitionLists.get(0).getCompetitionId();
+
+                CompetitionList competitionList = new CompetitionList();
+                competitionList.setAddTime(new Date());
+                competitionList.setCompetitionId(competitionId);
+                competitionList.setTeamAside(teamId);
+                competitionList.setUid((int) request.getSession().getAttribute("userId"));
+                return competitionListDAO.insert(competitionList);
+            }else {
+                return -2;
+            }
+        }else {
+            return -1;
+        }
     }
 }

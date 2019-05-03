@@ -37,13 +37,15 @@ public class GamesController implements GamesApi {
         //获取最新的100个比赛
         List<LastGameDot> gameDotList = gameService.getLastGames(20);
         //取得当前用户关注的比赛
-        List<Integer> gameIdList = gameDotList.parallelStream().map(LastGameDot::getGameId).collect(Collectors.toList());
+        List<Integer> gameIdList = gameDotList.stream().map(LastGameDot::getGameId).collect(Collectors.toList());
         gameIdList = followService.getFollowedGames(gameIdList);
-        HashMap<Integer,Integer> gameIdMap = new HashMap<>();
-        for (Integer game_id:gameIdList ){
-            gameIdMap.put(game_id,game_id);
+        HashMap<Integer, Integer> gameIdMap = new HashMap<>();
+        if(gameIdList!=null && !gameIdList.isEmpty()) {
+            for (Integer game_id : gameIdList) {
+                gameIdMap.put(game_id, game_id);
+            }
         }
-        model.addAttribute("gameIdMap",gameIdMap);
+        model.addAttribute("gameIdMap", gameIdMap);
         model.addAttribute("gamesList",gameDotList);
         return "games/list";
     }

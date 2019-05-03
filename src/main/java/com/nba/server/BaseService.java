@@ -19,8 +19,9 @@ public class BaseService {
     public void setUser( Model model){
         //根据id获取用户
         User user = loginService.getUser((int)request.getSession().getAttribute("userId"));
-        model.addAttribute("username",request.getSession().getAttribute("username"));
+        model.addAttribute("username",user.getUsername());
         model.addAttribute("userid",request.getSession().getAttribute("userId"));
+        request.getSession().setAttribute("username",user.getUsername());
         model.addAttribute("email",user.getEmail());
         model.addAttribute("gold",user.getGolds());
         model.addAttribute("posts",user.getPosts());
