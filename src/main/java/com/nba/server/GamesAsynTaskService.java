@@ -204,7 +204,7 @@ public class GamesAsynTaskService {
             }
         }
         if(notExistDetail.size() > 0){
-            gameDetailService.batchInsertDeatil(notExistDetail);
+            gameDetailService.batchInsertDetail(notExistDetail);
         }else {
             logger.info("比赛详情无需更新");
         }

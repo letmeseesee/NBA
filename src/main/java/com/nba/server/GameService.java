@@ -44,6 +44,21 @@ public class GameService {
     }
 
     /**
+     * 获取比赛
+     * @return LastGameDot
+     */
+    public LastGameDot getGame(int id){
+        GamesExample gamesExample = new GamesExample();
+        GamesExample.Criteria criteria = gamesExample.createCriteria();
+        criteria.andGameIdEqualTo(id);
+        List<LastGameDot> lastGameDots = gamesDAO.selectByExampleJoinTeam(gamesExample);
+        if(lastGameDots.isEmpty()){
+            return null;
+        }else {
+            return lastGameDots.get(0);
+        }
+    }
+    /**
      * 获取所有未结束的比赛的信息
      * @return List<LastGameDot>
      */
@@ -59,6 +74,4 @@ public class GameService {
         gamesExample.setOrderByClause("game_id desc");
         return gamesDAO.selectByExample(gamesExample);
     }
-
-
 }

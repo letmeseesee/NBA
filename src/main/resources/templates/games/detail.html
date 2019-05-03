@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">GamePage</h2>
+                </div>
+            </header>
+
+
+            <!--比赛-->
+            <section class="projects no-padding-top">
+                <div class="container-fluid">
+                    <!-- 一个比赛-->
+                    <div class="project">
+                        <div class="row bg-white has-shadow">
+                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.homeTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="text text-center">
+                                    <h3 class="h4" th:text="${game.homeTeam + ' VS ' + game.awayTeam + ' (' +game.status + ')'}">
+                                        Project Title
+                                    </h3>
+                                    <small th:text="${game.homeTeamScore + ' : ' + game.awayTeamScore}" class="text-red">Lorem Ipsum Dolor</small>
+                                </div>
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.awayTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right-col col-lg-6 d-flex align-items-center">
+                                <div class="text text-center text-red">
+                                    <small th:text="${game.dateTime}">
+                                        Project Title
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="right-col col-lg-6 d-flex align-items-center">
+                                <dl class="dl-horizontal">
+                                    <dt>当前进度</dt>
+                                    <dd>
+                                        <div class="progress progress-striped active m-b-sm">
+                                            <div style="width: 60%;" class="progress-bar"></div>
+                                        </div>
+                                        <small>当前已完成项目总进度的 <strong>60%</strong></small>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--得分详情-->
+            <section class="feeds no-padding-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 得分详情 -->
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>基本</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="timeline.html#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                            <li><a href="timeline.html#">选项1</a>
+                                            </li>
+                                            <li><a href="timeline.html#">选项2</a>
+                                            </li>
+                                        </ul>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content timeline">
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-briefcase"></i> 6:00
+                                                <br>
+                                                <small class="text-navy">2 小时前</small>
+                                            </div>
+                                            <div class="col-xs-7 content no-top-border">
+                                                <p class="m-b-xs"><strong>服务器已彻底崩溃</strong>
+                                                </p>
+
+                                                <p>还未检查出错误</p>
+
+                                                <p><span data-diameter="40" class="updating-chart" style="display: none;">10,9,9,7,7,6,1,1,1,0,1,8,8,6,9,9,3,9,9,5,4,4,3,1,8,1,7,10,3,9,1,2,6,3,9,7,6</span><svg class="peity" height="16" width="64"><polygon fill="#1ab394" points="0 15 0 0.5 1.7777777777777777 2 3.5555555555555554 2 5.333333333333333 5 7.111111111111111 5 8.88888888888889 6.5 10.666666666666666 14 12.444444444444443 14 14.222222222222221 14 16 15.5 17.77777777777778 14 19.555555555555554 3.5 21.333333333333332 3.5 23.11111111111111 6.5 24.888888888888886 2 26.666666666666664 2 28.444444444444443 11 30.22222222222222 2 32 2 33.77777777777778 8 35.55555555555556 9.5 37.33333333333333 9.5 39.11111111111111 11 40.888888888888886 14 42.666666666666664 3.5 44.44444444444444 14 46.22222222222222 5 48 0.5 49.77777777777777 11 51.55555555555555 2 53.33333333333333 14 55.11111111111111 12.5 56.888888888888886 6.5 58.666666666666664 11 60.44444444444444 2 62.22222222222222 5 64 6.5 64 15"></polygon><polyline fill="transparent" points="0 0.5 1.7777777777777777 2 3.5555555555555554 2 5.333333333333333 5 7.111111111111111 5 8.88888888888889 6.5 10.666666666666666 14 12.444444444444443 14 14.222222222222221 14 16 15.5 17.77777777777778 14 19.555555555555554 3.5 21.333333333333332 3.5 23.11111111111111 6.5 24.888888888888886 2 26.666666666666664 2 28.444444444444443 11 30.22222222222222 2 32 2 33.77777777777778 8 35.55555555555556 9.5 37.33333333333333 9.5 39.11111111111111 11 40.888888888888886 14 42.666666666666664 3.5 44.44444444444444 14 46.22222222222222 5 48 0.5 49.77777777777777 11 51.55555555555555 2 53.33333333333333 14 55.11111111111111 12.5 56.888888888888886 6.5 58.666666666666664 11 60.44444444444444 2 62.22222222222222 5 64 6.5" stroke="#169c81" stroke-width="1" stroke-linecap="square"></polyline></svg>
+                                                    <svg class="peity" height="16" width="64">
+                                                        <polygon fill="#1ab394" points="0 15 0 10.5 1.7777777777777777 0.5 3.5555555555555554 5.5 5.333333333333333 7.166666666666666 7.111111111111111 0.5 8.88888888888889 8.833333333333332 10.666666666666666 3.833333333333332 12.444444444444443 10.5 14.222222222222221 12.166666666666666 16 0.5 17.77777777777778 2.166666666666666 19.555555555555554 3.833333333333332 21.333333333333332 8.833333333333332 23.11111111111111 7.166666666666666 24.888888888888886 13.833333333333334 26.666666666666664 12.166666666666666 28.444444444444443 0.5 30.22222222222222 7.166666666666666 32 8.833333333333332 33.77777777777778 3.833333333333332 35.55555555555556 12.166666666666666 37.33333333333333 3.833333333333332 39.11111111111111 3.833333333333332 40.888888888888886 10.5 42.666666666666664 7.166666666666666 44.44444444444444 12.166666666666666 46.22222222222222 10.5 48 10.5 49.77777777777777 12.166666666666666 51.55555555555555 13.833333333333334 53.33333333333333 5.5 55.11111111111111 0.5 56.888888888888886 2.166666666666666 58.666666666666664 2.166666666666666 60.44444444444444 10.5 62.22222222222222 3.833333333333332 64 8.833333333333332 64 15"></polygon>
+                                                        <polyline fill="transparent" points="0 10.5 1.7777777777777777 0.5 3.5555555555555554 5.5 5.333333333333333 7.166666666666666 7.111111111111111 0.5 8.88888888888889 8.833333333333332 10.666666666666666 3.833333333333332 12.444444444444443 10.5 14.222222222222221 12.166666666666666 16 0.5 17.77777777777778 2.166666666666666 19.555555555555554 3.833333333333332 21.333333333333332 8.833333333333332 23.11111111111111 7.166666666666666 24.888888888888886 13.833333333333334 26.666666666666664 12.166666666666666 28.444444444444443 0.5 30.22222222222222 7.166666666666666 32 8.833333333333332 33.77777777777778 3.833333333333332 35.55555555555556 12.166666666666666 37.33333333333333 3.833333333333332 39.11111111111111 3.833333333333332 40.888888888888886 10.5 42.666666666666664 7.166666666666666 44.44444444444444 12.166666666666666 46.22222222222222 10.5 48 10.5 49.77777777777777 12.166666666666666 51.55555555555555 13.833333333333334 53.33333333333333 5.5 55.11111111111111 0.5 56.888888888888886 2.166666666666666 58.666666666666664 2.166666666666666 60.44444444444444 10.5 62.22222222222222 3.833333333333332 64 8.833333333333332" stroke="#169c81" stroke-width="1" stroke-linecap="square"></polyline>
+                                                    </svg>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-file-text"></i> 7:00
+                                                <br>
+                                                <small class="text-navy">3小时前</small>
+                                            </div>
+                                            <div class="col-xs-7 content">
+                                                <p class="m-b-xs"><strong>修复了0.5个bug</strong>
+                                                </p>
+                                                <p>重启服务</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-coffee"></i> 8:00
+                                                <br>
+                                            </div>
+                                            <div class="col-xs-7 content">
+                                                <p class="m-b-xs"><strong>喝水、上厕所、做测试</strong>
+                                                </p>
+                                                <p>
+                                                    喝了4杯水，上了3次厕所，控制台输出出2324个错误，神啊，带我走吧
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-phone"></i> 11:00
+                                                <br>
+                                                <small class="text-navy">21小时前</small>
+                                            </div>
+                                            <div class="col-xs-7 content">
+                                                <p class="m-b-xs"><strong>项目经理打电话来了</strong>
+                                                </p>
+                                                <p>
+                                                    TMD，项目经理居然还没有起床！！！
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-user-md"></i> 09:00
+                                                <br>
+                                                <small>21小时前</small>
+                                            </div>
+                                            <div class="col-xs-7 content">
+                                                <p class="m-b-xs"><strong>开会</strong>
+                                                </p>
+                                                <p>
+                                                    开你妹的会，老子还有897894个bug没有修复
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-comments"></i> 12:50
+                                                <br>
+                                                <small class="text-navy">讨论</small>
+                                            </div>
+                                            <div class="col-xs-7 content">
+                                                <p class="m-b-xs"><strong>…………</strong>
+                                                </p>
+                                                <p>
+                                                    又是操蛋的一天
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
