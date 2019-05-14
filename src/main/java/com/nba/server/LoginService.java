@@ -77,10 +77,10 @@ public class LoginService {
         user.setIsadmin(0);
         user.setEmail(registerReq.getEmail());
         user.setPosts(0);
-        user.setCreateDate((int)System.currentTimeMillis()/1000);
+        user.setCreateDate((int)(System.currentTimeMillis()/1000));
         user.setPassword(registerReq.getPassword());
         user.setUsername(registerReq.getUsername());
-        user.setLoginDate((int)System.currentTimeMillis()/1000);
+        user.setLoginDate((int)(System.currentTimeMillis()/1000));
         user.setThreads(0);
         return userDAO.insert(user);
     }
