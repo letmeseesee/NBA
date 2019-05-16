@@ -21,4 +21,11 @@ public class TeamService {
     public Teams getTeam(Integer id){
         return teamsDAO.selectByPrimaryKey(id);
     }
+
+    public List<Teams> getTeam(String name){
+        TeamsExample teamsExample = new TeamsExample();
+        TeamsExample.Criteria criteria = teamsExample.createCriteria();
+        criteria.andNameLike('%' + name +'%');
+        return teamsDAO.selectByExample(teamsExample);
+    }
 }

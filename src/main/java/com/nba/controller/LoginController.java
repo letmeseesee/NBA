@@ -5,9 +5,7 @@ import com.nba.facade.dto.BbsThreadDto;
 import com.nba.facade.dto.LastGameDot;
 import com.nba.facade.vo.request.LoginReq;
 import com.nba.facade.vo.request.RegisterReq;
-import com.nba.model.Games;
-import com.nba.model.News;
-import com.nba.model.User;
+import com.nba.model.*;
 import com.nba.server.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +39,12 @@ public class LoginController implements LoginApi {
 
     @Autowired
     BaseService baseService;
+
+    @Autowired
+    PlayerService playerService;
+
+    @Autowired
+    TeamService teamService;
 
     @RequestMapping("/")
     public String index() {
@@ -113,11 +117,20 @@ public class LoginController implements LoginApi {
         List<News> newsList = newsService.getLasterNews(keyword);
         //获取最新的帖子
         List<BbsThreadDto> bbsThreadDtoList = threadService.getLastBbsThreadList(keyword);
+
+        //球队
+        List<Players> players = playerService.getPlayers(keyword);
+
+        //球员
+        List<Teams> teamsList = teamService.getTeam(keyword);
+
+        model.addAttribute("teamsList",teamsList);
+        model.addAttribute("players",players);
         model.addAttribute("gamesList",gamesList);
         model.addAttribute("bbsThreadDtoList",bbsThreadDtoList);
         model.addAttribute("newsList",newsList);
         model.addAttribute("newsCount",newsList.size());
-        return "main/index";
+        return "main/search";
     }
 
     @Override

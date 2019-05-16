@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">HomePage</h2>
+                </div>
+            </header>
+            <!-- 用户总揽-->
+            <section class="dashboard-counts no-padding-top">
+                <div class="container-fluid">
+                    <div class="row bg-white has-shadow">
+                        <!-- 姓名 -->
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                <div class="title">
+                                    <span th:text="${username}">New Clients</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 回复总数 -->
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-red"><i class="icon-padnote"></i></div>
+                                <div class="title"><span>Reply</span>
+                                </div>
+                                <div class="number"><strong th:text="${posts}">70</strong></div>
+                            </div>
+                        </div>
+                        <!-- 总发帖数 -->
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-green"><i class="icon-bill"></i></div>
+                                <div class="title"><span>Your Threads</span>
+                                </div>
+                                <div class="number"><strong th:text="${threads}">40</strong></div>
+                            </div>
+                        </div>
+                        <!-- 金币 -->
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-orange"><i class="icon-money"></i></div>
+                                <div class="title"><span>Gold</span>
+                                </div>
+                                <div class="number"><strong th:text="${gold}">50</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 关注的比赛和即将开始的比赛-->
+            <section class="projects no-padding-top">
+                <div class="container-fluid" th:each="game : ${gamesList}">
+                    <!-- 一个比赛-->
+                    <div class="project">
+                        <div class="row bg-white has-shadow">
+                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.homeTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="text text-center">
+                                    <a th:href="${'/games/detail?id=' + game.gameId}" >
+                                        <h3 class="h4" th:text="${game.homeTeam + ' VS ' + game.awayTeam + ' (' +game.status + ')'}">
+                                            Project Title
+                                        </h3>
+                                    </a>
+                                    <small th:text="${game.homeTeamScore + ' : ' + game.awayTeamScore}" class="text-red">Lorem Ipsum Dolor</small>
+                                </div>
+                                <div class="project-title d-flex align-items-center">
+                                    <div class="image has-shadow">
+                                        <img th:src="${game.awayTeamLogo}" alt="..." class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right-col col-lg-6 d-flex align-items-center">
+                                <div class="text text-center text-red">
+                                    <small th:text="${game.dateTime}">
+                                        Project Title
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 最新信息-->
+            <section class="feeds no-padding-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 最新新闻 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"><i class="fa fa-times"></i>Close</a>
+                                            <a href="/news/list" class="dropdown-item remove"><i class="fa fa-times"></i>All</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Newest Articles</h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${newsCount + ' New'}"></div>
+                                </div>
+                                <div class="card-body no-padding" th:each="news : ${newsList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text">
+                                            <a th:href="${news.url}">
+                                                <h3 class="h4" th:text="${news.title}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small class="text-red"><a th:href="${'/news/detail?nid=' + news.newsId}" th:text="${'Posted on ' + news.updated + ' by ' + news.author}">
+                                                Posted on 5th June 2017 by Aria Smith.  </a>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 帖子 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                            <a href="/bbs/create" class="dropdown-item edit"> <i class="fa fa-gear"></i>Create</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Trending Lists   </h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${bbsThreadDtoList.size() + ' New'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadDtoList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/bbs/detail?subjectId=1" th:href="'/bbs/detail?subjectId='+${bbsThread.tid}">
+                                                <h3 class="h5" th:text="${bbsThread.subject}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${'Posted on ' + bbsThread.createDate + ' by ' + bbsThread.userName}">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 球队 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                            <a href="/bbs/create" class="dropdown-item edit"> <i class="fa fa-gear"></i>Create</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Trending Lists   </h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${bbsThreadDtoList.size() + ' New'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadDtoList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/bbs/detail?subjectId=1" th:href="'/bbs/detail?subjectId='+${bbsThread.tid}">
+                                                <h3 class="h5" th:text="${bbsThread.subject}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${'Posted on ' + bbsThread.createDate + ' by ' + bbsThread.userName}">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 球员 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                            <a href="/bbs/create" class="dropdown-item edit"> <i class="fa fa-gear"></i>Create</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Trending Lists   </h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${bbsThreadDtoList.size() + ' New'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="bbsThread : ${bbsThreadDtoList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img style="width: 30px;height: 30px" th:src="@{/vendor/timg.jpeg}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/bbs/detail?subjectId=1" th:href="'/bbs/detail?subjectId='+${bbsThread.tid}">
+                                                <h3 class="h5" th:text="${bbsThread.subject}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${'Posted on ' + bbsThread.createDate + ' by ' + bbsThread.userName}">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 最新信息-->
+            <section class="feeds no-padding-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 球队 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Team List</h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${teamsList.size() + ' Teams'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="team : ${teamsList}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img th:src="${team.wikipediaLogoUrl}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/player/detail?id=1" th:href="'/team/detail?id='+${team.teamId}">
+                                                <h3 class="h5" th:text="${team.name}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${ team.city + ' ' + team.conference }">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 球员 -->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">Player Lists   </h2>
+                                    <div class="badge badge-rounded bg-green" th:text="${players.size() + ' Players'}">4 New</div>
+                                </div>
+                                <div class="card-body no-padding" th:each="player : ${players}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img th:src="${player.photoUrl}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/player/detail?id=1" th:href="'/player/detail?id='+${player.playerId}">
+                                                <h3 class="h5" th:text="${player.firstName + ' ' +player.lastName}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${ player.birthDate }">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
