@@ -40,8 +40,8 @@ public class ThreadService {
         //插入主表信息
         BbsThread bbsThread = new BbsThread();
         bbsThread.setUid(userId);
-        bbsThread.setCreateDate(new Long(System.currentTimeMillis()).intValue());
-        bbsThread.setLastDate(new Long(System.currentTimeMillis()).intValue());
+        bbsThread.setCreateDate(new Long(System.currentTimeMillis()/1000).intValue());
+        bbsThread.setLastDate(new Long(System.currentTimeMillis()/1000).intValue());
         bbsThread.setSubject(createThreadReq.getSubject());
         bbsThread.setType(0);
         bbsThread.setViews(1);
@@ -54,7 +54,7 @@ public class ThreadService {
         bbsPost.setTid(bbsThread.getTid());
         bbsPost.setUid(userId);
         bbsPost.setIsfirst(1);
-        bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsPost.setCreateDate(new Long(System.currentTimeMillis()/1000).intValue());
         bbsPost.setMessage(createThreadReq.getContent());
         bbsPost.setMessageFmt("");
         bbsPost.setQuotepid(0);
@@ -79,8 +79,8 @@ public class ThreadService {
         //插入主表信息
         BbsThread bbsThread = new BbsThread();
         bbsThread.setUid(userId);
-        bbsThread.setCreateDate(new Long(System.currentTimeMillis()).intValue());
-        bbsThread.setLastDate(new Long(System.currentTimeMillis()).intValue());
+        bbsThread.setCreateDate(new Long(System.currentTimeMillis()/1000).intValue());
+        bbsThread.setLastDate(new Long(System.currentTimeMillis()/1000).intValue());
         bbsThread.setSubject(games.getHomeTeam() + " VS " +games.getHomeTeam());
         bbsThread.setType(1);
         bbsThread.setViews(1);
@@ -93,7 +93,7 @@ public class ThreadService {
         bbsPost.setTid(bbsThread.getTid());
         bbsPost.setUid(userId);
         bbsPost.setIsfirst(1);
-        bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsPost.setCreateDate(new Long(System.currentTimeMillis()/1000).intValue());
         bbsPost.setMessage(games.getHomeTeam() + " VS " +games.getHomeTeam());
         bbsPost.setMessageFmt("");
         bbsPost.setQuotepid(0);
@@ -159,7 +159,7 @@ public class ThreadService {
         bbsPost.setTid(createPostReq.getSubjectId());
         bbsPost.setUid(userId);
         bbsPost.setIsfirst(0);
-        bbsPost.setCreateDate(new Long(System.currentTimeMillis()).intValue());
+        bbsPost.setCreateDate(new Long(System.currentTimeMillis()/1000).intValue());
         bbsPost.setMessage(createPostReq.getMessage());
         if(createPostReq.getQuoteId() == 0) {
             bbsPost.setMessageFmt(" ");
