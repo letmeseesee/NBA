@@ -234,25 +234,23 @@ public class CompetitionService {
      */
     @Transactional
     public Integer betCompetition(Integer gameId, Integer teamId) {
-        Boolean result = loginService.deGold();
-        if(result) {
-            CompetitionExample competitionExample = new CompetitionExample();
-            CompetitionExample.Criteria criteriaCom = competitionExample.createCriteria();
-            criteriaCom.andGameIdEqualTo(gameId);
-            List<Competition> competitionLists = competitionDAO.selectByExample(competitionExample);
-            if(!competitionLists.isEmpty()) {
-                Integer competitionId = competitionLists.get(0).getCompetitionId();
-
-                CompetitionList competitionList = new CompetitionList();
-                competitionList.setAddTime(new Date());
-                competitionList.setCompetitionId(competitionId);
-                competitionList.setTeamAside(teamId);
-                competitionList.setUid((int) request.getSession().getAttribute("userId"));
-                return competitionListDAO.insert(competitionList);
-            }else {
+        CompetitionExample competitionExample = new CompetitionExample();
+        CompetitionExample.Criteria criteriaCom = competitionExample.createCriteria();
+        criteriaCom.andGameIdEqualTo(gameId);
+        List<Competition> competitionLists = competitionDAO.selectByExample(competitionExample);
+        if (!competitionLists.isEmpty()) {
+            Integer competitionId = competitionLists.get(0).getCompetitionId();
+            Boolean result = loginService.deGold();
+            if (!result) {
                 return -2;
             }
-        }else {
+            CompetitionList competitionList = new CompetitionList();
+            competitionList.setAddTime(new Date());
+            competitionList.setCompetitionId(competitionId);
+            competitionList.setTeamAside(teamId);
+            competitionList.setUid((int) request.getSession().getAttribute("userId"));
+            return competitionListDAO.insert(competitionList);
+        } else {
             return -1;
         }
     }
