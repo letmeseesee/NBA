@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Player Detail</h2>
+                </div>
+            </header>
+
+            <!--内容-->
+            <section class="projects">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="client card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="client-avatar"><img th:src="${player.photoUrl}"
+                                                                    alt="..." class="img-fluid rounded-circle">
+                                        <div class="status bg-green"></div>
+                                    </div>
+                                    <div class="client-title">
+                                        <h3 th:text="${player.firstName + ' ' +player.lastName}">Jason Doe</h3>
+                                        <span>NBA PLAYER</span>
+                                    </div>
+                                    <div class="client-info">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Height</strong><br><small th:text="${ player.height }">Photos</small></div>
+                                            <div class="col-4"><strong>Weight</strong><br><small th:text="${ player.weight }">Videos</small></div>
+                                            <div class="col-4"><strong>Salary</strong><br><small th:text="${ player.salary }">Tasks</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="daily-feeds card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard7" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="card-header">
+                                    <h3 class="h4">More Info</h3>
+                                </div>
+                                <div class="card-body no-padding">
+                                    <!-- Item-->
+                                    <div class="item">
+                                        <div class="feed d-flex justify-content-between">
+                                            <div class="feed-body d-flex justify-content-between">
+                                                <div class="content">
+                                                    <h5>Birth place</h5>
+                                                    <span th:text="${player.birthCity}">Posted a new blog </span>
+                                                    <span th:text="${player.birthState}">Posted a new blog </span>
+                                                    <span th:text="${player.birthCountry}">Posted a new blog </span>
+                                                    <div class="full-date">
+                                                        <small th:text="${player.birthDate}">Today 5:60 pm - 12.06.2014</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item-->
+                                    <div class="item">
+                                        <div class="feed d-flex justify-content-between">
+                                            <div class="feed-body d-flex justify-content-between">
+                                                <div class="content">
+                                                    <h5>Education</h5>
+                                                    <span th:text="${'highSchool:' + player.highSchool}">Posted a new blog </span><p>
+                                                    <span th:text="${'College:' + player.college}">Posted a new blog </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item-->
+                                    <div class="item">
+                                        <div class="feed d-flex justify-content-between">
+                                            <div class="feed-body d-flex justify-content-between">
+                                                <a href="#" class="feed-profile">
+                                                    <img th:src="${team.wikipediaLogoUrl}" alt="person"
+                                                         class="img-fluid rounded-circle"></a>
+                                                <div class="content">
+                                                    <h5>Team</h5><span th:text="${team.name}">Posted a new blog </span>
+                                                    <h5>Position</h5><span th:text="${player.position}">Posted a new blog </span>
+                                                    <h5>Status</h5><span th:text="${player.status}">Posted a new blog </span>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

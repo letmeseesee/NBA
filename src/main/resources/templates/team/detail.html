@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:include="/public/head :: head"></div>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <div th:include="/public/body :: body"></div>
+
+    <div class="page-content d-flex align-items-stretch">
+        <!-- 边栏 -->
+        <div th:include="/public/left :: left"></div>
+
+        <!-- 主要内容-->
+        <div class="content-inner">
+            <!-- 内容头 -->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Team Detail</h2>
+                </div>
+            </header>
+
+            <!--内容-->
+            <section class="projects">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="client card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="client-avatar">
+                                        <img th:src="${team.wikipediaLogoUrl}"
+                                                                    alt="..." class="img-fluid rounded-circle">
+                                        <div class="status bg-green"></div>
+                                    </div>
+                                    <div class="client-title">
+                                        <h3 th:text="${team.name}">Jason Doe</h3>
+                                        <span>NBA Team</span>
+                                    </div>
+                                    <div class="client-info">
+                                        <div class="row">
+                                            <div class="col-4"><strong>City</strong><br>
+                                                <small th:text="${ team.city }">Photos</small></div>
+                                            <div class="col-4"><strong>Conference</strong><br>
+                                                <small th:text="${ team.conference }">Videos</small></div>
+                                            <div class="col-4"><strong>Division</strong><br>
+                                                <small th:text="${ team.division }">Tasks</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="daily-feeds card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard7" class="dropdown-menu dropdown-menu-right has-shadow">
+                                            <a href="#" class="dropdown-item remove">
+                                                <i class="fa fa-times"></i>Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header">
+                                    <h3 class="h4">Team Member</h3>
+                                </div>
+                                <div class="card-body no-padding" th:each="player : ${players}">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="image">
+                                            <img th:src="${player.photoUrl}" alt="..." class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="text">
+                                            <a href="/player/detail?id=1" th:href="'/player/detail?id='+${player.playerId}">
+                                                <h3 class="h5" th:text="${player.firstName + ' ' +player.lastName}">Lorem Ipsum Dolor</h3>
+                                            </a>
+                                            <small th:text="${ player.birthDate }">Posted on 5th June 2017 by Aria Smith.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 底部-->
+            <div th:include="/public/foot :: foot"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
